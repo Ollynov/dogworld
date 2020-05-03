@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>516168928562-nsg48tlg9u3fonu7nc574bnu9un9foag.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.516168928562-nsg48tlg9u3fonu7nc574bnu9un9foag</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD-kOMb0s0PbZC75393DqO2dfiMcmI6lKs</string>
+	<key>GCM_SENDER_ID</key>
+	<string>516168928562</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>io.dogworld.0</string>
+	<key>PROJECT_ID</key>
+	<string>dogworldio</string>
+	<key>STORAGE_BUCKET</key>
+	<string>dogworldio.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:516168928562:ios:9f6f2d162f9954443c9b2b</string>
+	<key>DATABASE_URL</key>
+	<string>https://dogworldio.firebaseio.com</string>
+</dict>
+</plist>
