@@ -1,6 +1,7 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
-
+import 'services/services.dart';
+import 'screens/screens.dart';
 import 'package:flutter/material.dart';
 
 import 'package:doggies/shared/bottom_nav.dart';
@@ -29,9 +30,9 @@ class MyApp extends StatelessWidget {
         '/breed-information': (context) => BreedInfo(),
         '/dog': (context) => Dog(),
         '/profile': (context) => Profile(),
-        '/dashboard': (context) => Dashboard(),
-        '/dogopedia': (context) => Dogopedia(),
-        '/search': (context) => Search(),
+        '/dashboard': (context) => DashboardScreen(),
+        '/dogopedia': (context) => DogopediaScreen(),
+        '/search': (context) => SearchScreen(),
       },
       navigatorObservers: [
         FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),
