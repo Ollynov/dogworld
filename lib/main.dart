@@ -9,17 +9,54 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Doggies',
-      theme: ThemeData.dark().copyWith(
-        primaryColor: Colors.purple[400],
-        accentColor: Colors.amber,
-        // This makes the visual density adapt to the platform that you run
-        // the app on. For desktop platforms, the controls will be smaller and
-        // closer together (more dense) than on mobile platforms.
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: MyHomePage(title: 'Doggies'),
-    );
+        title: 'Doggies',
+        theme: ThemeData.dark().copyWith(
+          primaryColor: Colors.purple[400],
+          accentColor: Colors.amber,
+          // This makes the visual density adapt to the platform that you run
+          // the app on. For desktop platforms, the controls will be smaller and
+          // closer together (more dense) than on mobile platforms.
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: MyHomePage(title: 'Doggies'),
+        routes: {
+          '/breed-information': (context) => BreedInfo(),
+          '/dog': (context) => Dog(),
+          '/profile': (context) => Profile(),
+          '/dashboard': (context) => Dashboard(),
+        });
+  }
+}
+
+class BreedInfo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+}
+
+class Dog extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+}
+
+class Profile extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+}
+
+class Dashboard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
   }
 }
 
@@ -105,6 +142,42 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(Icons.add),
         backgroundColor: Theme.of(context).accentColor,
       ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Home'),
+        backgroundColor: Colors.red,
+      ),
+      body: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            FlatButton(
+              child: Text('push'),
+              color: Colors.green,
+              onPressed: () {
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => SlideshowScreen(name: 'Jeff'))
+                // );
+
+                //  Navigator.pushNamed(
+                //     context,
+                //     '/slideshow'
+                //   );
+
+                Navigator.pushNamed(context, '/slideshow');
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
