@@ -1,8 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 import 'services/services.dart';
 import 'screens/screens.dart';
-import 'package:flutter/material.dart';
 
 import 'package:doggies/shared/bottom_nav.dart';
 
@@ -14,29 +16,34 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Doggies',
-      theme: ThemeData.dark().copyWith(
-        primaryColor: Colors.purple[400],
-        accentColor: Colors.amber,
-        // This makes the visual density adapt to the platform that you run
-        // the app on. For desktop platforms, the controls will be smaller and
-        // closer together (more dense) than on mobile platforms.
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        brightness: Brightness.dark,
-      ),
-      home: MyHomePage(title: 'Doggies'),
-      routes: {
-        '/breed-information': (context) => BreedInfo(),
-        '/dog': (context) => Dog(),
-        '/profile': (context) => Profile(),
-        '/dashboard': (context) => DashboardScreen(),
-        '/dogopedia': (context) => DogopediaScreen(),
-        '/search': (context) => SearchScreen(),
-      },
-      navigatorObservers: [
-        FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),
+    return MultiProvider(
+      providers: [
+        StreamProvider<FirebaseUser>.value(value: AuthService().userStream),
       ],
+      child: MaterialApp(
+        title: 'Doggies',
+        theme: ThemeData.dark().copyWith(
+          primaryColor: Colors.purple[400],
+          accentColor: Colors.amber,
+          // This makes the visual density adapt to the platform that you run
+          // the app on. For desktop platforms, the controls will be smaller and
+          // closer together (more dense) than on mobile platforms.
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          brightness: Brightness.dark,
+        ),
+        home: MyHomePage(title: 'Doggies'),
+        routes: {
+          '/breed-information': (context) => BreedInfo(),
+          '/dog': (context) => Dog(),
+          '/profile': (context) => Profile(),
+          '/dashboard': (context) => DashboardScreen(),
+          '/dogopedia': (context) => DogopediaScreen(),
+          '/search': (context) => SearchScreen(),
+        },
+        navigatorObservers: [
+          FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),
+        ],
+      ),
     );
   }
 }
