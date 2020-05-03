@@ -1,4 +1,9 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
+
 import 'package:flutter/material.dart';
+
+import 'package:doggies/shared/bottom_nav.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,22 +14,29 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Doggies',
-        theme: ThemeData.dark().copyWith(
-          primaryColor: Colors.purple[400],
-          accentColor: Colors.amber,
-          // This makes the visual density adapt to the platform that you run
-          // the app on. For desktop platforms, the controls will be smaller and
-          // closer together (more dense) than on mobile platforms.
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        home: MyHomePage(title: 'Doggies'),
-        routes: {
-          '/breed-information': (context) => BreedInfo(),
-          '/dog': (context) => Dog(),
-          '/profile': (context) => Profile(),
-          '/dashboard': (context) => Dashboard(),
-        });
+      title: 'Doggies',
+      theme: ThemeData.dark().copyWith(
+        primaryColor: Colors.purple[400],
+        accentColor: Colors.amber,
+        // This makes the visual density adapt to the platform that you run
+        // the app on. For desktop platforms, the controls will be smaller and
+        // closer together (more dense) than on mobile platforms.
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        brightness: Brightness.dark,
+      ),
+      home: MyHomePage(title: 'Doggies'),
+      routes: {
+        '/breed-information': (context) => BreedInfo(),
+        '/dog': (context) => Dog(),
+        '/profile': (context) => Profile(),
+        '/dashboard': (context) => Dashboard(),
+        '/dogopedia': (context) => Dogopedia(),
+        '/search': (context) => Search(),
+      },
+      navigatorObservers: [
+        FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),
+      ],
+    );
   }
 }
 
@@ -53,6 +65,22 @@ class Profile extends StatelessWidget {
 }
 
 class Dashboard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+}
+
+class Dogopedia extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+}
+
+class Search extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -141,7 +169,9 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: Icon(Icons.add),
         backgroundColor: Theme.of(context).accentColor,
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
+      bottomNavigationBar:
+          AppBottomNav(), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
