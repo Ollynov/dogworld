@@ -1,3 +1,4 @@
+import 'package:doggies/shared/shared.dart';
 import 'package:flutter/material.dart';
 
 class DogopediaScreen extends StatelessWidget {
@@ -12,6 +13,7 @@ class DogopediaScreen extends StatelessWidget {
         child: Text(
             'Here is your dogopedia where you will find everything dogs....'),
       ),
+      bottomNavigationBar: AppBottomNav(),
     );
   }
 }

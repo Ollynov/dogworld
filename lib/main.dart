@@ -30,6 +30,14 @@ class MyApp extends StatelessWidget {
           // closer together (more dense) than on mobile platforms.
           visualDensity: VisualDensity.adaptivePlatformDensity,
           brightness: Brightness.dark,
+          buttonTheme: ButtonThemeData(),
+          textTheme: TextTheme(
+              bodyText1: TextStyle(fontSize: 18),
+              bodyText2: TextStyle(fontSize: 16),
+              button:
+                  TextStyle(letterSpacing: 1.5, fontWeight: FontWeight.bold),
+              headline1: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              subtitle1: TextStyle(color: Colors.grey)),
         ),
         home: MyHomePage(title: 'Doggies'),
         routes: {
@@ -39,7 +47,7 @@ class MyApp extends StatelessWidget {
           '/dashboard': (context) => DashboardScreen(),
           '/dogopedia': (context) => DogopediaScreen(),
           '/search': (context) => SearchScreen(),
-          // '/login': (context) => LoginScreen(),
+          '/login': (context) => LoginScreen(),
         },
         navigatorObservers: [
           FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),
@@ -117,6 +125,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  AuthService auth = AuthService();
 
   void _incrementCounter() {
     setState(() {
@@ -163,6 +172,10 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            LoginButton(
+                text: 'Login',
+                loginMethod: auth.anonLogin,
+                destination: "/dashboard"),
             Text(
               'You have pushed the button this many times:',
             ),

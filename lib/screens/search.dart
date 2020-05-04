@@ -1,3 +1,4 @@
+import 'package:doggies/shared/bottom_nav.dart';
 import 'package:flutter/material.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -11,6 +12,7 @@ class SearchScreen extends StatelessWidget {
       body: Center(
         child: Text('Here is your search...'),
       ),
+      bottomNavigationBar: AppBottomNav(),
     );
   }
 }

@@ -26,6 +26,7 @@ class DashboardScreen extends StatelessWidget {
                   Navigator.of(context)
                       .pushNamedAndRemoveUntil('/', (route) => false);
                 })),
+        bottomNavigationBar: AppBottomNav(),
       );
     } else {
       return Text('Sorry you are not logged in.');

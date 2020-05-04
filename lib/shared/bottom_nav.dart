@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class AppBottomNav extends StatelessWidget {
+class AppBottomNav extends StatefulWidget {
+  @override
+  _AppBottomNavState createState() => _AppBottomNavState();
+}
+
+class _AppBottomNavState extends State<AppBottomNav> {
+  int _selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      items: [
+      items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
             icon: Icon(FontAwesomeIcons.dog, size: 20),
             title: Text('Dogopedia')),
@@ -15,9 +22,15 @@ class AppBottomNav extends StatelessWidget {
         BottomNavigationBarItem(
             icon: Icon(FontAwesomeIcons.userCircle, size: 20),
             title: Text('Dashboard')),
-      ].toList(),
-      fixedColor: Colors.deepPurple[200],
+      ],
+      currentIndex: _selectedIndex,
+      unselectedItemColor: Colors.white,
+      selectedItemColor: Theme.of(context).accentColor,
+      // fixedColor: Colors.deepPurple[200],
       onTap: (int idx) {
+        setState(() {
+          _selectedIndex = idx;
+        });
         switch (idx) {
           case 0:
             Navigator.pushNamed(context, '/dogopedia');
