@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
           '/dashboard': (context) => DashboardScreen(),
           '/dogopedia': (context) => DogopediaScreen(),
           '/search': (context) => SearchScreen(),
+          // '/login': (context) => LoginScreen(),
         },
         navigatorObservers: [
           FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),

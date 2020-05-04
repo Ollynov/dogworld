@@ -53,4 +53,8 @@ class AuthService {
       'lastActivity': DateTime.now(),
     }, merge: true);
   }
+
+  Future<void> signOut() {
+    return _auth.signOut();
+  }
 }
