@@ -1,4 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+import 'services/services.dart';
+import 'screens/screens.dart';
+
+import 'package:doggies/shared/bottom_nav.dart';
 
 void main() {
   runApp(MyApp());
@@ -8,18 +16,92 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Doggies',
-      theme: ThemeData.dark().copyWith(
-        primaryColor: Colors.purple[400],
-        accentColor: Colors.amber,
-        // This makes the visual density adapt to the platform that you run
-        // the app on. For desktop platforms, the controls will be smaller and
-        // closer together (more dense) than on mobile platforms.
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+    return MultiProvider(
+      providers: [
+        StreamProvider<FirebaseUser>.value(value: AuthService().userStream),
+      ],
+      child: MaterialApp(
+        title: 'Doggies',
+        theme: ThemeData.dark().copyWith(
+          primaryColor: Colors.purple[400],
+          accentColor: Colors.amber,
+          // This makes the visual density adapt to the platform that you run
+          // the app on. For desktop platforms, the controls will be smaller and
+          // closer together (more dense) than on mobile platforms.
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          brightness: Brightness.dark,
+          buttonTheme: ButtonThemeData(),
+          textTheme: TextTheme(
+              bodyText1: TextStyle(fontSize: 18),
+              bodyText2: TextStyle(fontSize: 16),
+              button:
+                  TextStyle(letterSpacing: 1.5, fontWeight: FontWeight.bold),
+              headline1: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              subtitle1: TextStyle(color: Colors.grey)),
+        ),
+        home: MyHomePage(title: 'Doggies'),
+        routes: {
+          '/breed-information': (context) => BreedInfo(),
+          '/dog': (context) => Dog(),
+          '/profile': (context) => Profile(),
+          '/dashboard': (context) => DashboardScreen(),
+          '/dogopedia': (context) => DogopediaScreen(),
+          '/search': (context) => SearchScreen(),
+          '/login': (context) => LoginScreen(),
+        },
+        navigatorObservers: [
+          FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),
+        ],
       ),
-      home: MyHomePage(title: 'Doggies'),
     );
+  }
+}
+
+class BreedInfo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+}
+
+class Dog extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+}
+
+class Profile extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+}
+
+class Dashboard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+}
+
+class Dogopedia extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+}
+
+class Search extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
   }
 }
 
@@ -43,6 +125,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  AuthService auth = AuthService();
 
   void _incrementCounter() {
     setState(() {
@@ -89,6 +172,11 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            FlatButton(
+                onPressed: () async {
+                  Navigator.pushReplacementNamed(context, '/login');
+                },
+                child: Text("Go To Login")),
             Text(
               'You have pushed the button this many times:',
             ),
@@ -104,7 +192,45 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: Icon(Icons.add),
         backgroundColor: Theme.of(context).accentColor,
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
+      bottomNavigationBar:
+          AppBottomNav(), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Home'),
+        backgroundColor: Colors.red,
+      ),
+      body: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            FlatButton(
+              child: Text('push'),
+              color: Colors.green,
+              onPressed: () {
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => SlideshowScreen(name: 'Jeff'))
+                // );
+
+                //  Navigator.pushNamed(
+                //     context,
+                //     '/slideshow'
+                //   );
+
+                Navigator.pushNamed(context, '/slideshow');
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
