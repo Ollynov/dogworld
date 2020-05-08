@@ -172,10 +172,11 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            LoginButton(
-                text: 'Login',
-                loginMethod: auth.anonLogin,
-                destination: "/dashboard"),
+            FlatButton(
+                onPressed: () async {
+                  Navigator.pushReplacementNamed(context, '/login');
+                },
+                child: Text("Go To Login")),
             Text(
               'You have pushed the button this many times:',
             ),

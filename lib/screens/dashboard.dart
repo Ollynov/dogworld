@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../services/services.dart';
@@ -22,6 +24,8 @@ class DashboardScreen extends StatelessWidget {
                 child: Text('Logout'),
                 color: Colors.red,
                 onPressed: () async {
+                  log('ok you just signed out bruh');
+                  print('ok you just signed out bruh');
                   await auth.signOut();
                   Navigator.of(context)
                       .pushNamedAndRemoveUntil('/', (route) => false);

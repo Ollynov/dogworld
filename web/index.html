@@ -28,6 +28,35 @@
       });
     }
   </script>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-app.js"></script>
+
+  <!-- <script src="https://www.gstatic.com/firebasejs/7.5.0/firebase-auth.js"></script> -->
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+      https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/7.14.3/firebase-analytics.js"></script>
+  <!-- Add Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-firestore.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyAokbD6N67LGpncPvussjcR-nWoB-3zOXI",
+      authDomain: "dogworldio.firebaseapp.com",
+      databaseURL: "https://dogworldio.firebaseio.com",
+      projectId: "dogworldio",
+      storageBucket: "dogworldio.appspot.com",
+      messagingSenderId: "516168928562",
+      appId: "1:516168928562:web:d15c7a09e8f240a13c9b2b",
+      measurementId: "G-T86TJQ73XZ"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
+
   <script src="main.dart.js" type="application/javascript"></script>
+
 </body>
 </html>
