@@ -17,9 +17,8 @@ class LoginScreenState extends State<LoginScreen> {
     super.initState();
     auth.getUser.then(
       (user) {
-        print('you already logged in boy!');
-        print(user);
         if (user != null) {
+          print('you already logged in boy!');
           Navigator.pushReplacementNamed(context, '/dashboard');
         }
       },
@@ -46,16 +45,16 @@ class LoginScreenState extends State<LoginScreen> {
             ),
             Text('Your Tagline'),
             LoginButton(
-              text: 'LOGIN WITH GOOGLE',
-              icon: FontAwesomeIcons.google,
-              color: Colors.black45,
-              loginMethod: auth.googleSignIn,
-            ),
+                text: 'LOGIN WITH GOOGLE',
+                icon: FontAwesomeIcons.google,
+                color: Colors.black45,
+                loginMethod: auth.googleSignIn,
+                destination: '/dashboard'),
             // We first need to wrap our Apple sign in button in a FutureBuilder Widget. The way this widget works is it returns a future and it's context to the builder output. This can be useful if you need a button that has the name of a logged in user, or for example if you want to do a conditional statement, like we want to do in this case here:
             FutureBuilder<Object>(
                 future: auth.appleSignInAvailable,
                 builder: (context, snapshot) {
-                  if (snapshot.data) {
+                  if (snapshot.data == true) {
                     return AppleSignInButton(
                       style: ButtonStyle.black,
                       onPressed: () async {
@@ -103,6 +102,8 @@ class LoginButton extends StatelessWidget {
         color: color,
         onPressed: () async {
           var user = await loginMethod();
+          print('ok in our button we got user as: ');
+          print(user);
           if (user != null) {
             Navigator.pushReplacementNamed(context, destination);
           }
