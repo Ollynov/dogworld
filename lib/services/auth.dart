@@ -26,7 +26,7 @@ class AuthService {
 
       if (appleResult.error != null) {
         print('ok here is our appleResult: ');
-        print(appleResult);
+        print(appleResult.credential);
       }
 
       final AuthCredential credential = OAuthProvider(providerId: 'apple.com')

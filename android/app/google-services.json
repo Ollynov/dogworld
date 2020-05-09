@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "516168928562",
+    "firebase_url": "https://dogworldio.firebaseio.com",
+    "project_id": "dogworldio",
+    "storage_bucket": "dogworldio.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516168928562:android:ce800f8c075561233c9b2b",
+        "android_client_info": {
+          "package_name": "io.dogworld.android0"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "516168928562-5jj7tt4mhvhelvsgqfoi20s5a5feljil.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.dogworld.android0",
+            "certificate_hash": "2ebd6add5b959ac44003b1f92a377eb653c42a3b"
+          }
+        },
+        {
+          "client_id": "516168928562-2urf6q21e8qalgk9vi2fmclc3v98d4ma.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDBrY1F5ZmBVPjpFD8d-ewhTanBCkBcVw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "516168928562-2urf6q21e8qalgk9vi2fmclc3v98d4ma.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "516168928562-nsg48tlg9u3fonu7nc574bnu9un9foag.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "io.dogworld.0"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

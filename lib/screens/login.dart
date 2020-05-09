@@ -1,6 +1,8 @@
+import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../services/services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:apple_sign_in/apple_sign_in.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -15,8 +17,10 @@ class LoginScreenState extends State<LoginScreen> {
     super.initState();
     auth.getUser.then(
       (user) {
+        print('you already logged in boy!');
+        print(user);
         if (user != null) {
-          Navigator.pushReplacementNamed(context, '/topics');
+          Navigator.pushReplacementNamed(context, '/dashboard');
         }
       },
     );
@@ -47,6 +51,24 @@ class LoginScreenState extends State<LoginScreen> {
               color: Colors.black45,
               loginMethod: auth.googleSignIn,
             ),
+            // We first need to wrap our Apple sign in button in a FutureBuilder Widget. The way this widget works is it returns a future and it's context to the builder output. This can be useful if you need a button that has the name of a logged in user, or for example if you want to do a conditional statement, like we want to do in this case here:
+            FutureBuilder<Object>(
+                future: auth.appleSignInAvailable,
+                builder: (context, snapshot) {
+                  if (snapshot.data) {
+                    return AppleSignInButton(
+                      style: ButtonStyle.black,
+                      onPressed: () async {
+                        FirebaseUser user = await auth.appleSignIn();
+                        if (user != null) {
+                          Navigator.pushReplacementNamed(context, '/dashboard');
+                        }
+                      },
+                    );
+                  } else {
+                    return Container();
+                  }
+                }),
             LoginButton(text: 'Continue as Guest', loginMethod: auth.anonLogin),
           ],
         ),
