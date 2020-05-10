@@ -56,7 +56,6 @@ class LoginScreenState extends State<LoginScreen> {
                 builder: (context, snapshot) {
                   if (snapshot.data == true) {
                     return AppleSignInButton(
-                      style: ButtonStyle.black,
                       onPressed: () async {
                         FirebaseUser user = await auth.appleSignIn();
                         if (user != null) {
