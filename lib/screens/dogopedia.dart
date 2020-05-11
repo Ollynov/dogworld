@@ -11,7 +11,6 @@ class TopicsScreen extends StatelessWidget {
       future: Global.topicsRef.getData(),
       builder: (BuildContext context, AsyncSnapshot snap) {
         if (snap.hasData) {
-          print('WE ARE IN BRUH');
           List<Topic> topics = snap.data;
           return Scaffold(
             appBar: AppBar(
