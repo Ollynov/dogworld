@@ -16,13 +16,13 @@ class TopicsScreen extends StatelessWidget {
             appBar: AppBar(
               backgroundColor: Colors.deepPurple,
               title: Text('Topics'),
-              actions: [
-                IconButton(
-                  icon: Icon(FontAwesomeIcons.userCircle,
-                      color: Colors.pink[200]),
-                  onPressed: () => Navigator.pushNamed(context, '/profile'),
-                )
-              ],
+              // actions: [
+              //   IconButton(
+              //     icon: Icon(FontAwesomeIcons.userCircle,
+              //         color: Colors.pink[200]),
+              //     onPressed: () => Navigator.pushNamed(context, '/profile'),
+              //   )
+              // ],
             ),
             // drawer: TopicDrawer(topics: snap.data),
             body: GridView.count(
