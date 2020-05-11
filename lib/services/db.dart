@@ -46,10 +46,22 @@ class Collection<T> {
   }
 
   Future<List<T>> getData() async {
-    var snapshots = await ref.getDocuments();
-    return snapshots.documents
-        .map((doc) => Global.models[T](doc.data) as T)
+    var snapshots;
+    try {
+      snapshots = await ref.getDocuments();
+    } catch (err) {
+      print('ok here is err: ');
+      print(err);
+    }
+
+    // print(snapshots.documents[0].data);
+    // return snapshots.documents;
+    var result = snapshots.documents
+        .map<T>((doc) => Global.models[T](doc.data) as T)
         .toList();
+    print('ok here is result[0]: ');
+    print(result[0]);
+    return result;
   }
 
   Stream<List<T>> streamData() {
