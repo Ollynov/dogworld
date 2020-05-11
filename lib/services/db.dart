@@ -69,6 +69,9 @@ class UserData<T> {
   UserData({this.collection});
 
   Stream<T> get documentStream {
+    // The function switchMap is an operator (method) that comes out of the box with rxdart. I need to look more into the switchMap function, but it allows us to switch from one stream to another. So once we get back the full 'user' object which we are looking for here, (when it is not null), it will switch to another stream.
+
+    // The other nice thing about this functon is that it will automatically return "null" in the stream when you log out, and therefore you will unsubscribe.
     return _auth.onAuthStateChanged.switchMap((user) {
       if (user != null) {
         Document<T> doc = Document<T>(path: '$collection/${user.uid}');
@@ -84,6 +87,7 @@ class UserData<T> {
 
     if (user != null) {
       Document doc = Document<T>(path: '$collection/${user.uid}');
+      // This will return back a nice unserialized version of the user information.
       return doc.getData();
     } else {
       return null;

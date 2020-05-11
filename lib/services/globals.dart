@@ -1,3 +1,4 @@
+import 'db.dart';
 import 'models.dart';
 import 'services.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -10,4 +11,9 @@ class Global {
     Quiz: (data) => Quiz.fromMap(data),
     Report: (data) => Report.fromMap(data),
   };
+
+  // Firestore References for Writes
+  static final Collection<Topic> topicsRef = Collection<Topic>(path: 'topics');
+  static final UserData<Report> reportRef =
+      UserData<Report>(collection: 'reports');
 }
