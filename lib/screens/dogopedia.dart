@@ -55,12 +55,11 @@ class TopicItem extends StatelessWidget {
           clipBehavior: Clip.antiAlias,
           child: InkWell(
             onTap: () {
-              // Navigator.of(context).push(
-              //   MaterialPageRoute(
-              //     builder: (BuildContext context) => TopicScreen(topic: topic),
-              //   ),
-              // );
-              print('you did clicky clicky');
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) => TopicScreen(topic: topic),
+                ),
+              );
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,19 +98,71 @@ class TopicItem extends StatelessWidget {
   }
 }
 
-// class DogopediaScreen extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Dogopedia'),
-//         backgroundColor: Colors.blue,
-//       ),
-//       body: Center(
-//         child: Text(
-//             'Here is your dogopedia where you will find everything dogs....'),
-//       ),
-//       bottomNavigationBar: AppBottomNav(),
-//     );
-//   }
-// }
+class TopicScreen extends StatelessWidget {
+  final Topic topic;
+
+  TopicScreen({this.topic});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+      ),
+      body: ListView(children: [
+        Hero(
+          tag: topic.img,
+          child: Image.asset('assets/covers/${topic.img}',
+              width: MediaQuery.of(context).size.width),
+        ),
+        Text(
+          topic.title,
+          style:
+              TextStyle(height: 2, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        QuizList(topic: topic)
+      ]),
+    );
+  }
+}
+
+class QuizList extends StatelessWidget {
+  final Topic topic;
+  QuizList({Key key, this.topic});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+        children: topic.quizzes.map((quiz) {
+      return Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+        elevation: 4,
+        margin: EdgeInsets.all(4),
+        child: InkWell(
+          // onTap: () {
+          //   Navigator.of(context).push(
+          //     MaterialPageRoute(
+          //       builder: (BuildContext context) => QuizScreen(quizId: quiz.id),
+          //     ),
+          //   );
+          // },
+          child: Container(
+            padding: EdgeInsets.all(8),
+            child: ListTile(
+              title: Text(
+                quiz.title,
+                style: Theme.of(context).textTheme.title,
+              ),
+              subtitle: Text(
+                quiz.description,
+                overflow: TextOverflow.fade,
+                style: Theme.of(context).textTheme.subhead,
+              ),
+              // leading: QuizBadge(topic: topic, quizId: quiz.id),
+            ),
+          ),
+        ),
+      );
+    }).toList());
+  }
+}
