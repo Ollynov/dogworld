@@ -29,7 +29,7 @@
 .pub-cache/
 .pub/
 /build/
-data
+data/credentials.json
 
 # Web related
 lib/generated_plugin_registrant.dart
