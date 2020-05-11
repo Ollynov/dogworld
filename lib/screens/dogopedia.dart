@@ -85,7 +85,7 @@ class TopicItem extends StatelessWidget {
                         ),
                       ),
                     ),
-                    // Text(topic.description)
+                    Text(topic.description)
                   ],
                 ),
                 // )
