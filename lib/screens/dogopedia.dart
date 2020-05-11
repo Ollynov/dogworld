@@ -1,9 +1,7 @@
+import 'package:doggies/services/models.dart';
 import 'package:doggies/services/services.dart';
 import 'package:doggies/shared/shared.dart';
 import 'package:flutter/material.dart';
-import '../services/services.dart';
-import '../shared/shared.dart';
-import '../screens/screens.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TopicsScreen extends StatelessWidget {
@@ -26,7 +24,7 @@ class TopicsScreen extends StatelessWidget {
                 )
               ],
             ),
-            drawer: TopicDrawer(topics: snap.data),
+            // drawer: TopicDrawer(topics: snap.data),
             body: GridView.count(
               primary: false,
               padding: const EdgeInsets.all(20.0),
@@ -57,11 +55,12 @@ class TopicItem extends StatelessWidget {
           clipBehavior: Clip.antiAlias,
           child: InkWell(
             onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (BuildContext context) => TopicScreen(topic: topic),
-                ),
-              );
+              // Navigator.of(context).push(
+              //   MaterialPageRoute(
+              //     builder: (BuildContext context) => TopicScreen(topic: topic),
+              //   ),
+              // );
+              print('you did clicky clicky');
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,7 +89,7 @@ class TopicItem extends StatelessWidget {
                   ],
                 ),
                 // )
-                TopicProgress(topic: topic),
+                // TopicProgress(topic: topic),
               ],
             ),
           ),
