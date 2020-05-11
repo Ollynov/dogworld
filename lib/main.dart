@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Doggies',
         theme: ThemeData.dark().copyWith(
-          primaryColor: Colors.purple[400],
+          primaryColor: Colors.red[400],
           accentColor: Colors.amber,
           // This makes the visual density adapt to the platform that you run
           // the app on. For desktop platforms, the controls will be smaller and
@@ -45,13 +45,15 @@ class MyApp extends StatelessWidget {
           '/dog': (context) => Dog(),
           '/profile': (context) => Profile(),
           '/dashboard': (context) => DashboardScreen(),
-          '/dogopedia': (context) => DogopediaScreen(),
+          '/dogopedia': (context) => TopicsScreen(),
+          // '/dogopedia': (context) => DogopediaScreen(),
           '/search': (context) => SearchScreen(),
           '/login': (context) => LoginScreen(),
         },
-        navigatorObservers: [
-          FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),
-        ],
+        // WEB does not support firebase storage nor analytics so commenting out to avoid errors for now
+        // navigatorObservers: [
+        //   FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),
+        // ],
       ),
     );
   }
