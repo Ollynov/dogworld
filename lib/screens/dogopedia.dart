@@ -4,14 +4,14 @@ import 'package:doggies/shared/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class TopicsScreen extends StatelessWidget {
+class DogopediaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: Global.topicsRef.getData(),
       builder: (BuildContext context, AsyncSnapshot snap) {
         if (snap.hasData) {
-          List<Topic> topics = snap.data;
+          List<Breed> topics = snap.data;
           return Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.deepPurple,

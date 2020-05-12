@@ -72,24 +72,28 @@ class Quiz {
   }
 }
 
-class Topic {
-  final String id;
-  final String title;
+class Breed {
+  // final String id;
+  final String fullName;
   final String description;
   final String img;
-  final List<Quiz> quizzes;
+  final List<String> variations;
+  // final List<Quiz> quizzes;
 
-  Topic({this.id, this.title, this.description, this.img, this.quizzes});
+  Breed({this.fullName, this.description, this.img, this.variations});
+  // Topic({this.id, this.title, this.description, this.img, this.quizzes});
 
-  factory Topic.fromMap(Map data) {
-    return Topic(
-      id: data['id'] ?? '',
-      title: data['title'] ?? '',
-      description: data['description'] ?? '',
-      img: data['img'] ?? 'default.png',
-      quizzes: (data['quizzes'] as List ?? [])
-          .map((v) => Quiz.fromMap(v))
-          .toList(), //data['quizzes'],
-    );
+  factory Breed.fromMap(Map data) {
+    return Breed(
+        fullName: data['fullName'] ?? '',
+        description: data['description'] ?? '',
+        img: data['img'] ?? 'default.png',
+        variations: (data['variations'] as List ?? [])
+        // .map((v) => Quiz.fromMap(v))
+        // .toList(),
+        // quizzes: (data['quizzes'] as List ?? [])
+        //     .map((v) => Quiz.fromMap(v))
+        //     .toList(), //data['quizzes'],
+        );
   }
 }
