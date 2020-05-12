@@ -29,7 +29,7 @@ class DogopediaScreen extends StatelessWidget {
               primary: false,
               padding: const EdgeInsets.all(20.0),
               crossAxisSpacing: 10.0,
-              crossAxisCount: 2,
+              crossAxisCount: 1,
               children:
                   breeds.map((breed) => BreedPreview(breed: breed)).toList(),
             ),
@@ -56,11 +56,11 @@ class BreedPreview extends StatelessWidget {
           clipBehavior: Clip.antiAlias,
           child: InkWell(
             onTap: () {
-              // Navigator.of(context).push(
-              //   MaterialPageRoute(
-              //     builder: (BuildContext context) => TopicScreen(breed: breed),
-              //   ),
-              // );
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) => BreedScreen(breed: breed),
+                ),
+              );
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
