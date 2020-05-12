@@ -49,19 +49,15 @@ class Collection<T> {
     var snapshots;
     try {
       snapshots = await ref.getDocuments();
+      // print(snapshots.documents[0].data);
+      // return snapshots.documents;
+      return snapshots.documents
+          .map<T>((doc) => Global.models[T](doc.data) as T)
+          .toList();
     } catch (err) {
       print('ok here is err: ');
       print(err);
     }
-
-    // print(snapshots.documents[0].data);
-    // return snapshots.documents;
-    var result = snapshots.documents
-        .map<T>((doc) => Global.models[T](doc.data) as T)
-        .toList();
-    print('ok here is result[0]: ');
-    print(result[0]);
-    return result;
   }
 
   Stream<List<T>> streamData() {

@@ -8,14 +8,14 @@ class DogopediaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Global.topicsRef.getData(),
+      future: Global.breedsRef.getData(),
       builder: (BuildContext context, AsyncSnapshot snap) {
         if (snap.hasData) {
-          List<Breed> topics = snap.data;
+          List<Breed> breeds = snap.data;
           return Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.deepPurple,
-              title: Text('Topics'),
+              title: Text('Breeds'),
               // actions: [
               //   IconButton(
               //     icon: Icon(FontAwesomeIcons.userCircle,
@@ -30,7 +30,8 @@ class DogopediaScreen extends StatelessWidget {
               padding: const EdgeInsets.all(20.0),
               crossAxisSpacing: 10.0,
               crossAxisCount: 2,
-              children: topics.map((topic) => TopicItem(topic: topic)).toList(),
+              children:
+                  breeds.map((breed) => BreedPreview(breed: breed)).toList(),
             ),
             bottomNavigationBar: AppBottomNav(),
           );
@@ -42,31 +43,31 @@ class DogopediaScreen extends StatelessWidget {
   }
 }
 
-class TopicItem extends StatelessWidget {
-  final Topic topic;
-  const TopicItem({Key key, this.topic}) : super(key: key);
+class BreedPreview extends StatelessWidget {
+  final Breed breed;
+  const BreedPreview({Key key, this.breed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Hero(
-        tag: topic.img,
+        tag: breed.img,
         child: Card(
           clipBehavior: Clip.antiAlias,
           child: InkWell(
             onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (BuildContext context) => TopicScreen(topic: topic),
-                ),
-              );
+              // Navigator.of(context).push(
+              //   MaterialPageRoute(
+              //     builder: (BuildContext context) => TopicScreen(breed: breed),
+              //   ),
+              // );
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Image.asset(
-                  'assets/covers/${topic.img}',
+                  'assets/covers/${breed.img}',
                   fit: BoxFit.contain,
                 ),
                 Row(
@@ -76,7 +77,7 @@ class TopicItem extends StatelessWidget {
                       child: Padding(
                         padding: EdgeInsets.only(left: 10, right: 10),
                         child: Text(
-                          topic.title,
+                          breed.fullName,
                           style: TextStyle(
                               height: 1.5, fontWeight: FontWeight.bold),
                           overflow: TextOverflow.fade,
@@ -84,7 +85,7 @@ class TopicItem extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Text(topic.description)
+                    Text(breed.description)
                   ],
                 ),
                 // )
@@ -98,10 +99,10 @@ class TopicItem extends StatelessWidget {
   }
 }
 
-class TopicScreen extends StatelessWidget {
-  final Topic topic;
+class BreedScreen extends StatelessWidget {
+  final Breed breed;
 
-  TopicScreen({this.topic});
+  BreedScreen({this.breed});
 
   @override
   Widget build(BuildContext context) {
@@ -111,58 +112,58 @@ class TopicScreen extends StatelessWidget {
       ),
       body: ListView(children: [
         Hero(
-          tag: topic.img,
-          child: Image.asset('assets/covers/${topic.img}',
+          tag: breed.img,
+          child: Image.asset('assets/covers/${breed.img}',
               width: MediaQuery.of(context).size.width),
         ),
         Text(
-          topic.title,
+          breed.fullName,
           style:
               TextStyle(height: 2, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        QuizList(topic: topic)
+        // QuizList(breed: breed)
       ]),
     );
   }
 }
 
-class QuizList extends StatelessWidget {
-  final Topic topic;
-  QuizList({Key key, this.topic});
+// class QuizList extends StatelessWidget {
+//   final Breed breed;
+//   QuizList({Key key, this.topic});
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-        children: topic.quizzes.map((quiz) {
-      return Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-        elevation: 4,
-        margin: EdgeInsets.all(4),
-        child: InkWell(
-          // onTap: () {
-          //   Navigator.of(context).push(
-          //     MaterialPageRoute(
-          //       builder: (BuildContext context) => QuizScreen(quizId: quiz.id),
-          //     ),
-          //   );
-          // },
-          child: Container(
-            padding: EdgeInsets.all(8),
-            child: ListTile(
-              title: Text(
-                quiz.title,
-                style: Theme.of(context).textTheme.title,
-              ),
-              subtitle: Text(
-                quiz.description,
-                overflow: TextOverflow.fade,
-                style: Theme.of(context).textTheme.subhead,
-              ),
-              // leading: QuizBadge(topic: topic, quizId: quiz.id),
-            ),
-          ),
-        ),
-      );
-    }).toList());
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//         children: breed.quizzes.map((quiz) {
+//       return Card(
+//         shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+//         elevation: 4,
+//         margin: EdgeInsets.all(4),
+//         child: InkWell(
+//           // onTap: () {
+//           //   Navigator.of(context).push(
+//           //     MaterialPageRoute(
+//           //       builder: (BuildContext context) => QuizScreen(quizId: quiz.id),
+//           //     ),
+//           //   );
+//           // },
+//           child: Container(
+//             padding: EdgeInsets.all(8),
+//             child: ListTile(
+//               title: Text(
+//                 quiz.title,
+//                 style: Theme.of(context).textTheme.title,
+//               ),
+//               subtitle: Text(
+//                 quiz.description,
+//                 overflow: TextOverflow.fade,
+//                 style: Theme.of(context).textTheme.subhead,
+//               ),
+//               // leading: QuizBadge(topic: topic, quizId: quiz.id),
+//             ),
+//           ),
+//         ),
+//       );
+//     }).toList());
+//   }
+// }
