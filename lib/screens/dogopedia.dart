@@ -29,7 +29,7 @@ class DogopediaScreen extends StatelessWidget {
               primary: false,
               padding: const EdgeInsets.all(20.0),
               crossAxisSpacing: 10.0,
-              crossAxisCount: 1,
+              crossAxisCount: 2,
               children:
                   breeds.map((breed) => BreedPreview(breed: breed)).toList(),
             ),
@@ -63,19 +63,26 @@ class BreedPreview extends StatelessWidget {
               );
             },
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Image.asset(
-                  'assets/covers/${breed.img}',
-                  fit: BoxFit.contain,
+                Container(
+                  height: 330,
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 20, bottom: 20),
+                    child: Image.asset(
+                      'assets/covers/${breed.img}',
+                      fit: BoxFit.contain,
+                      // fit: BoxFit.,
+                    ),
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsets.only(left: 10, right: 10),
+                        padding: EdgeInsets.only(left: 10, bottom: 10),
                         child: Text(
                           breed.fullName,
                           style: TextStyle(
@@ -85,7 +92,6 @@ class BreedPreview extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Text(breed.description)
                   ],
                 ),
                 // )
@@ -108,62 +114,82 @@ class BreedScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.deepPurple,
+        title: Text('${breed.fullName}'),
       ),
-      body: ListView(children: [
-        Hero(
-          tag: breed.img,
-          child: Image.asset('assets/covers/${breed.img}',
-              width: MediaQuery.of(context).size.width),
-        ),
-        Text(
-          breed.fullName,
-          style:
-              TextStyle(height: 2, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        // QuizList(breed: breed)
-      ]),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 10),
+        child: ListView(children: [
+          Hero(
+              tag: breed.img,
+              child: Image.asset(
+                'assets/covers/${breed.img}',
+                width: MediaQuery.of(context).size.width,
+                height: 500,
+              )),
+          // Text(
+          //   breed.fullName,
+          //   style:
+          //       TextStyle(height: 2, fontSize: 20, fontWeight: FontWeight.bold),
+          // ),
+          BreedDetails(breed: breed)
+        ]),
+      ),
     );
   }
 }
 
-// class QuizList extends StatelessWidget {
-//   final Breed breed;
-//   QuizList({Key key, this.topic});
+class BreedDetails extends StatelessWidget {
+  final Breed breed;
+  BreedDetails({Key key, this.breed});
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//         children: breed.quizzes.map((quiz) {
-//       return Card(
-//         shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-//         elevation: 4,
-//         margin: EdgeInsets.all(4),
-//         child: InkWell(
-//           // onTap: () {
-//           //   Navigator.of(context).push(
-//           //     MaterialPageRoute(
-//           //       builder: (BuildContext context) => QuizScreen(quizId: quiz.id),
-//           //     ),
-//           //   );
-//           // },
-//           child: Container(
-//             padding: EdgeInsets.all(8),
-//             child: ListTile(
-//               title: Text(
-//                 quiz.title,
-//                 style: Theme.of(context).textTheme.title,
-//               ),
-//               subtitle: Text(
-//                 quiz.description,
-//                 overflow: TextOverflow.fade,
-//                 style: Theme.of(context).textTheme.subhead,
-//               ),
-//               // leading: QuizBadge(topic: topic, quizId: quiz.id),
-//             ),
-//           ),
-//         ),
-//       );
-//     }).toList());
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: Colors.deepPurple,
+      child: Container(
+        height: 300,
+        width: 300,
+        child: Text(
+          breed.description,
+          style: TextStyle(height: 2, fontSize: 20),
+        ),
+      ),
+    );
+  }
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Column(
+  //       children: [1, 2, 3].map((quiz) {
+  //     return Card(
+  //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+  //       elevation: 4,
+  //       margin: EdgeInsets.all(4),
+  //       child: InkWell(
+  //         // onTap: () {
+  //         //   Navigator.of(context).push(
+  //         //     MaterialPageRoute(
+  //         //       builder: (BuildContext context) => QuizScreen(quizId: quiz.id),
+  //         //     ),
+  //         //   );
+  //         // },
+  //         child: Container(
+  //           padding: EdgeInsets.all(8),
+  //           child: ListTile(
+  //             title: Text(
+  //               'Lab',
+  //               style: Theme.of(context).textTheme.title,
+  //             ),
+  //             subtitle: Text(
+  //               'Subtitle',
+  //               overflow: TextOverflow.fade,
+  //               style: Theme.of(context).textTheme.subhead,
+  //             ),
+  //             // leading: QuizBadge(topic: topic, quizId: quiz.id),
+  //           ),
+  //         ),
+  //       ),
+  //     );
+  //   }).toList());
+  // }
+}

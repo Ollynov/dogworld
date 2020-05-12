@@ -88,7 +88,7 @@ class Breed {
       fullName: data['fullName'] ?? '',
       description: data['description'] ?? '',
       img: data['img'] ?? 'default.png',
-      // variations: (data['variations'] as List ?? [])
+      // variations: (data['variations'] as List<String> ?? [])
       // quizzes: (data['quizzes'] as List ?? [])
       //     .map((v) => Quiz.fromMap(v))
       //     .toList(), //data['quizzes'],
