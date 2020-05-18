@@ -68,8 +68,8 @@ class QuizBadge extends StatelessWidget {
     Report report = Provider.of<Report>(context);
 
     if (report != null) {
-      List completed = report.quizComplete;
-      if (completed != null && completed.contains(quizId)) {
+      bool completed = report.quizComplete;
+      if (completed == true) {
         return Icon(FontAwesomeIcons.checkDouble, color: Colors.green);
       } else {
         return Icon(FontAwesomeIcons.solidCircle, color: Colors.grey);
@@ -80,30 +80,30 @@ class QuizBadge extends StatelessWidget {
   }
 }
 
-class TopicProgress extends StatelessWidget {
+class QuizProgress extends StatelessWidget {
   final Breed breed;
-  const TopicProgress({Key key, this.breed}) : super(key: key);
+  const QuizProgress({Key key, this.breed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Report report = Provider.of<Report>(context);
     return Row(
       children: [
-        _progressCount(report, breed),
+        _progressCount(report),
         Expanded(
-          child: AnimatedProgressbar(
-              value: _calculateProgress(breed, report), height: 8),
+          child:
+              AnimatedProgressbar(value: _calculateProgress(report), height: 8),
         ),
       ],
     );
   }
 
-  Widget _progressCount(Report report, Breed breed) {
-    if (report != null && breed != null) {
+  Widget _progressCount(Report report) {
+    if (report != null) {
       return Padding(
         padding: const EdgeInsets.only(left: 8),
         child: Text(
-          '${report.topics[breed.id]?.length ?? 0} / ${breed?.img ?? 0}',
+          '${report.completedQuizQuestions ?? 0} / ${report.totalQuizQuestions ?? 0}',
           style: TextStyle(fontSize: 10, color: Colors.grey),
         ),
       );
@@ -112,11 +112,11 @@ class TopicProgress extends StatelessWidget {
     }
   }
 
-  double _calculateProgress(Breed breed, Report report) {
+  double _calculateProgress(Report report) {
     try {
-      int totalQuizzes = breed.img;
-      int completedQuizzes = report.topics[breed.id].length;
-      return completedQuizzes / totalQuizzes;
+      int totalQuizQuestions = report.totalQuizQuestions;
+      int completedQuizQuestions = report.completedQuizQuestions;
+      return completedQuizQuestions / totalQuizQuestions;
     } catch (err) {
       return 0.0;
     }

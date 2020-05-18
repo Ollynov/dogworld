@@ -4,9 +4,17 @@ class Report {
   int total;
   Map topics;
   bool quizComplete;
+  int totalQuizQuestions;
+  int completedQuizQuestions;
 
   // first constructor method applying those properties we have defined above.
-  Report({this.uid, this.topics, this.total, this.quizComplete});
+  Report(
+      {this.uid,
+      this.topics,
+      this.total,
+      this.quizComplete,
+      this.totalQuizQuestions,
+      this.completedQuizQuestions});
 
   // so this parameter 'data' that we pass to our Report is the data that we get back from firestore. This factory fromMap function can be seen as a secondary constructor method.
   factory Report.convertFromFireBaseMap(Map data) {
@@ -14,7 +22,9 @@ class Report {
         uid: data['uid'] ?? "",
         topics: data['topics'] ?? 0,
         total: data['total'] ?? {},
-        quizComplete: data['quizComplete'] ?? false);
+        quizComplete: data['quizComplete'] ?? false,
+        totalQuizQuestions: data['totalQuizQuestions'] ?? 0,
+        completedQuizQuestions: data['completedQuizQuestions'] ?? 0);
   }
 }
 
