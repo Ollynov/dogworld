@@ -57,6 +57,7 @@ class Collection<T> {
     } catch (err) {
       print('ok here is err: ');
       print(err);
+      throw 'got error';
     }
   }
 
