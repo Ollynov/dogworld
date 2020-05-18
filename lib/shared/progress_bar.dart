@@ -17,6 +17,7 @@ class AnimatedProgressbar extends StatelessWidget {
         return Container(
           padding: EdgeInsets.all(10),
           width: box.maxWidth,
+          // Remember a stack is just a widget that accepts children which will layer on top of each other. Our first layer is the dark grey background of the progress bar, and on top of it is our colored progress bar which has the exact same dimensions.
           child: Stack(
             children: [
               Container(
@@ -81,8 +82,7 @@ class QuizBadge extends StatelessWidget {
 }
 
 class QuizProgress extends StatelessWidget {
-  final Breed breed;
-  const QuizProgress({Key key, this.breed}) : super(key: key);
+  const QuizProgress({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
