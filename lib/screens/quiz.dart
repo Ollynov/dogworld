@@ -15,7 +15,22 @@ class QuizState with ChangeNotifier {
   get getProgress => _progress;
   get getSelected => _selected;
 
-  set progress(double newValue) {}
+  set progress(double newValue) {
+    _progress = newValue;
+    notifyListeners();
+  }
+
+  set selected(Option newValue) {
+    _selected = newValue;
+    notifyListeners();
+  }
+
+  void nextPage() async {
+    await controller.nextPage(
+      duration: Duration(milliseconds: 500),
+      curve: Curves.easeOut,
+    );
+  }
 }
 
 class QuizScreen extends StatelessWidget {
@@ -62,6 +77,40 @@ class QuizScreen extends StatelessWidget {
             );
           }
         },
+      ),
+    );
+  }
+}
+
+class StartPage extends StatelessWidget {
+  final Quiz quiz;
+  final PageController controller;
+  StartPage({this.quiz, this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    var state = Provider.of<QuizState>(context);
+
+    return Container(
+      padding: EdgeInsets.all(20),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(quiz.title, style: Theme.of(context).textTheme.headline),
+          Divider(),
+          Expanded(child: Text(quiz.description)),
+          ButtonBar(
+            alignment: MainAxisAlignment.center,
+            children: <Widget>[
+              FlatButton.icon(
+                onPressed: state.nextPage,
+                label: Text('Start Quiz!'),
+                icon: Icon(Icons.poll),
+                color: Colors.green,
+              )
+            ],
+          )
+        ],
       ),
     );
   }
