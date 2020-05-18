@@ -3,16 +3,18 @@ class Report {
   String uid;
   int total;
   Map topics;
+  bool quizComplete;
 
   // first constructor method applying those properties we have defined above.
-  Report({this.uid, this.topics, this.total});
+  Report({this.uid, this.topics, this.total, this.quizComplete});
 
   // so this parameter 'data' that we pass to our Report is the data that we get back from firestore. This factory fromMap function can be seen as a secondary constructor method.
-  factory Report.fromMap(Map data) {
+  factory Report.convertFromFireBaseMap(Map data) {
     return Report(
         uid: data['uid'] ?? "",
         topics: data['topics'] ?? 0,
-        total: data['total'] ?? {});
+        total: data['total'] ?? {},
+        quizComplete: data['quizComplete'] ?? false);
   }
 }
 
@@ -34,7 +36,7 @@ class Question {
   List<Option> options;
   Question({this.options, this.text});
 
-  Question.fromMap(Map data) {
+  Question.convertFromFireBaseMap(Map data) {
     text = data['text'] ?? '';
     options =
         (data['options'] as List ?? []).map((v) => Option.fromMap(v)).toList();
@@ -59,7 +61,7 @@ class Quiz {
       this.id,
       this.topic});
 
-  factory Quiz.fromMap(Map data) {
+  factory Quiz.convertFromFireBaseMap(Map data) {
     return Quiz(
         id: data['id'] ?? '',
         title: data['title'] ?? '',
@@ -67,7 +69,7 @@ class Quiz {
         description: data['description'] ?? '',
         video: data['video'] ?? '',
         questions: (data['questions'] as List ?? [])
-            .map((v) => Question.fromMap(v))
+            .map((v) => Question.convertFromFireBaseMap(v))
             .toList());
   }
 }
@@ -83,7 +85,7 @@ class Breed {
   Breed({this.fullName, this.description, this.img});
   // Topic({this.id, this.title, this.description, this.img, this.quizzes});
 
-  factory Breed.fromMap(Map data) {
+  factory Breed.convertFromFireBaseMap(Map data) {
     return Breed(
       fullName: data['fullName'] ?? '',
       description: data['description'] ?? '',
@@ -94,4 +96,6 @@ class Breed {
       //     .toList(), //data['quizzes'],
     );
   }
+
+  get id => null;
 }
