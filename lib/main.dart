@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'services/services.dart';
 import 'screens/screens.dart';
@@ -37,7 +38,6 @@ class MyApp extends StatelessWidget {
               bodyText2: TextStyle(fontSize: 16),
               button:
                   TextStyle(letterSpacing: 1.5, fontWeight: FontWeight.bold),
-              headline1: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               subtitle1: TextStyle(color: Colors.grey)),
         ),
         home: MyHomePage(title: 'Doggies'),
@@ -63,7 +63,6 @@ class MyApp extends StatelessWidget {
 class BreedInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     throw UnimplementedError();
   }
 }
@@ -71,7 +70,6 @@ class BreedInfo extends StatelessWidget {
 class Dog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     throw UnimplementedError();
   }
 }
@@ -79,7 +77,6 @@ class Dog extends StatelessWidget {
 class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     throw UnimplementedError();
   }
 }
@@ -87,7 +84,6 @@ class Profile extends StatelessWidget {
 class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     throw UnimplementedError();
   }
 }
@@ -95,7 +91,6 @@ class Dashboard extends StatelessWidget {
 class Dogopedia extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     throw UnimplementedError();
   }
 }
@@ -103,22 +98,12 @@ class Dogopedia extends StatelessWidget {
 class Search extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     throw UnimplementedError();
   }
 }
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -132,11 +117,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
       _counter++;
     });
   }
@@ -154,6 +134,15 @@ class _MyHomePageState extends State<MyHomePage> {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
+        backgroundColor: Theme.of(context).primaryColor,
+        actions: [
+          IconButton(
+            icon: Icon(
+              FontAwesomeIcons.userCircle,
+            ),
+            onPressed: () => Navigator.pushNamed(context, '/login'),
+          )
+        ],
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -175,18 +164,18 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            FlatButton(
-                onPressed: () async {
-                  Navigator.pushReplacementNamed(context, '/login');
-                },
-                child: Text("Go To Login")),
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+            // FlatButton(
+            //     onPressed: () async {
+            //       Navigator.pushReplacementNamed(context, '/login');
+            //     },
+            //     child: Text("Go To Login")),
+            // Text(
+            //   'You have pushed the button this many times:',
+            // ),
+            // Text(
+            //   '$_counter',
+            //   style: Theme.of(context).textTheme.headline4,
+            // ),
           ],
         ),
       ),
