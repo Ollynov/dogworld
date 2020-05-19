@@ -34,6 +34,7 @@ class DashboardScreen extends StatelessWidget {
                   labelText: 'New Display Name',
                 ),
                 onSubmitted: (String value) async {
+                  await userService.updateUserPreferences(user, value);
                   await showDialog<void>(
                     context: context,
                     builder: (BuildContext context) {
