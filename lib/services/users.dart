@@ -10,13 +10,13 @@ class UsersService {
   Future<FirebaseUser> get getUser => _auth.currentUser();
   Stream<FirebaseUser> get userStream => _auth.onAuthStateChanged;
 
-  Future<void> updateUserPreferences(FirebaseUser user) {
+  Future<void> updateUserPreferences(FirebaseUser user, String newDisplayName) {
     DocumentReference userRef = _db.collection('users').document(user.uid);
 
     // this just updates info we have on the user, and gives us the last time they were active on the site. merge: true is important, so it only overwrites in case the data now is different
     return userRef.setData({
       'uid': user.uid,
-      'displayName': user.displayName,
+      'displayName': newDisplayName ?? user.displayName,
       'lastActivity': DateTime.now(),
     }, merge: true);
   }

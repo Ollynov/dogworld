@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:doggies/services/users.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../services/services.dart';
@@ -7,6 +8,7 @@ import 'package:provider/provider.dart';
 
 class DashboardScreen extends StatelessWidget {
   final AuthService auth = AuthService();
+  final UsersService userService = UsersService();
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,30 @@ class DashboardScreen extends StatelessWidget {
               'Welcome There ${user.displayName}',
               style: TextStyle(height: 1.5, fontWeight: FontWeight.bold),
             ),
+            TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'New Display Name',
+                ),
+                onSubmitted: (String value) async {
+                  await showDialog<void>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Great!'),
+                        content: Text('Your new display name is "$value".'),
+                        actions: <Widget>[
+                          FlatButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: FlatButton(
