@@ -1,41 +1,12 @@
 import 'dart:developer';
-import 'package:logger/logger.dart';
-import 'dart:convert';
-import 'dart:developer' as developer;
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../services/services.dart';
 import '../shared/shared.dart';
 import 'package:provider/provider.dart';
 
-class DashboardScreen extends StatefulWidget {
-  @override
-  _DashboardScreenState createState() => _DashboardScreenState();
-}
-
-class _DashboardScreenState extends State<DashboardScreen> {
-  AuthService auth = AuthService();
-  var logger = Logger();
-
-  @override
-  void initState() {
-    super.initState();
-    auth.getUser.then(
-      (user) {
-        if (user != null) {
-          logger.d("user");
-          developer.log(
-            'log me',
-            name: 'my.app.category',
-            error: jsonEncode(user),
-          );
-        } else {
-          Navigator.pushReplacementNamed(context, '/login');
-        }
-      },
-    );
-  }
+class DashboardScreen extends StatelessWidget {
+  final AuthService auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +23,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Welcome There',
+              'Welcome There ${user.displayName}',
               style: TextStyle(height: 1.5, fontWeight: FontWeight.bold),
             ),
             Padding(
