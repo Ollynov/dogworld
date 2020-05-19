@@ -34,18 +34,21 @@ class QuizState with ChangeNotifier {
 }
 
 class QuizScreen extends StatelessWidget {
-  QuizScreen({this.quizId});
-  final String quizId;
+  // QuizScreen({this.quizId});
+  // final String quizId;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => QuizState(),
       child: FutureBuilder(
-        future: Document<Quiz>(path: 'quizzes/$quizId').getData(),
+        future: Document<Quiz>(path: 'quizzes/angular-basics').getData(),
         builder: (BuildContext context, AsyncSnapshot snap) {
           var state = Provider.of<QuizState>(context); // k
-
+          print('here is state');
+          print(state);
+          print('here is snap');
+          print(snap);
           if (!snap.hasData || snap.hasError) {
             return LoadingScreen();
           } else {
@@ -64,6 +67,7 @@ class QuizScreen extends StatelessWidget {
                 controller: state.controller,
                 onPageChanged: (int idx) =>
                     state.progress = (idx / (quiz.questions.length + 1)),
+                // because our state is inside of our changeNotifier, any widget that is listening, will re-render. For example the animatedProgressBar
                 itemBuilder: (BuildContext context, int idx) {
                   if (idx == 0) {
                     return StartPage(quiz: quiz);

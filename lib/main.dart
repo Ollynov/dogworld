@@ -49,6 +49,7 @@ class MyApp extends StatelessWidget {
           '/dogopedia': (context) => DogopediaScreen(),
           '/search': (context) => SearchScreen(),
           '/login': (context) => LoginScreen(),
+          '/quiz': (context) => QuizScreen(),
         },
         // WEB does not support firebase storage nor analytics so commenting out to avoid errors for now
         // navigatorObservers: [
