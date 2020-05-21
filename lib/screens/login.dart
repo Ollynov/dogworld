@@ -28,6 +28,17 @@ class LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
+        actions: [
+          IconButton(
+            icon: Icon(
+              FontAwesomeIcons.userCircle,
+            ),
+            onPressed: () => Navigator.pushNamed(context, '/login'),
+          )
+        ],
+      ),
       body: Container(
         padding: EdgeInsets.all(30),
         decoration: BoxDecoration(),

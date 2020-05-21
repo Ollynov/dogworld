@@ -3,16 +3,28 @@ class Report {
   String uid;
   int total;
   Map topics;
+  bool quizComplete;
+  int totalQuizQuestions;
+  int completedQuizQuestions;
 
   // first constructor method applying those properties we have defined above.
-  Report({this.uid, this.topics, this.total});
+  Report(
+      {this.uid,
+      this.topics,
+      this.total,
+      this.quizComplete,
+      this.totalQuizQuestions,
+      this.completedQuizQuestions});
 
   // so this parameter 'data' that we pass to our Report is the data that we get back from firestore. This factory fromMap function can be seen as a secondary constructor method.
-  factory Report.fromMap(Map data) {
+  factory Report.convertFromFireBaseMap(Map data) {
     return Report(
         uid: data['uid'] ?? "",
         topics: data['topics'] ?? 0,
-        total: data['total'] ?? {});
+        total: data['total'] ?? {},
+        quizComplete: data['quizComplete'] ?? false,
+        totalQuizQuestions: data['totalQuizQuestions'] ?? 0,
+        completedQuizQuestions: data['completedQuizQuestions'] ?? 0);
   }
 }
 
@@ -34,7 +46,7 @@ class Question {
   List<Option> options;
   Question({this.options, this.text});
 
-  Question.fromMap(Map data) {
+  Question.convertFromFireBaseMap(Map data) {
     text = data['text'] ?? '';
     options =
         (data['options'] as List ?? []).map((v) => Option.fromMap(v)).toList();
@@ -59,7 +71,7 @@ class Quiz {
       this.id,
       this.topic});
 
-  factory Quiz.fromMap(Map data) {
+  factory Quiz.convertFromFireBaseMap(Map data) {
     return Quiz(
         id: data['id'] ?? '',
         title: data['title'] ?? '',
@@ -67,29 +79,33 @@ class Quiz {
         description: data['description'] ?? '',
         video: data['video'] ?? '',
         questions: (data['questions'] as List ?? [])
-            .map((v) => Question.fromMap(v))
+            .map((v) => Question.convertFromFireBaseMap(v))
             .toList());
   }
 }
 
-class Topic {
-  final String id;
-  final String title;
+class Breed {
+  // final String id;
+  final String fullName;
   final String description;
   final String img;
-  final List<Quiz> quizzes;
+  // final List<String> variations;
+  // final List<Quiz> quizzes;
 
-  Topic({this.id, this.title, this.description, this.img, this.quizzes});
+  Breed({this.fullName, this.description, this.img});
+  // Topic({this.id, this.title, this.description, this.img, this.quizzes});
 
-  factory Topic.fromMap(Map data) {
-    return Topic(
-      id: data['id'] ?? '',
-      title: data['title'] ?? '',
+  factory Breed.convertFromFireBaseMap(Map data) {
+    return Breed(
+      fullName: data['fullName'] ?? '',
       description: data['description'] ?? '',
       img: data['img'] ?? 'default.png',
-      quizzes: (data['quizzes'] as List ?? [])
-          .map((v) => Quiz.fromMap(v))
-          .toList(), //data['quizzes'],
+      // variations: (data['variations'] as List<String> ?? [])
+      // quizzes: (data['quizzes'] as List ?? [])
+      //     .map((v) => Quiz.fromMap(v))
+      //     .toList(), //data['quizzes'],
     );
   }
+
+  get id => null;
 }
