@@ -52,7 +52,11 @@ class MyApp extends StatelessWidget {
           '/login': (context) => LoginScreen(),
           '/quiz': (context) => QuizScreen(),
         },
+<<<<<<< HEAD
+        // this will probably be a conflict
+=======
         // johnDev
+>>>>>>> master
         // WEB does not support firebase storage nor analytics so commenting out to avoid errors for now
         // navigatorObservers: [
         //   FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),
