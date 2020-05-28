@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         StreamProvider<FirebaseUser>.value(value: AuthService().userStream),
       ],
       child: MaterialApp(
-        title: 'Doggies',
+        title: 'Dog World',
         theme: ThemeData.light().copyWith(
           primaryColor: Color(0xffA83518),
           accentColor: Color(0xffF2A922),
@@ -57,11 +57,7 @@ class MyApp extends StatelessWidget {
           '/login': (context) => LoginScreen(),
           '/quiz': (context) => QuizScreen(),
         },
-<<<<<<< HEAD
-        // this will probably be a conflict
-=======
-        // johnDev
->>>>>>> master
+
         // WEB does not support firebase storage nor analytics so commenting out to avoid errors for now
         // navigatorObservers: [
         //   FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),
