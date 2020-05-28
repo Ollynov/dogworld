@@ -24,15 +24,20 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Doggies',
-        theme: ThemeData.dark().copyWith(
-          // primaryColor: Colors.red[400],
-          // accentColor: Colors.amber,
+        theme: ThemeData.light().copyWith(
+          primaryColor: Color(0xffA83518),
+          accentColor: Color(0xffF2A922),
+//           .Smiling-bi-eyed-husky-dog-wait-dog-treats-on-the-yellow-background.-Smiling-dog-is-wait-for-food.-1-hex { color: #A67CA3; }
+// .Smiling-bi-eyed-husky-dog-wait-dog-treats-on-the-yellow-background.-Smiling-dog-is-wait-for-food.-2-hex { color: #F0F0F2; }
+// .Smiling-bi-eyed-husky-dog-wait-dog-treats-on-the-yellow-background.-Smiling-dog-is-wait-for-food.-3-hex { color: #F2CB05; }
+// .Smiling-bi-eyed-husky-dog-wait-dog-treats-on-the-yellow-background.-Smiling-dog-is-wait-for-food.-4-hex { color: #F2D95C; }
+// .Smiling-bi-eyed-husky-dog-wait-dog-treats-on-the-yellow-background.-Smiling-dog-is-wait-for-food.-5-hex { color: #F2B705; }
 
           // This makes the visual density adapt to the platform that you run
           // the app on. For desktop platforms, the controls will be smaller and
           // closer together (more dense) than on mobile platforms.
           visualDensity: VisualDensity.adaptivePlatformDensity,
-          brightness: Brightness.dark,
+          // brightness: Brightness.light,
           buttonTheme: ButtonThemeData(),
           textTheme: TextTheme(
               bodyText1: TextStyle(fontSize: 18),

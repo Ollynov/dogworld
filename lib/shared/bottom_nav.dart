@@ -22,9 +22,9 @@ class _AppBottomNavState extends State<AppBottomNav> {
         BottomNavigationBarItem(
             icon: Icon(FontAwesomeIcons.userCircle, size: 20),
             title: Text('Dashboard')),
-        BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.question, size: 20),
-            title: Text('Quiz')),
+        // BottomNavigationBarItem(
+        //     icon: Icon(FontAwesomeIcons.question, size: 20),
+        //     title: Text('Quiz')),
       ],
       currentIndex: _selectedIndex,
       unselectedItemColor: Colors.white,
@@ -44,9 +44,9 @@ class _AppBottomNavState extends State<AppBottomNav> {
           case 2:
             Navigator.pushNamed(context, '/dashboard');
             break;
-          case 3:
-            Navigator.pushNamed(context, '/quiz');
-            break;
+          // case 3:
+          //   Navigator.pushNamed(context, '/quiz');
+          //   break;
         }
       },
     );
