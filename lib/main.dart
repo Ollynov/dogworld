@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        home: MyHomePage(title: "Dog World"),
+        initialRoute: '/dogopedia',
         routes: {
           // '/breed-information': (context) => BreedInfo(),
           // '/dog': (context) => Dog(),

@@ -53,9 +53,9 @@ class _AppBottomNavState extends State<AppBottomNav> {
           case 2:
             Navigator.pushNamed(context, '/dashboard');
             break;
-          // case 3:
-          //   Navigator.pushNamed(context, '/quiz');
-          //   break;
+          default:
+            print('chi');
+            break;
         }
       },
     );
