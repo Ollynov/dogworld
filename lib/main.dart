@@ -23,39 +23,36 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Dog World',
-        // theme: ThemeData.light().copyWith(
         theme: ThemeData(
-          primaryColor: Color(0xffA83518),
-          accentColor: Color(0xffF2A922),
-          backgroundColor: Colors.red,
+          primaryColor: Color(0xffff1744),
+          accentColor: Color(0xffffd117),
           visualDensity: VisualDensity.adaptivePlatformDensity,
           buttonTheme: ButtonThemeData(),
           textTheme: TextTheme(
               bodyText1: TextStyle(fontSize: 18),
               bodyText2: TextStyle(fontSize: 16),
-              button:
-                  TextStyle(letterSpacing: 1.5, fontWeight: FontWeight.bold),
+              button: TextStyle(letterSpacing: 1.5, fontWeight: FontWeight.bold),
               subtitle1: TextStyle(color: Colors.grey)),
           appBarTheme: AppBarTheme(
-            // color: Theme.of(context).primaryColor,
-            color: Color(0xffA83518),
-            brightness: Brightness.light,
-            iconTheme: IconThemeData(),
+            color: Color(0xffff1744),
+            textTheme: Typography.blackCupertino,
+            // brightness: Brightness.light,
+            iconTheme: IconThemeData(
+              color: Colors.black
+            ),
           ),
         ),
-
         home: MyHomePage(title: "Dog World"),
         routes: {
-          '/breed-information': (context) => BreedInfo(),
-          '/dog': (context) => Dog(),
-          '/profile': (context) => Profile(),
+          // '/breed-information': (context) => BreedInfo(),
+          // '/dog': (context) => Dog(),
+          // '/profile': (context) => Profile(),
           '/dashboard': (context) => DashboardScreen(),
           '/dogopedia': (context) => DogopediaScreen(),
           '/search': (context) => SearchScreen(),
           '/login': (context) => LoginScreen(),
           '/quiz': (context) => QuizScreen(),
         },
-
         // WEB does not support firebase storage nor analytics so commenting out to avoid errors for now
         // navigatorObservers: [
         //   FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),
@@ -65,37 +62,15 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class BreedInfo extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    throw UnimplementedError();
-  }
-}
-
-class Dog extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    throw UnimplementedError();
-  }
-}
-
-class Profile extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    throw UnimplementedError();
-  }
-}
-
-class Dashboard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    throw UnimplementedError();
-  }
-}
+// class BreedInfo extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     throw UnimplementedError();
+//   }
+// }
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
-
   final String title;
 
   @override
@@ -117,11 +92,18 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(Icons.home),
+              onPressed: () { Scaffold.of(context).openDrawer();},
+              tooltip: "Go Home",
+            );
+          },
+        ),
         actions: [
           IconButton(
-            icon: Icon(
-              FontAwesomeIcons.userCircle,
-            ),
+            icon: Icon(FontAwesomeIcons.userCircle),
             onPressed: () => Navigator.pushNamed(context, '/login'),
           )
         ],
@@ -145,20 +127,6 @@ class _MyHomePageState extends State<MyHomePage> {
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            // FlatButton(
-            //     onPressed: () async {
-            //       Navigator.pushReplacementNamed(context, '/login');
-            //     },
-            //     child: Text("Go To Login")),
-            // Text(
-            //   'You have pushed the button this many times:',
-            // ),
-            // Text(
-            //   '$_counter',
-            //   style: Theme.of(context).textTheme.headline4,
-            // ),
-          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(

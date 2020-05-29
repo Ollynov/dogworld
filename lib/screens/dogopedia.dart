@@ -14,7 +14,6 @@ class DogopediaScreen extends StatelessWidget {
           List<Breed> breeds = snap.data;
           return Scaffold(
             appBar: AppBar(
-              // backgroundColor: Theme.of(context).primaryColor,
               title: Text('Breeds'),
               actions: [
                 IconButton(
