@@ -31,11 +31,10 @@ class _AppBottomNavState extends State<AppBottomNav> {
       // selectedItemColor: Theme.of(context).accentColor,
       selectedItemColor: Colors.white,
       backgroundColor: Theme.of(context).primaryColor,
-      // fixedColor: Colors.deepPurple[200],
       onTap: (int idx) {
-        setState(() {
-          _selectedIndex = idx;
-        });
+        // setState(() {
+        //   _selectedIndex = idx;
+        // });
         switch (idx) {
           case 0:
             Navigator.pushNamed(context, '/dogopedia');

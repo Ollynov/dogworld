@@ -12,7 +12,7 @@ class SearchScreen extends StatelessWidget {
       body: Center(
         child: Text('Here is your search...'),
       ),
-      bottomNavigationBar: AppBottomNav(),
+      // bottomNavigationBar: AppBottomNav(),
     );
   }
 }
