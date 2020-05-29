@@ -14,7 +14,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -24,20 +23,12 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Dog World',
-        theme: ThemeData.light().copyWith(
+        // theme: ThemeData.light().copyWith(
+        theme: ThemeData(
           primaryColor: Color(0xffA83518),
           accentColor: Color(0xffF2A922),
-//           .Smiling-bi-eyed-husky-dog-wait-dog-treats-on-the-yellow-background.-Smiling-dog-is-wait-for-food.-1-hex { color: #A67CA3; }
-// .Smiling-bi-eyed-husky-dog-wait-dog-treats-on-the-yellow-background.-Smiling-dog-is-wait-for-food.-2-hex { color: #F0F0F2; }
-// .Smiling-bi-eyed-husky-dog-wait-dog-treats-on-the-yellow-background.-Smiling-dog-is-wait-for-food.-3-hex { color: #F2CB05; }
-// .Smiling-bi-eyed-husky-dog-wait-dog-treats-on-the-yellow-background.-Smiling-dog-is-wait-for-food.-4-hex { color: #F2D95C; }
-// .Smiling-bi-eyed-husky-dog-wait-dog-treats-on-the-yellow-background.-Smiling-dog-is-wait-for-food.-5-hex { color: #F2B705; }
-
-          // This makes the visual density adapt to the platform that you run
-          // the app on. For desktop platforms, the controls will be smaller and
-          // closer together (more dense) than on mobile platforms.
+          backgroundColor: Colors.red,
           visualDensity: VisualDensity.adaptivePlatformDensity,
-          // brightness: Brightness.light,
           buttonTheme: ButtonThemeData(),
           textTheme: TextTheme(
               bodyText1: TextStyle(fontSize: 18),
@@ -45,8 +36,15 @@ class MyApp extends StatelessWidget {
               button:
                   TextStyle(letterSpacing: 1.5, fontWeight: FontWeight.bold),
               subtitle1: TextStyle(color: Colors.grey)),
+          appBarTheme: AppBarTheme(
+            // color: Theme.of(context).primaryColor,
+            color: Color(0xffA83518),
+            brightness: Brightness.light,
+            iconTheme: IconThemeData(),
+          ),
         ),
-        home: MyHomePage(title: 'Doggies'),
+
+        home: MyHomePage(title: "Dog World"),
         routes: {
           '/breed-information': (context) => BreedInfo(),
           '/dog': (context) => Dog(),
@@ -95,20 +93,6 @@ class Dashboard extends StatelessWidget {
   }
 }
 
-class Dogopedia extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    throw UnimplementedError();
-  }
-}
-
-class Search extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    throw UnimplementedError();
-  }
-}
-
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
@@ -130,18 +114,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
-        backgroundColor: Theme.of(context).primaryColor,
         actions: [
           IconButton(
             icon: Icon(
@@ -194,42 +169,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       bottomNavigationBar:
           AppBottomNav(), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-        backgroundColor: Colors.red,
-      ),
-      body: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            FlatButton(
-              child: Text('push'),
-              color: Colors.green,
-              onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => SlideshowScreen(name: 'Jeff'))
-                // );
-
-                //  Navigator.pushNamed(
-                //     context,
-                //     '/slideshow'
-                //   );
-
-                Navigator.pushNamed(context, '/slideshow');
-              },
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

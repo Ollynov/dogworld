@@ -14,15 +14,22 @@ class DogopediaScreen extends StatelessWidget {
           List<Breed> breeds = snap.data;
           return Scaffold(
             appBar: AppBar(
-              backgroundColor: Colors.deepPurple,
+              // backgroundColor: Theme.of(context).primaryColor,
               title: Text('Breeds'),
-              // actions: [
-              //   IconButton(
-              //     icon: Icon(FontAwesomeIcons.userCircle,
-              //         color: Colors.pink[200]),
-              //     onPressed: () => Navigator.pushNamed(context, '/profile'),
-              //   )
-              // ],
+              actions: [
+                IconButton(
+                  icon: Icon(
+                    FontAwesomeIcons.home,
+                  ),
+                  onPressed: () => Navigator.pushNamed(context, '/'),
+                ),
+                IconButton(
+                  icon: Icon(
+                    FontAwesomeIcons.userCircle,
+                  ),
+                  onPressed: () => Navigator.pushNamed(context, '/login'),
+                )
+              ],
             ),
             // drawer: TopicDrawer(topics: snap.data),
             body: GridView.count(
