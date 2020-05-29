@@ -27,8 +27,10 @@ class _AppBottomNavState extends State<AppBottomNav> {
         //     title: Text('Quiz')),
       ],
       currentIndex: _selectedIndex,
-      unselectedItemColor: Colors.white,
-      selectedItemColor: Theme.of(context).accentColor,
+      // unselectedItemColor: Colors.white,
+      // selectedItemColor: Theme.of(context).accentColor,
+      selectedItemColor: Colors.white,
+      backgroundColor: Theme.of(context).primaryColor,
       // fixedColor: Colors.deepPurple[200],
       onTap: (int idx) {
         setState(() {
