@@ -39,7 +39,7 @@ class DogopediaScreen extends StatelessWidget {
               children:
                   breeds.map((breed) => BreedPreview(breed: breed)).toList(),
             ),
-            bottomNavigationBar: AppBottomNav(),
+            bottomNavigationBar: AppBottomNav(route: 0),
           );
         } else {
           return LoadingScreen();

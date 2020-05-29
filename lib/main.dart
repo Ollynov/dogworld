@@ -136,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).accentColor,
       ),
       bottomNavigationBar:
-          AppBottomNav(), // This trailing comma makes auto-formatting nicer for build methods.
+          AppBottomNav(route: 0), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

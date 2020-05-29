@@ -95,7 +95,7 @@ class DashboardScreen extends StatelessWidget {
             ),
           ],
         )),
-        // bottomNavigationBar: AppBottomNav(),
+        bottomNavigationBar: AppBottomNav(route: 2),
       );
     }
   }

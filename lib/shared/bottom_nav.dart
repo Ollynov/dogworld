@@ -2,12 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AppBottomNav extends StatefulWidget {
+  AppBottomNav({Key key, this.route}) : super(key: key);
+  final int route;
+
   @override
   _AppBottomNavState createState() => _AppBottomNavState();
 }
 
 class _AppBottomNavState extends State<AppBottomNav> {
   int _selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.route;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +36,6 @@ class _AppBottomNavState extends State<AppBottomNav> {
         //     title: Text('Quiz')),
       ],
       currentIndex: _selectedIndex,
-      // unselectedItemColor: Colors.white,
       // selectedItemColor: Theme.of(context).accentColor,
       selectedItemColor: Colors.white,
       backgroundColor: Theme.of(context).primaryColor,
