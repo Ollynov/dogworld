@@ -29,12 +29,10 @@ class LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).primaryColorDark,
         actions: [
           IconButton(
-            icon: Icon(
-              FontAwesomeIcons.userCircle,
-            ),
+            icon: Icon(FontAwesomeIcons.userCircle,),
             onPressed: () => Navigator.pushNamed(context, '/login'),
           )
         ],
@@ -50,15 +48,15 @@ class LoginScreenState extends State<LoginScreen> {
               size: 150,
             ),
             Text(
-              'Login to Start',
-              style: Theme.of(context).textTheme.headline1,
+              'Login',
+              style: Theme.of(context).textTheme.headline5,
               textAlign: TextAlign.center,
             ),
-            Text('Your Tagline'),
+            Text("It's time to find your new best friend."),
             LoginButton(
                 text: 'LOGIN WITH GOOGLE',
                 icon: FontAwesomeIcons.google,
-                color: Colors.black45,
+                color: Theme.of(context).primaryColorDark,
                 loginMethod: auth.googleSignIn,
                 destination: '/dashboard'),
             // We first need to wrap our Apple sign in button in a FutureBuilder Widget. The way this widget works is it returns a future and it's context to the builder output. This can be useful if you need a button that has the name of a logged in user, or for example if you want to do a conditional statement, like we want to do in this case here:
@@ -106,20 +104,24 @@ class LoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(bottom: 10),
+      width: 250,
       child: FlatButton.icon(
-        padding: EdgeInsets.all(30),
+        padding: EdgeInsets.all(22),
         icon: Icon(icon, color: Colors.white),
         color: color,
         onPressed: () async {
           var user = await loginMethod();
           print('ok in our button we got user as: ');
           print(user);
-          if (user != null) {
-            Navigator.pushReplacementNamed(context, destination);
-          }
+          if (user != null) {Navigator.pushReplacementNamed(context, destination);}
         },
         label: Expanded(
-          child: Text('$text', textAlign: TextAlign.center),
+          child: Text(
+            '$text', 
+            textAlign: TextAlign.center, 
+            style: TextStyle(
+              color: Theme.of(context).accentColor),
+            )
         ),
       ),
     );

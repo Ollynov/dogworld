@@ -43,9 +43,7 @@ class DashboardScreen extends StatelessWidget {
                         content: Text('Your new display name is "$value".'),
                         actions: <Widget>[
                           FlatButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
+                            onPressed: () { Navigator.pop(context);},
                             child: const Text('OK'),
                           ),
                         ],
@@ -55,16 +53,15 @@ class DashboardScreen extends StatelessWidget {
                 }),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: FlatButton(
+              child: 
+                FlatButton(
                   child: Text('Logout'),
                   color: Colors.red[400],
                   onPressed: () async {
-                    log('ok you just signed out bruh');
                     print('ok you just signed out bruh');
                     await auth.signOut();
-                    Navigator.of(context)
-                        .pushNamedAndRemoveUntil('/', (route) => false);
-                  }),
+                    Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+                }),
             ),
           ],
         )),
@@ -74,7 +71,6 @@ class DashboardScreen extends StatelessWidget {
       return Scaffold(
         appBar: AppBar(
           title: Text('Dashboard'),
-          backgroundColor: Theme.of(context).primaryColor,
         ),
         body: Center(
             child: Column(
@@ -88,7 +84,7 @@ class DashboardScreen extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: FlatButton(
                   child: Text('Login'),
-                  color: Colors.greenAccent,
+                  color: Theme.of(context).accentColor,
                   onPressed: () async {
                     Navigator.pushNamed(context, '/login');
                   }),
