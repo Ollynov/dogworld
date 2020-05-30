@@ -120,7 +120,6 @@ class BreedScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple,
         title: Text('${breed.fullName}'),
       ),
       body: Padding(
@@ -152,7 +151,6 @@ class BreedDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.deepPurple,
       child: Container(
         height: 300,
         width: 300,

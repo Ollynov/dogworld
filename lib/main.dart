@@ -14,6 +14,15 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+
+  final Color primaryColor = Color(0xffff1744);
+  final Color primaryColorDark = Color(0xffc4001d);
+  final Color primaryColorLight = Color(0xffff616f);
+  final Color secondaryColor = Color(0xffffd117);
+  final Color secondaryColorDark = Color(0xffc7a000);
+  final Color secondaryColorLight = Color(0xffffff58);
+
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -24,8 +33,10 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Dog World',
         theme: ThemeData(
-          primaryColor: Color(0xffff1744),
-          accentColor: Color(0xffffd117),
+          primaryColor: primaryColor,
+          primaryColorDark: primaryColorDark,
+          primaryColorLight: primaryColorLight,
+          accentColor: secondaryColor,
           visualDensity: VisualDensity.adaptivePlatformDensity,
           buttonTheme: ButtonThemeData(),
           textTheme: TextTheme(
@@ -33,12 +44,15 @@ class MyApp extends StatelessWidget {
               bodyText2: TextStyle(fontSize: 16),
               button: TextStyle(letterSpacing: 1.5, fontWeight: FontWeight.bold),
               subtitle1: TextStyle(color: Colors.grey)),
+          cardTheme: CardTheme(
+            color: Colors.grey[100]
+          ),
           appBarTheme: AppBarTheme(
-            color: Color(0xffff1744),
+            color: primaryColorDark,
             textTheme: Typography.blackCupertino,
             // brightness: Brightness.light,
             iconTheme: IconThemeData(
-              color: Colors.black
+              // color: Colors.black
             ),
           ),
         ),
