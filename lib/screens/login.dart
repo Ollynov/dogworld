@@ -30,6 +30,7 @@ class LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColorDark,
+        title: Text("Login"),
         actions: [
           IconButton(
             icon: Icon(FontAwesomeIcons.userCircle,),
@@ -42,17 +43,18 @@ class LoginScreenState extends State<LoginScreen> {
         decoration: BoxDecoration(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            FlutterLogo(
-              size: 150,
+            FlutterLogo(size: 150,),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 100, top: 20),
+              child: Text(
+                "It's time to find your new best friend.",
+                style: Theme.of(context).textTheme.headline5,
+                textAlign: TextAlign.center,
+              ),
             ),
-            Text(
-              'Login',
-              style: Theme.of(context).textTheme.headline5,
-              textAlign: TextAlign.center,
-            ),
-            Text("It's time to find your new best friend."),
+            
             LoginButton(
                 text: 'LOGIN WITH GOOGLE',
                 icon: FontAwesomeIcons.google,
@@ -76,7 +78,12 @@ class LoginScreenState extends State<LoginScreen> {
                     return Container();
                   }
                 }),
-            LoginButton(text: 'Continue as Guest', loginMethod: auth.anonLogin),
+            LoginButton(
+              text: 'CONTINUE AS GUEST',
+              icon: FontAwesomeIcons.user, 
+              loginMethod: auth.anonLogin,
+              color: Theme.of(context).primaryColorDark,
+              destination: '/dashboard',),
           ],
         ),
       ),
