@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
               bodyText1: TextStyle(fontSize: 18),
               bodyText2: TextStyle(fontSize: 16),
               button: TextStyle(letterSpacing: 1.5, fontWeight: FontWeight.bold),
-              subtitle1: TextStyle(color: Colors.grey)),
+              subtitle1: TextStyle(color: Colors.grey, fontSize: 24)),
           cardTheme: CardTheme(
             color: Colors.grey[100]
           ),
@@ -56,7 +56,8 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        initialRoute: '/dogopedia',
+        // initialRoute: '/dogopedia',
+        home: MyHomePage(title: "Homepage"),
         routes: {
           // '/breed-information': (context) => BreedInfo(),
           // '/dog': (context) => Dog(),
@@ -122,6 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         ],
       ),
+      backgroundColor: Theme.of(context).accentColor,
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
@@ -141,6 +143,9 @@ class _MyHomePageState extends State<MyHomePage> {
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('DogWorld.png')
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(

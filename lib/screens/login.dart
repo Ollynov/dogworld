@@ -45,12 +45,13 @@ class LoginScreenState extends State<LoginScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            FlutterLogo(size: 150,),
+            // FlutterLogo(size: 150,),
+            Image.asset('smallDogWorldLogo.png'),
             Padding(
               padding: const EdgeInsets.only(bottom: 100, top: 20),
               child: Text(
-                "It's time to find your new best friend.",
-                style: Theme.of(context).textTheme.headline5,
+                "Find your new best friend",
+                style: Theme.of(context).textTheme.subtitle1,
                 textAlign: TextAlign.center,
               ),
             ),
