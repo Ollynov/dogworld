@@ -9,9 +9,12 @@ class SearchScreen extends StatelessWidget {
         title: Text('Search'),
       ),
       body: Center(
-        child: Text('Here is your search...'),
+        child: Text(
+          
+          'Here is your search...',)
+          // style: TextStyle(fontFamily: 'IndieFlower')),
       ),
-      bottomNavigationBar: AppBottomNav(route: 1),
+      bottomNavigationBar: AppBottomNav(route: 1, inactive: false,),
     );
   }
 }

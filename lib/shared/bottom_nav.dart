@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AppBottomNav extends StatefulWidget {
-  AppBottomNav({Key key, this.route}) : super(key: key);
+  AppBottomNav({Key key, this.route, this.inactive}) : super(key: key);
   final int route;
+  final bool inactive;
 
   @override
   _AppBottomNavState createState() => _AppBottomNavState();
@@ -11,14 +12,25 @@ class AppBottomNav extends StatefulWidget {
 
 class _AppBottomNavState extends State<AppBottomNav> {
   int _selectedIndex = 0;
+  bool _inactive = false;
+  Color selected;
 
   @override
   void initState() {
     super.initState();
     _selectedIndex = widget.route;
+    _inactive = widget.inactive;
+    if (_inactive) {
+      selected = Colors.black38;
+    } else {
+      selected = Colors.white;
+    }
   }
 
+
+
   @override
+
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       items: const <BottomNavigationBarItem>[
@@ -37,7 +49,8 @@ class _AppBottomNavState extends State<AppBottomNav> {
       ],
       currentIndex: _selectedIndex,
       // selectedItemColor: Theme.of(context).accentColor,
-      selectedItemColor: Colors.white,
+      selectedItemColor: selected,
+      unselectedItemColor: Colors.black38,
       backgroundColor: Theme.of(context).primaryColorDark,
       onTap: (int idx) {
         // setState(() {

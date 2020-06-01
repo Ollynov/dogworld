@@ -65,7 +65,7 @@ class DashboardScreen extends StatelessWidget {
             ),
           ],
         )),
-        bottomNavigationBar: AppBottomNav(),
+        bottomNavigationBar: AppBottomNav(route: 2, inactive: false,),
       );
     } else {
       return Scaffold(
@@ -91,7 +91,7 @@ class DashboardScreen extends StatelessWidget {
             ),
           ],
         )),
-        bottomNavigationBar: AppBottomNav(route: 2),
+        bottomNavigationBar: AppBottomNav(route: 2, inactive: false),
       );
     }
   }

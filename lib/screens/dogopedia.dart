@@ -3,6 +3,8 @@ import 'package:doggies/services/services.dart';
 import 'package:doggies/shared/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'dart:developer' as developer;
+
 
 class DogopediaScreen extends StatelessWidget {
   @override
@@ -10,6 +12,7 @@ class DogopediaScreen extends StatelessWidget {
     return FutureBuilder(
       future: Global.breedsRef.getData(),
       builder: (BuildContext context, AsyncSnapshot snap) {
+
         if (snap.hasData) {
           List<Breed> breeds = snap.data;
           return Scaffold(
@@ -39,7 +42,7 @@ class DogopediaScreen extends StatelessWidget {
               children:
                   breeds.map((breed) => BreedPreview(breed: breed)).toList(),
             ),
-            bottomNavigationBar: AppBottomNav(route: 0),
+            bottomNavigationBar: AppBottomNav(route: 0, inactive: false,),
           );
         } else {
           return LoadingScreen();

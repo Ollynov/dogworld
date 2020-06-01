@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
           accentColor: secondaryColor,
           visualDensity: VisualDensity.adaptivePlatformDensity,
           buttonTheme: ButtonThemeData(),
+          fontFamily: 'IndieFlower',
           textTheme: TextTheme(
               bodyText1: TextStyle(fontSize: 18),
               bodyText2: TextStyle(fontSize: 16),
@@ -50,7 +51,7 @@ class MyApp extends StatelessWidget {
           appBarTheme: AppBarTheme(
             color: primaryColorDark,
             textTheme: Typography.blackCupertino,
-            // brightness: Brightness.light,
+            // brightness: Brightness.light,  
             iconTheme: IconThemeData(
               // color: Colors.black
             ),
@@ -148,14 +149,14 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-        backgroundColor: Theme.of(context).accentColor,
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: _incrementCounter,
+      //   tooltip: 'Increment',
+      //   child: Icon(Icons.add),
+      //   backgroundColor: Theme.of(context).accentColor,
+      // ),
       bottomNavigationBar:
-          AppBottomNav(route: 0), // This trailing comma makes auto-formatting nicer for build methods.
+          AppBottomNav(route: 0, inactive: true), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
