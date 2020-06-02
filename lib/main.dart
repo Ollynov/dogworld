@@ -145,7 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('DogWorld.png')
+            Image.asset('assets/DogWorld.png')
           ],
         ),
       ),
