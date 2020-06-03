@@ -58,6 +58,7 @@ class AuthService {
     return user;
   }
 
+  // GOOGLE SIGNIN
   Future<FirebaseUser> googleSignIn() async {
     try {
       GoogleSignInAccount googleSignInAccount = await _googleSignIn.signIn();

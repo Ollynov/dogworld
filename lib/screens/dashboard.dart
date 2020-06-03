@@ -34,6 +34,8 @@ class DashboardScreen extends StatelessWidget {
                   labelText: 'New Display Name',
                 ),
                 onSubmitted: (String value) async {
+                  print('ok going to send this input: ');
+                  print(value);
                   await userService.updateUserPreferences(user, value);
                   await showDialog<void>(
                     context: context,
@@ -77,7 +79,7 @@ class DashboardScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Sorry you are not logged in.',
+              'Sorry you are not logged in!!',
               style: TextStyle(height: 1.5, fontWeight: FontWeight.bold),
             ),
             Padding(

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../services/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:apple_sign_in/apple_sign_in.dart';
 
 class LoginScreen extends StatefulWidget {
   createState() => LoginScreenState();
@@ -68,14 +67,21 @@ class LoginScreenState extends State<LoginScreen> {
                 future: auth.appleSignInAvailable,
                 builder: (context, snapshot) {
                   if (snapshot.data == true) {
-                    return AppleSignInButton(
-                      onPressed: () async {
-                        FirebaseUser user = await auth.appleSignIn();
-                        if (user != null) {
-                          Navigator.pushReplacementNamed(context, '/dashboard');
-                        }
-                      },
+                    return LoginButton(
+                      text: "LOGIN WITH APPLE",
+                      icon: FontAwesomeIcons.apple,
+                      color: Theme.of(context).primaryColorDark,
+                      loginMethod: auth.appleSignIn,
+                      destination: '/dashboard',
                     );
+                    // return AppleSignInButton(
+                    //   onPressed: () async {
+                    //     FirebaseUser user = await auth.appleSignIn();
+                    //     if (user != null) {
+                    //       Navigator.pushReplacementNamed(context, '/dashboard');
+                    //     }
+                    //   },
+                    // );
                   } else {
                     return Container();
                   }
