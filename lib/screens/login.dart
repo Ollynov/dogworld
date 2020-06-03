@@ -40,58 +40,63 @@ class LoginScreenState extends State<LoginScreen> {
       body: Container(
         padding: EdgeInsets.all(30),
         decoration: BoxDecoration(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // FlutterLogo(size: 150,),
-            Image.asset('assets/smallDogWorldLogo.png'),
-            // Image(image: AssetImage('assets/smallDogWorldLogo.png')),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 100, top: 20),
-              child: Text(
-                "Find your new best friend",
-                style: Theme.of(context).textTheme.subtitle1,
-                textAlign: TextAlign.center,
-              ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // FlutterLogo(size: 150,),
+                Image.asset('assets/smallDogWorldLogo.png'),
+                // Image(image: AssetImage('assets/smallDogWorldLogo.png')),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 100, top: 20),
+                  child: Text(
+                    "Find your new best friend",
+                    style: Theme.of(context).textTheme.subtitle1,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                
+                LoginButton(
+                    text: 'LOGIN WITH GOOGLE',
+                    icon: FontAwesomeIcons.google,
+                    color: Theme.of(context).primaryColorDark,
+                    loginMethod: auth.googleSignIn,
+                    destination: '/dashboard'),
+                // We first need to wrap our Apple sign in button in a FutureBuilder Widget. The way this widget works is it returns a future and it's context to the builder output. This can be useful if you need a button that has the name of a logged in user, or for example if you want to do a conditional statement, like we want to do in this case here:
+                FutureBuilder<Object>(
+                    future: auth.appleSignInAvailable,
+                    builder: (context, snapshot) {
+                      if (snapshot.data == true) {
+                        return LoginButton(
+                          text: "LOGIN WITH APPLE",
+                          icon: FontAwesomeIcons.apple,
+                          color: Theme.of(context).primaryColorDark,
+                          loginMethod: auth.appleSignIn,
+                          destination: '/dashboard',
+                        );
+                        // return AppleSignInButton(
+                        //   onPressed: () async {
+                        //     FirebaseUser user = await auth.appleSignIn();
+                        //     if (user != null) {
+                        //       Navigator.pushReplacementNamed(context, '/dashboard');
+                        //     }
+                        //   },
+                        // );
+                      } else {
+                        return Container();
+                      }
+                    }),
+                LoginButton(
+                  text: 'CONTINUE AS GUEST',
+                  icon: FontAwesomeIcons.user, 
+                  loginMethod: auth.anonLogin,
+                  color: Theme.of(context).primaryColorDark,
+                  destination: '/dashboard',),
+              ],
             ),
-            
-            LoginButton(
-                text: 'LOGIN WITH GOOGLE',
-                icon: FontAwesomeIcons.google,
-                color: Theme.of(context).primaryColorDark,
-                loginMethod: auth.googleSignIn,
-                destination: '/dashboard'),
-            // We first need to wrap our Apple sign in button in a FutureBuilder Widget. The way this widget works is it returns a future and it's context to the builder output. This can be useful if you need a button that has the name of a logged in user, or for example if you want to do a conditional statement, like we want to do in this case here:
-            FutureBuilder<Object>(
-                future: auth.appleSignInAvailable,
-                builder: (context, snapshot) {
-                  if (snapshot.data == true) {
-                    return LoginButton(
-                      text: "LOGIN WITH APPLE",
-                      icon: FontAwesomeIcons.apple,
-                      color: Theme.of(context).primaryColorDark,
-                      loginMethod: auth.appleSignIn,
-                      destination: '/dashboard',
-                    );
-                    // return AppleSignInButton(
-                    //   onPressed: () async {
-                    //     FirebaseUser user = await auth.appleSignIn();
-                    //     if (user != null) {
-                    //       Navigator.pushReplacementNamed(context, '/dashboard');
-                    //     }
-                    //   },
-                    // );
-                  } else {
-                    return Container();
-                  }
-                }),
-            LoginButton(
-              text: 'CONTINUE AS GUEST',
-              icon: FontAwesomeIcons.user, 
-              loginMethod: auth.anonLogin,
-              color: Theme.of(context).primaryColorDark,
-              destination: '/dashboard',),
           ],
         ),
       ),
