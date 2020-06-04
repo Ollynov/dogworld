@@ -6,13 +6,22 @@ import '../services/services.dart';
 import '../shared/shared.dart';
 import 'package:provider/provider.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatefulWidget {
+  @override
+  _DashboardScreenState createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
   final AuthService auth = AuthService();
   final UsersService userService = UsersService();
+  String newDisplayName = "";
+  bool hasNewDisplay = false;
 
   @override
   Widget build(BuildContext context) {
+    
     FirebaseUser user = Provider.of<FirebaseUser>(context);
+    
 
     if (user != null) {
       return Scaffold(
@@ -24,18 +33,21 @@ class DashboardScreen extends StatelessWidget {
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            (hasNewDisplay? Text(
+              'Welcome There $newDisplayName',
+              style: TextStyle(height: 1.5, fontWeight: FontWeight.bold),
+            ) :
             Text(
               'Welcome There ${user.displayName}',
               style: TextStyle(height: 1.5, fontWeight: FontWeight.bold),
-            ),
+            ))
+            ,
             TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'New Display Name',
                 ),
                 onSubmitted: (String value) async {
-                  print('ok going to send this input: ');
-                  print(value);
                   await userService.updateUserPreferences(user, value);
                   await showDialog<void>(
                     context: context,
@@ -52,6 +64,10 @@ class DashboardScreen extends StatelessWidget {
                       );
                     },
                   );
+                  setState(() {
+                    newDisplayName = value;
+                    hasNewDisplay = true;
+                  });
                 }),
             Padding(
               padding: const EdgeInsets.all(8.0),
