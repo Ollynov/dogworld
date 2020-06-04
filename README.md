@@ -1,12 +1,11 @@
-# doggies
+# Dog World
 
-A new Flutter project.
+Welcome.
 
-## Getting Started
+## Useful Commands
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
+- Specifically running flutter web server on google auth authorized port: `flutter run -d chrome --web-hostname localhost --web-port 7357`
+- Deploy: `flutter deploy`
 
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)

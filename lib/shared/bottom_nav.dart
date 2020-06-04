@@ -2,14 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AppBottomNav extends StatefulWidget {
+  AppBottomNav({Key key, this.route, this.inactive}) : super(key: key);
+  final int route;
+  final bool inactive;
+
   @override
   _AppBottomNavState createState() => _AppBottomNavState();
 }
 
 class _AppBottomNavState extends State<AppBottomNav> {
   int _selectedIndex = 0;
+  bool _inactive = false;
+  Color selected;
 
   @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.route;
+    _inactive = widget.inactive;
+    if (_inactive) {
+      selected = Colors.black38;
+    } else {
+      selected = Colors.white;
+    }
+  }
+
+
+
+  @override
+
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       items: const <BottomNavigationBarItem>[
@@ -22,18 +43,19 @@ class _AppBottomNavState extends State<AppBottomNav> {
         BottomNavigationBarItem(
             icon: Icon(FontAwesomeIcons.userCircle, size: 20),
             title: Text('Dashboard')),
-        BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.question, size: 20),
-            title: Text('Quiz')),
+        // BottomNavigationBarItem(
+        //     icon: Icon(FontAwesomeIcons.question, size: 20),
+        //     title: Text('Quiz')),
       ],
       currentIndex: _selectedIndex,
-      unselectedItemColor: Colors.white,
-      selectedItemColor: Theme.of(context).accentColor,
-      // fixedColor: Colors.deepPurple[200],
+      // selectedItemColor: Theme.of(context).accentColor,
+      selectedItemColor: selected,
+      unselectedItemColor: Colors.black38,
+      backgroundColor: Theme.of(context).primaryColorDark,
       onTap: (int idx) {
-        setState(() {
-          _selectedIndex = idx;
-        });
+        // setState(() {
+        //   _selectedIndex = idx;
+        // });
         switch (idx) {
           case 0:
             Navigator.pushNamed(context, '/dogopedia');
@@ -44,8 +66,8 @@ class _AppBottomNavState extends State<AppBottomNav> {
           case 2:
             Navigator.pushNamed(context, '/dashboard');
             break;
-          case 3:
-            Navigator.pushNamed(context, '/quiz');
+          default:
+            print('chi');
             break;
         }
       },

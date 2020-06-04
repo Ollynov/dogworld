@@ -3,6 +3,8 @@ import 'package:doggies/services/services.dart';
 import 'package:doggies/shared/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'dart:developer' as developer;
+
 
 class DogopediaScreen extends StatelessWidget {
   @override
@@ -10,19 +12,26 @@ class DogopediaScreen extends StatelessWidget {
     return FutureBuilder(
       future: Global.breedsRef.getData(),
       builder: (BuildContext context, AsyncSnapshot snap) {
+
         if (snap.hasData) {
           List<Breed> breeds = snap.data;
           return Scaffold(
             appBar: AppBar(
-              backgroundColor: Colors.deepPurple,
               title: Text('Breeds'),
-              // actions: [
-              //   IconButton(
-              //     icon: Icon(FontAwesomeIcons.userCircle,
-              //         color: Colors.pink[200]),
-              //     onPressed: () => Navigator.pushNamed(context, '/profile'),
-              //   )
-              // ],
+              actions: [
+                IconButton(
+                  icon: Icon(
+                    FontAwesomeIcons.home,
+                  ),
+                  onPressed: () => Navigator.pushNamed(context, '/'),
+                ),
+                IconButton(
+                  icon: Icon(
+                    FontAwesomeIcons.userCircle,
+                  ),
+                  onPressed: () => Navigator.pushNamed(context, '/login'),
+                )
+              ],
             ),
             // drawer: TopicDrawer(topics: snap.data),
             body: GridView.count(
@@ -33,7 +42,7 @@ class DogopediaScreen extends StatelessWidget {
               children:
                   breeds.map((breed) => BreedPreview(breed: breed)).toList(),
             ),
-            bottomNavigationBar: AppBottomNav(),
+            bottomNavigationBar: AppBottomNav(route: 0, inactive: false,),
           );
         } else {
           return LoadingScreen();
@@ -114,7 +123,6 @@ class BreedScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple,
         title: Text('${breed.fullName}'),
       ),
       body: Padding(
@@ -146,7 +154,6 @@ class BreedDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.deepPurple,
       child: Container(
         height: 300,
         width: 300,

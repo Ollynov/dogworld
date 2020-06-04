@@ -58,22 +58,23 @@ class AuthService {
     return user;
   }
 
+  // GOOGLE SIGNIN
   Future<FirebaseUser> googleSignIn() async {
+    print('we trying to sign in thats madness');
     try {
       GoogleSignInAccount googleSignInAccount = await _googleSignIn.signIn();
-      GoogleSignInAuthentication googleAuth =
-          await googleSignInAccount.authentication;
+      GoogleSignInAuthentication googleAuth = await googleSignInAccount.authentication;
 
       // These are the secure tokens that are saved on our browser after we have succesfully signed into google, and they have redirected us back to our app with the tokens
       final AuthCredential credential = GoogleAuthProvider.getCredential(
-          idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
+        idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
 
       // Finally we sign into our own app with the credential variable from above.
       AuthResult result = await _auth.signInWithCredential(credential);
       FirebaseUser user = result.user;
 
       updateUserData(user); // this is just in case anything has changed;
-      print('ok here is user: ');
+      print('ok here is user!: ');
       print(user);
 
       return user;

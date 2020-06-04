@@ -7,12 +7,14 @@ class SearchScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Search'),
-        backgroundColor: Colors.blue,
       ),
       body: Center(
-        child: Text('Here is your search...'),
+        child: Text(
+          
+          'Here is your search...',)
+          // style: TextStyle(fontFamily: 'IndieFlower')),
       ),
-      bottomNavigationBar: AppBottomNav(),
+      bottomNavigationBar: AppBottomNav(route: 1, inactive: false,),
     );
   }
 }

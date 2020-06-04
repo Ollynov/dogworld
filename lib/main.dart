@@ -14,7 +14,15 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+
+  final Color primaryColor = Color(0xffff1744);
+  final Color primaryColorDark = Color(0xffc4001d);
+  final Color primaryColorLight = Color(0xffff616f);
+  final Color secondaryColor = Color(0xffffd117);
+  final Color secondaryColorDark = Color(0xffc7a000);
+  final Color secondaryColorLight = Color(0xffffff58);
+
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -23,40 +31,44 @@ class MyApp extends StatelessWidget {
         StreamProvider<FirebaseUser>.value(value: AuthService().userStream),
       ],
       child: MaterialApp(
-        title: 'Doggies',
-        theme: ThemeData.dark().copyWith(
-          // primaryColor: Colors.red[400],
-          // accentColor: Colors.amber,
-
-          // This makes the visual density adapt to the platform that you run
-          // the app on. For desktop platforms, the controls will be smaller and
-          // closer together (more dense) than on mobile platforms.
+        title: 'Dog World',
+        theme: ThemeData(
+          primaryColor: primaryColor,
+          primaryColorDark: primaryColorDark,
+          primaryColorLight: primaryColorLight,
+          accentColor: secondaryColor,
           visualDensity: VisualDensity.adaptivePlatformDensity,
-          brightness: Brightness.dark,
           buttonTheme: ButtonThemeData(),
+          fontFamily: 'IndieFlower',
           textTheme: TextTheme(
               bodyText1: TextStyle(fontSize: 18),
               bodyText2: TextStyle(fontSize: 16),
-              button:
-                  TextStyle(letterSpacing: 1.5, fontWeight: FontWeight.bold),
-              subtitle1: TextStyle(color: Colors.grey)),
+              button: TextStyle(letterSpacing: 1.5, fontWeight: FontWeight.bold),
+              subtitle1: TextStyle(color: Colors.grey, fontSize: 24)),
+          cardTheme: CardTheme(
+            color: Colors.grey[100]
+          ),
+          appBarTheme: AppBarTheme(
+            color: primaryColorDark,
+            textTheme: Typography.blackCupertino,
+            // brightness: Brightness.light,  
+            iconTheme: IconThemeData(
+              // color: Colors.black
+            ),
+          ),
         ),
-        home: MyHomePage(title: 'Doggies'),
+        // initialRoute: '/dogopedia',
+        home: MyHomePage(title: "Homepage"),
         routes: {
-          '/breed-information': (context) => BreedInfo(),
-          '/dog': (context) => Dog(),
-          '/profile': (context) => Profile(),
+          // '/breed-information': (context) => BreedInfo(),
+          // '/dog': (context) => Dog(),
+          // '/profile': (context) => Profile(),
           '/dashboard': (context) => DashboardScreen(),
           '/dogopedia': (context) => DogopediaScreen(),
           '/search': (context) => SearchScreen(),
           '/login': (context) => LoginScreen(),
           '/quiz': (context) => QuizScreen(),
         },
-<<<<<<< HEAD
-        // this will probably be a conflict
-=======
-        // johnDev
->>>>>>> master
         // WEB does not support firebase storage nor analytics so commenting out to avoid errors for now
         // navigatorObservers: [
         //   FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),
@@ -66,51 +78,15 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class BreedInfo extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    throw UnimplementedError();
-  }
-}
-
-class Dog extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    throw UnimplementedError();
-  }
-}
-
-class Profile extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    throw UnimplementedError();
-  }
-}
-
-class Dashboard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    throw UnimplementedError();
-  }
-}
-
-class Dogopedia extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    throw UnimplementedError();
-  }
-}
-
-class Search extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    throw UnimplementedError();
-  }
-}
+// class BreedInfo extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     throw UnimplementedError();
+//   }
+// }
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
-
   final String title;
 
   @override
@@ -129,27 +105,26 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
-        backgroundColor: Theme.of(context).primaryColor,
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(Icons.home),
+              onPressed: () { Scaffold.of(context).openDrawer();},
+              tooltip: "Go Home",
+            );
+          },
+        ),
         actions: [
           IconButton(
-            icon: Icon(
-              FontAwesomeIcons.userCircle,
-            ),
+            icon: Icon(FontAwesomeIcons.userCircle),
             onPressed: () => Navigator.pushNamed(context, '/login'),
           )
         ],
       ),
+      backgroundColor: Theme.of(context).accentColor,
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
@@ -169,66 +144,19 @@ class _MyHomePageState extends State<MyHomePage> {
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            // FlatButton(
-            //     onPressed: () async {
-            //       Navigator.pushReplacementNamed(context, '/login');
-            //     },
-            //     child: Text("Go To Login")),
-            // Text(
-            //   'You have pushed the button this many times:',
-            // ),
-            // Text(
-            //   '$_counter',
-            //   style: Theme.of(context).textTheme.headline4,
-            // ),
+          children: [
+            Image.asset('assets/DogWorld.png')
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-        backgroundColor: Theme.of(context).accentColor,
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: _incrementCounter,
+      //   tooltip: 'Increment',
+      //   child: Icon(Icons.add),
+      //   backgroundColor: Theme.of(context).accentColor,
+      // ),
       bottomNavigationBar:
-          AppBottomNav(), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-        backgroundColor: Colors.red,
-      ),
-      body: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            FlatButton(
-              child: Text('push'),
-              color: Colors.green,
-              onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => SlideshowScreen(name: 'Jeff'))
-                // );
-
-                //  Navigator.pushNamed(
-                //     context,
-                //     '/slideshow'
-                //   );
-
-                Navigator.pushNamed(context, '/slideshow');
-              },
-            ),
-          ],
-        ),
-      ),
+          AppBottomNav(route: 0, inactive: true), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
