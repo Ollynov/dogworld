@@ -74,7 +74,7 @@ class AuthService {
       FirebaseUser user = result.user;
 
       updateUserData(user); // this is just in case anything has changed;
-      print('ok here is user: ');
+      print('ok here is user!: ');
       print(user);
 
       return user;
