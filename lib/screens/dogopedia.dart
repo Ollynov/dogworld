@@ -128,13 +128,37 @@ class BreedScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.only(top: 10),
         child: ListView(children: [
-          Hero(
-              tag: breed.img,
-              child: Image.asset(
-                'assets/covers/${breed.img}',
-                width: MediaQuery.of(context).size.width,
-                height: 500,
-              )),
+          Row(
+            children: [
+              Expanded(
+                flex: 8,
+                child: Hero(
+                  tag: breed.img,
+                  child: Image.asset(
+                    'assets/covers/${breed.img}',
+                    width: MediaQuery.of(context).size.width,
+                    height: 500,
+                  )),
+              ),
+              Expanded(
+                flex: 2,
+                child: FlatButton(
+                  onPressed: () async {
+                    Navigator.pushNamed(context, '/login');
+                  }, 
+                  child: Row(
+                    children: [
+                      FaIcon(FontAwesomeIcons.solidHeart, color: Theme.of(context).primaryColor),
+                      Text('Save'),
+                    ],
+                  ),
+                  color: Theme.of(context).cardTheme.color,),
+                  
+                  // color: Theme.of(context).cardTheme.color,),
+              ),
+            ],
+          ),
+          
           // Text(
           //   breed.fullName,
           //   style:
@@ -164,39 +188,4 @@ class BreedDetails extends StatelessWidget {
       ),
     );
   }
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Column(
-  //       children: [1, 2, 3].map((quiz) {
-  //     return Card(
-  //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-  //       elevation: 4,
-  //       margin: EdgeInsets.all(4),
-  //       child: InkWell(
-  //         // onTap: () {
-  //         //   Navigator.of(context).push(
-  //         //     MaterialPageRoute(
-  //         //       builder: (BuildContext context) => QuizScreen(quizId: quiz.id),
-  //         //     ),
-  //         //   );
-  //         // },
-  //         child: Container(
-  //           padding: EdgeInsets.all(8),
-  //           child: ListTile(
-  //             title: Text(
-  //               'Lab',
-  //               style: Theme.of(context).textTheme.title,
-  //             ),
-  //             subtitle: Text(
-  //               'Subtitle',
-  //               overflow: TextOverflow.fade,
-  //               style: Theme.of(context).textTheme.subhead,
-  //             ),
-  //             // leading: QuizBadge(topic: topic, quizId: quiz.id),
-  //           ),
-  //         ),
-  //       ),
-  //     );
-  //   }).toList());
-  // }
 }
