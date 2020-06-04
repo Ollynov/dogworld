@@ -114,57 +114,64 @@ class BreedPreview extends StatelessWidget {
   }
 }
 
-class BreedScreen extends StatelessWidget {
+class BreedScreen extends StatefulWidget {
   final Breed breed;
 
   BreedScreen({this.breed});
 
   @override
+  _BreedScreenState createState() => _BreedScreenState();
+}
+
+class _BreedScreenState extends State<BreedScreen> {
+  bool isFavorited = false;
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('${breed.fullName}'),
+        title: Text('${widget.breed.fullName}'),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(top: 10),
+        padding: const EdgeInsets.only(top: 10, bottom: 10),
         child: ListView(children: [
-          Row(
+          Stack(
             children: [
-              Expanded(
-                flex: 8,
-                child: Hero(
-                  tag: breed.img,
-                  child: Image.asset(
-                    'assets/covers/${breed.img}',
-                    width: MediaQuery.of(context).size.width,
-                    height: 500,
-                  )),
-              ),
-              Expanded(
-                flex: 2,
-                child: FlatButton(
-                  onPressed: () async {
-                    Navigator.pushNamed(context, '/login');
-                  }, 
-                  child: Row(
-                    children: [
-                      FaIcon(FontAwesomeIcons.solidHeart, color: Theme.of(context).primaryColor),
-                      Text('Save'),
-                    ],
-                  ),
-                  color: Theme.of(context).cardTheme.color,),
-                  
-                  // color: Theme.of(context).cardTheme.color,),
+              Hero(
+                tag: widget.breed.img,
+                child: Image.asset(
+                  'assets/covers/${widget.breed.img}',
+                  width: MediaQuery.of(context).size.width,
+                  height: 500,
+                )),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  FlatButton(
+                    onPressed: () async {
+                     setState(() {
+                       isFavorited = !isFavorited;
+                     });
+                    }, 
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        (isFavorited? FaIcon(FontAwesomeIcons.solidHeart, color: Theme.of(context).primaryColor):
+                        FaIcon(FontAwesomeIcons.heart, color: Theme.of(context).primaryColor)),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12.0),
+                          child: Text('Favorite', style: TextStyle(fontSize: 20.0),),
+                        ),
+                      ],
+                    ),
+                    color: Theme.of(context).cardTheme.color,
+                    ),
+                ],
               ),
             ],
           ),
-          
-          // Text(
-          //   breed.fullName,
-          //   style:
-          //       TextStyle(height: 2, fontSize: 20, fontWeight: FontWeight.bold),
-          // ),
-          BreedDetails(breed: breed)
+          BreedDetails(breed: widget.breed)
         ]),
       ),
     );
