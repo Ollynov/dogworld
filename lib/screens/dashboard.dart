@@ -27,62 +27,72 @@ class _DashboardScreenState extends State<DashboardScreen> {
       return Scaffold(
         appBar: AppBar(
           title: Text('Dashboard'),
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Theme.of(context).primaryColorDark,
         ),
         body: Center(
+          child: SizedBox(
+            width: 500,
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            (hasNewDisplay? Text(
-              'Welcome There $newDisplayName',
-              style: TextStyle(height: 1.5, fontWeight: FontWeight.bold),
-            ) :
-            Text(
-              'Welcome There ${user.displayName}',
-              style: TextStyle(height: 1.5, fontWeight: FontWeight.bold),
-            ))
-            ,
-            TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'New Display Name',
-                ),
-                onSubmitted: (String value) async {
-                  await userService.updateUserPreferences(user, value);
-                  await showDialog<void>(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text('Great!'),
-                        content: Text('Your new display name is "$value".'),
-                        actions: <Widget>[
-                          FlatButton(
-                            onPressed: () { Navigator.pop(context);},
-                            child: const Text('OK'),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                  setState(() {
-                    newDisplayName = value;
-                    hasNewDisplay = true;
-                  });
-                }),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: 
-                FlatButton(
-                  child: Text('Logout'),
-                  color: Colors.red[400],
-                  onPressed: () async {
-                    print('ok you just signed out bruh');
-                    await auth.signOut();
-                    Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
-                }),
-            ),
+              (hasNewDisplay? Text(
+                'Welcome There $newDisplayName',
+                style: TextStyle(height: 1.5, fontWeight: FontWeight.bold),
+              ) :
+              Text(
+                'Welcome There ${user.displayName}',
+                style: TextStyle(height: 1.5, fontWeight: FontWeight.bold),
+              )),
+              TextField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'New Display Name',
+                  ),
+                  onSubmitted: (String value) async {
+                    await userService.updateUserPreferences(user, value);
+                    await showDialog<void>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Great!'),
+                          content: Text('Your new display name is "$value".'),
+                          actions: <Widget>[
+                            FlatButton(
+                              onPressed: () { Navigator.pop(context);},
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                    setState(() {
+                      newDisplayName = value;
+                      hasNewDisplay = true;
+                    });
+                  }),
+              Padding(
+                padding: EdgeInsets.only(top: 15, bottom: 200),
+                child: 
+                  FlatButton(
+                    child: Text('Logout'),
+                    color: Colors.red[400],
+                    onPressed: () async {
+                      print('ok you just signed out bruh');
+                      await auth.signOut();
+                      Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+                  }),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Your Favorite Breeds:',
+                    style: TextStyle(height: 1.5, fontWeight: FontWeight.bold)),
+                ],
+              )
           ],
-        )),
+        ),
+            )),
         bottomNavigationBar: AppBottomNav(route: 2, inactive: false,),
       );
     } else {
