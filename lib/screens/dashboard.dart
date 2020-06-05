@@ -83,15 +83,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
                   }),
               ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     Text(
-              //       'Your Favorite Breeds:',
-              //       style: TextStyle(height: 1.5, fontWeight: FontWeight.bold)),
-              //     UserFavoriteBreeds()
-              //   ],
-              // )
               Text(
                 'Your Favorite Breeds:',
                 style: TextStyle(height: 1.5, fontWeight: FontWeight.bold)),
@@ -154,10 +145,11 @@ class UserFavoriteBreeds extends StatelessWidget {
                   },
                   child: Container(
                     padding: EdgeInsets.all(8),
+                    color: Colors.grey[300],
                     child: Row(
                       children: [
                         Icon(
-                            FontAwesomeIcons.checkCircle,
+                            FontAwesomeIcons.dog,
                             size: 20),
                         Expanded(
                           child: Container(
