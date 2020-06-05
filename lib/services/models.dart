@@ -28,6 +28,29 @@ class Report {
   }
 }
 
+class UserDetails {
+  String uid;
+  String displayName;
+  List favoriteBreeds;
+  String lastActivity;
+
+
+  // first constructor method applying those properties we have defined above.
+  UserDetails({this.uid,
+      this.displayName,
+      this.favoriteBreeds,
+      this.lastActivity});
+
+  // so this parameter 'data' that we pass to our UserDetails is the data that we get back from firestore. This factory fromMap function can be seen as a secondary constructor method.
+  factory UserDetails.convertFromFireBaseMap(Map data) {
+    return UserDetails(
+        uid: data['uid'] ?? "",
+        displayName: data['displayName'] ?? "",
+        favoriteBreeds: data['favoriteBreeds'] ?? [],
+        lastActivity: data['quizComplete'] ?? "");
+  }
+}
+
 class Option {
   String value;
   String detail;

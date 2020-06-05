@@ -114,33 +114,64 @@ class BreedPreview extends StatelessWidget {
   }
 }
 
-class BreedScreen extends StatelessWidget {
+class BreedScreen extends StatefulWidget {
   final Breed breed;
 
   BreedScreen({this.breed});
 
   @override
+  _BreedScreenState createState() => _BreedScreenState();
+}
+
+class _BreedScreenState extends State<BreedScreen> {
+  bool isFavorited = false;
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('${breed.fullName}'),
+        title: Text('${widget.breed.fullName}'),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(top: 10),
+        padding: const EdgeInsets.only(top: 10, bottom: 10),
         child: ListView(children: [
-          Hero(
-              tag: breed.img,
-              child: Image.asset(
-                'assets/covers/${breed.img}',
-                width: MediaQuery.of(context).size.width,
-                height: 500,
-              )),
-          // Text(
-          //   breed.fullName,
-          //   style:
-          //       TextStyle(height: 2, fontSize: 20, fontWeight: FontWeight.bold),
-          // ),
-          BreedDetails(breed: breed)
+          Stack(
+            children: [
+              Hero(
+                tag: widget.breed.img,
+                child: Image.asset(
+                  'assets/covers/${widget.breed.img}',
+                  width: MediaQuery.of(context).size.width,
+                  height: 500,
+                )),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  FlatButton(
+                    onPressed: () async {
+                     setState(() {
+                       isFavorited = !isFavorited;
+                     });
+                    }, 
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        (isFavorited? FaIcon(FontAwesomeIcons.solidHeart, color: Theme.of(context).primaryColor):
+                        FaIcon(FontAwesomeIcons.heart, color: Theme.of(context).primaryColor)),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12.0),
+                          child: Text('Favorite', style: TextStyle(fontSize: 20.0),),
+                        ),
+                      ],
+                    ),
+                    color: Theme.of(context).cardTheme.color,
+                    ),
+                ],
+              ),
+            ],
+          ),
+          BreedDetails(breed: widget.breed)
         ]),
       ),
     );
@@ -164,39 +195,4 @@ class BreedDetails extends StatelessWidget {
       ),
     );
   }
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Column(
-  //       children: [1, 2, 3].map((quiz) {
-  //     return Card(
-  //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-  //       elevation: 4,
-  //       margin: EdgeInsets.all(4),
-  //       child: InkWell(
-  //         // onTap: () {
-  //         //   Navigator.of(context).push(
-  //         //     MaterialPageRoute(
-  //         //       builder: (BuildContext context) => QuizScreen(quizId: quiz.id),
-  //         //     ),
-  //         //   );
-  //         // },
-  //         child: Container(
-  //           padding: EdgeInsets.all(8),
-  //           child: ListTile(
-  //             title: Text(
-  //               'Lab',
-  //               style: Theme.of(context).textTheme.title,
-  //             ),
-  //             subtitle: Text(
-  //               'Subtitle',
-  //               overflow: TextOverflow.fade,
-  //               style: Theme.of(context).textTheme.subhead,
-  //             ),
-  //             // leading: QuizBadge(topic: topic, quizId: quiz.id),
-  //           ),
-  //         ),
-  //       ),
-  //     );
-  //   }).toList());
-  // }
 }

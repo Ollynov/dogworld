@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         StreamProvider<Report>.value(value: Global.reportRef.documentStream),
+        StreamProvider<UserDetails>.value(value: Global.userDetailsRef.documentStream),
         StreamProvider<FirebaseUser>.value(value: AuthService().userStream),
       ],
       child: MaterialApp(
@@ -38,7 +39,13 @@ class MyApp extends StatelessWidget {
           primaryColorLight: primaryColorLight,
           accentColor: secondaryColor,
           visualDensity: VisualDensity.adaptivePlatformDensity,
-          buttonTheme: ButtonThemeData(),
+          buttonTheme: ButtonThemeData(
+            minWidth: 100,
+            padding: EdgeInsets.all(14)
+          ),
+          // buttonTheme: ButtonThemeData().copyWith(
+          //   buttonColor: secondaryColor
+          // ),
           fontFamily: 'IndieFlower',
           textTheme: TextTheme(
               bodyText1: TextStyle(fontSize: 18),
