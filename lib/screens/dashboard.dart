@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:doggies/services/users.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../services/services.dart';
 import '../shared/shared.dart';
 import 'package:provider/provider.dart';
@@ -88,6 +89,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   Text(
                     'Your Favorite Breeds:',
                     style: TextStyle(height: 1.5, fontWeight: FontWeight.bold)),
+                  UserFavoriteBreeds()
                 ],
               )
           ],
@@ -124,3 +126,56 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
   }
 }
+
+class UserFavoriteBreeds extends StatelessWidget {
+  final dynamic userFavoriteBreeds = [];
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: Global.breedsRef.getData(),
+      builder: (BuildContext context, AsyncSnapshot snap) {
+        return Container(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: userFavoriteBreeds.map((opt) {
+              return Container(
+                height: 90,
+                margin: EdgeInsets.only(bottom: 10),
+                color: Colors.black26,
+                child: InkWell(
+                  onTap: () {
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(16),
+                    child: Row(
+                      children: [
+                        Icon(
+                            FontAwesomeIcons.checkCircle,
+                            size: 30),
+                        Expanded(
+                          child: Container(
+                            margin: EdgeInsets.only(left: 16),
+                            child: Text(
+                              opt.value,
+                              style: Theme.of(context).textTheme.bodyText2,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        );
+      },
+    );
+  }
+}
+
+
+
+
