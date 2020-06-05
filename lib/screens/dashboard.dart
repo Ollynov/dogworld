@@ -83,15 +83,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
                   }),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Your Favorite Breeds:',
-                    style: TextStyle(height: 1.5, fontWeight: FontWeight.bold)),
-                  UserFavoriteBreeds()
-                ],
-              )
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Text(
+              //       'Your Favorite Breeds:',
+              //       style: TextStyle(height: 1.5, fontWeight: FontWeight.bold)),
+              //     UserFavoriteBreeds()
+              //   ],
+              // )
+              Text(
+                'Your Favorite Breeds:',
+                style: TextStyle(height: 1.5, fontWeight: FontWeight.bold)),
+              UserFavoriteBreeds()
           ],
         ),
             )),
@@ -128,37 +132,39 @@ class _DashboardScreenState extends State<DashboardScreen> {
 }
 
 class UserFavoriteBreeds extends StatelessWidget {
-  final dynamic userFavoriteBreeds = [];
+  // final dynamic userFavoriteBreeds = [];
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: Global.breedsRef.getData(),
       builder: (BuildContext context, AsyncSnapshot snap) {
+        List<Breed> userFavoriteBreeds = snap.data;
         return Container(
           padding: EdgeInsets.all(20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: userFavoriteBreeds.map((opt) {
               return Container(
-                height: 90,
-                margin: EdgeInsets.only(bottom: 10),
+                height: 40,
+                margin: EdgeInsets.only(bottom: 6),
                 color: Colors.black26,
                 child: InkWell(
                   onTap: () {
                   },
                   child: Container(
-                    padding: EdgeInsets.all(16),
+                    padding: EdgeInsets.all(8),
                     child: Row(
                       children: [
                         Icon(
                             FontAwesomeIcons.checkCircle,
-                            size: 30),
+                            size: 20),
                         Expanded(
                           child: Container(
-                            margin: EdgeInsets.only(left: 16),
+                            margin: EdgeInsets.only(left: 10),
                             child: Text(
-                              opt.value,
+                              opt.fullName,
+                              // opt.value,
                               style: Theme.of(context).textTheme.bodyText2,
                             ),
                           ),
