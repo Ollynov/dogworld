@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doggies/services/models.dart';
 import 'package:doggies/services/services.dart';
 import 'package:doggies/shared/shared.dart';
@@ -149,6 +150,8 @@ class _BreedScreenState extends State<BreedScreen> {
                 children: [
                   FlatButton(
                     onPressed: () async {
+                      // here we need to save to our favorites
+                      _addNewBreedToFavorites(widget.breed.id);
                      setState(() {
                        isFavorited = !isFavorited;
                      });
@@ -195,4 +198,14 @@ class BreedDetails extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<void> _addNewBreedToFavorites(breedId) {
+  print('ok trying to add');
+  print(breedId);
+  return Global.userDetailsRef.upsert(
+    ({
+      'favoriteBreeds': FieldValue.arrayUnion(breedId),
+    }),
+  );
 }

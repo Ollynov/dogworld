@@ -97,8 +97,10 @@ class UserData<T> {
     if (user != null) {
       Document doc = Document<T>(path: '$collection/${user.uid}');
       // This will return back a nice unserialized version of the user information.
+      print('ok getting back user');
       return doc.getData();
     } else {
+      print('ok getting null for logged in user');
       return null;
     }
   }

@@ -125,74 +125,69 @@ class _DashboardScreenState extends State<DashboardScreen> {
 }
 
 class UserFavoriteBreeds extends StatelessWidget {
-  // final dynamic userFavoriteBreeds = [];
 
   @override
   Widget build(BuildContext context) {
-    // FirebaseUser user = Provider.of<FirebaseUser>(context);
-    // String id = user.uid;
-
 
     return FutureBuilder(
       future: Global.userDetailsRef.getDocument(),
       builder: (BuildContext context, AsyncSnapshot snap) {
-        UserDetails userDetails = snap.data;
-        print('ok got this userdetails: ');
-        print(snap);
-        print(snap.data);
-        return Container(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: userDetails.favoriteBreeds.map((opt) {
-              return Container(
-                height: 40,
-                margin: EdgeInsets.only(bottom: 6),
-                color: Colors.black26,
-                child: InkWell(
-                  onTap: () {
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(8),
-                    color: Colors.grey[300],
-                    child: Row(
-                      children: [
-                        Icon(
-                            FontAwesomeIcons.dog,
-                            size: 20),
-                        Expanded(
-                          child: Container(
-                            margin: EdgeInsets.only(left: 10),
-                            child: Text(
-                              opt,
-                              // opt.value,
-                              style: Theme.of(context).textTheme.bodyText2,
+
+        if (snap.hasData) {
+          UserDetails userDetails = snap.data;
+          return Container(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: userDetails.favoriteBreeds.map((opt) {
+                return Container(
+                  height: 40,
+                  margin: EdgeInsets.only(bottom: 6),
+                  color: Colors.black26,
+                  child: InkWell(
+                    onTap: () {
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(8),
+                      color: Colors.grey[300],
+                      child: Row(
+                        children: [
+                          Icon(
+                              FontAwesomeIcons.dog,
+                              size: 20),
+                          Expanded(
+                            child: Container(
+                              margin: EdgeInsets.only(left: 10),
+                              child: Text(
+                                opt,
+                                // opt.value,
+                                style: Theme.of(context).textTheme.bodyText2,
+                              ),
                             ),
-                          ),
-                        )
-                      ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              );
-            }).toList(),
-          ),
-        );
+                );
+              }).toList(),
+            ),
+          );
+        } else {
+          return Loader();
+        }
       },
     );
   }
 }
 
-Future<void> _updateUserDetails(UserDetails userDetails) {
-  // return Global.userDetailsRef.upsert(
-  //   ({
-  //     'total': FieldValue.increment(1),
-  //     'topics': {
-  //       '${quiz.topic}': FieldValue.arrayUnion([quiz.id])
-  //     }
-  //   }),
-  // );
-}
+// Future<void> _updateUserDetails(newBreed) {
+//   return Global.userDetailsRef.upsert(
+//     ({
+//       'favoriteBreeds': FieldValue.arrayUnion(newBreed),
+//     }),
+//   );
+// }
 
 
 

@@ -108,14 +108,14 @@ class Quiz {
 }
 
 class Breed {
-  // final String id;
+  final String id;
   final String fullName;
   final String description;
   final String img;
   // final List<String> variations;
   // final List<Quiz> quizzes;
 
-  Breed({this.fullName, this.description, this.img});
+  Breed({this.fullName, this.description, this.img, this.id});
   // Topic({this.id, this.title, this.description, this.img, this.quizzes});
 
   factory Breed.convertFromFireBaseMap(Map data) {
@@ -123,6 +123,7 @@ class Breed {
       fullName: data['fullName'] ?? '',
       description: data['description'] ?? '',
       img: data['img'] ?? 'default.png',
+      id: data['id'] ?? ''
       // variations: (data['variations'] as List<String> ?? [])
       // quizzes: (data['quizzes'] as List ?? [])
       //     .map((v) => Quiz.fromMap(v))
@@ -130,5 +131,5 @@ class Breed {
     );
   }
 
-  get id => null;
+  // get id => null;
 }
