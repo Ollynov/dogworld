@@ -6,6 +6,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../services/services.dart';
 import '../shared/shared.dart';
 import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class DashboardScreen extends StatefulWidget {
   @override
@@ -127,15 +129,22 @@ class UserFavoriteBreeds extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // FirebaseUser user = Provider.of<FirebaseUser>(context);
+    // String id = user.uid;
+
+
     return FutureBuilder(
-      future: Global.breedsRef.getData(),
+      future: Global.userDetailsRef.getDocument(),
       builder: (BuildContext context, AsyncSnapshot snap) {
-        List<Breed> userFavoriteBreeds = snap.data;
+        UserDetails userDetails = snap.data;
+        print('ok got this userdetails: ');
+        print(snap);
+        print(snap.data);
         return Container(
           padding: EdgeInsets.all(20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: userFavoriteBreeds.map((opt) {
+            children: userDetails.favoriteBreeds.map((opt) {
               return Container(
                 height: 40,
                 margin: EdgeInsets.only(bottom: 6),
@@ -155,7 +164,7 @@ class UserFavoriteBreeds extends StatelessWidget {
                           child: Container(
                             margin: EdgeInsets.only(left: 10),
                             child: Text(
-                              opt.fullName,
+                              opt,
                               // opt.value,
                               style: Theme.of(context).textTheme.bodyText2,
                             ),
@@ -174,6 +183,16 @@ class UserFavoriteBreeds extends StatelessWidget {
   }
 }
 
+Future<void> _updateUserDetails(UserDetails userDetails) {
+  // return Global.userDetailsRef.upsert(
+  //   ({
+  //     'total': FieldValue.increment(1),
+  //     'topics': {
+  //       '${quiz.topic}': FieldValue.arrayUnion([quiz.id])
+  //     }
+  //   }),
+  // );
+}
 
 
 
