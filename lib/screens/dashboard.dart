@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:doggies/services/users.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,19 +5,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../services/services.dart';
 import '../shared/shared.dart';
 import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 
-class DashboardScreen extends StatefulWidget {
-  @override
-  _DashboardScreenState createState() => _DashboardScreenState();
-}
-
-class _DashboardScreenState extends State<DashboardScreen> {
+class DashboardScreen extends StatelessWidget {
   final AuthService auth = AuthService();
   final UsersService userService = UsersService();
-  // String newDisplayName = "";
-  // bool hasNewDisplay = false;
 
   @override
   Widget build(BuildContext context) {
@@ -69,10 +60,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         );
                       },
                     );
-                    // setState(() {
-                    //   newDisplayName = value;
-                    //   hasNewDisplay = true;
-                    // });
                   }),
               Padding(
                 padding: EdgeInsets.only(top: 15, bottom: 200),
