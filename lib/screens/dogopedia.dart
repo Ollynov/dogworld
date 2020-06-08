@@ -2,9 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doggies/services/models.dart';
 import 'package:doggies/services/services.dart';
 import 'package:doggies/shared/shared.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'dart:developer' as developer;
+
+import 'package:provider/provider.dart';
 
 
 class DogopediaScreen extends StatelessWidget {
@@ -129,6 +131,9 @@ class _BreedScreenState extends State<BreedScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    FirebaseUser user = Provider.of<FirebaseUser>(context);
+    
     return Scaffold(
       appBar: AppBar(
         title: Text('${widget.breed.fullName}'),
@@ -151,10 +156,13 @@ class _BreedScreenState extends State<BreedScreen> {
                   FlatButton(
                     onPressed: () async {
                       // here we need to save to our favorites
-                     _addNewBreedToFavorites(widget.breed.id);
-                     setState(() {
-                       isFavorited = !isFavorited;
-                     });
+                      if (user != null) {
+                        _addNewBreedToFavorites(widget.breed.id);
+                        setState(() {
+                          isFavorited = !isFavorited;
+                        });
+                      }
+
                     }, 
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,

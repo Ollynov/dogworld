@@ -133,13 +133,10 @@ class UserFavoriteBreeds extends StatelessWidget {
       future: Global.userDetailsRef.getDocument(),
       builder: (BuildContext context, AsyncSnapshot snap) {
 
-        print('here is snap:');
-        print(snap);
-
         if (!snap.hasData) {
-          return Text('Loading...');
+          return Loader();
         } 
-         else {
+        else {
 
           UserDetails userDetails = snap.data;
           
