@@ -177,7 +177,7 @@ class _FavoriteButtonState extends State<FavoriteButton> {
     UserDetails userDetails = Provider.of<UserDetails>(context);
 
 
-    if (userDetails.favoriteBreeds.contains(widget.breedId)) {
+    if (userDetails != null && userDetails.favoriteBreeds.contains(widget.breedId)) {
       setState(() {
         isFavorited = true;
       });
@@ -252,9 +252,9 @@ Future<void> _addNewBreedToFavorites(String breedId) {
   );
 }
 Future<void> _removeBreedFromFavorites(String breedId) {
-  // return Global.userDetailsRef.upsert(
-  //   ({
-  //     'favoriteBreeds': FieldValue.arrayUnion([breedId])
-  //   }),
-  // );
+  return Global.userDetailsRef.upsert(
+    ({
+      'favoriteBreeds': FieldValue.arrayRemove([breedId])
+    }),
+  );
 }
