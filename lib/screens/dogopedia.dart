@@ -188,7 +188,11 @@ class _FavoriteButtonState extends State<FavoriteButton> {
           });
         } else {
           Scaffold.of(context).showSnackBar(SnackBar(
-            content: Text("You must be logged in to save a favorite dog breed."),
+            content: GestureDetector(
+              child: Text("You must be logged in to save a favorite dog breed."),
+              onTap: () {Navigator.pushNamed(context, '/login');},
+            ),
+            
             backgroundColor: Theme.of(context).primaryColorLight,
           ));
         }
