@@ -76,7 +76,7 @@ class DashboardScreen extends StatelessWidget {
               Text(
                 'Your Favorite Breeds:',
                 style: TextStyle(height: 1.5, fontWeight: FontWeight.bold)),
-              UserFavoriteBreeds()
+              UserFavoriteBreeds(userDetails: userDetails)
           ],
         ),
             )),
@@ -113,63 +113,59 @@ class DashboardScreen extends StatelessWidget {
 }
 
 class UserFavoriteBreeds extends StatelessWidget {
+  final UserDetails userDetails;
+  UserFavoriteBreeds({this.userDetails});
 
   @override
   Widget build(BuildContext context) {
 
-    return FutureBuilder(
-      future: Global.userDetailsRef.getDocument(),
-      builder: (BuildContext context, AsyncSnapshot snap) {
-
-        if (!snap.hasData) {
-          return Loader();
-        } 
-        else {
-
-          UserDetails userDetails = snap.data;
-          
-          return Container(
-            padding: EdgeInsets.all(20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: userDetails.favoriteBreeds.map((opt) {
-                return Container(
-                  height: 40,
-                  margin: EdgeInsets.only(bottom: 6),
-                  color: Colors.black26,
-                  child: InkWell(
-                    onTap: () {
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(8),
-                      color: Colors.grey[300],
-                      child: Row(
-                        children: [
-                          Icon(
-                              FontAwesomeIcons.dog,
-                              size: 20),
-                          Expanded(
-                            child: Container(
-                              margin: EdgeInsets.only(left: 10),
-                              child: Text(
-                                opt,
-                                // opt.value,
-                                style: Theme.of(context).textTheme.bodyText2,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
+    if (userDetails.favoriteBreeds != []) {
+      print('ok we are here, and favs are: ');
+      print(userDetails.favoriteBreeds);
+      return Container(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: userDetails.favoriteBreeds.map((breedName) {
+            return Container(
+              height: 40,
+              margin: EdgeInsets.only(bottom: 6),
+              color: Colors.black26,
+              child: InkWell(
+                onTap: () {
+                },
+                child: Container(
+                  padding: EdgeInsets.all(8),
+                  color: Colors.grey[300],
+                  child: Row(
+                    children: [
+                      Icon(
+                          FontAwesomeIcons.dog,
+                          size: 20),
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.only(left: 10),
+                          child: Text(
+                            breedName,
+                            // breedName.value,
+                            style: Theme.of(context).textTheme.bodyText2,
+                          ),
+                        ),
+                      )
+                    ],
                   ),
-                );
-              }).toList(),
-            ),
-          );
-        }   
-      },
-    );
-  }
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+      );
+    } else {
+      return Loader();
+    }
+ 
+    
+  }   
 }
 
 // Future<void> _updateUserDetails(newBreed) {
