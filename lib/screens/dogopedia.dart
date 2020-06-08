@@ -187,7 +187,10 @@ class _FavoriteButtonState extends State<FavoriteButton> {
             isFavorited = !isFavorited;
           });
         } else {
-          Scaffold.of(context).showSnackBar(SnackBar(content: Text("nyooooo")));
+          Scaffold.of(context).showSnackBar(SnackBar(
+            content: Text("You must be logged in to save a favorite dog breed."),
+            backgroundColor: Theme.of(context).primaryColorLight,
+          ));
         }
 
       }, 
