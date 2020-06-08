@@ -117,16 +117,11 @@ class BreedPreview extends StatelessWidget {
   }
 }
 
-class BreedScreen extends StatefulWidget {
-  final Breed breed;
 
+class BreedScreen extends StatelessWidget {
+  final Breed breed;
   BreedScreen({this.breed});
 
-  @override
-  _BreedScreenState createState() => _BreedScreenState();
-}
-
-class _BreedScreenState extends State<BreedScreen> {
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +129,7 @@ class _BreedScreenState extends State<BreedScreen> {
     
     return Scaffold(
       appBar: AppBar(
-        title: Text('${widget.breed.fullName}'),
+        title: Text('${breed.fullName}'),
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 10, bottom: 10),
@@ -142,9 +137,9 @@ class _BreedScreenState extends State<BreedScreen> {
           Stack(
             children: [
               Hero(
-                tag: widget.breed.img,
+                tag: breed.img,
                 child: Image.asset(
-                  'assets/covers/${widget.breed.img}',
+                  'assets/covers/${breed.img}',
                   width: MediaQuery.of(context).size.width,
                   height: 500,
                 )),
@@ -156,7 +151,7 @@ class _BreedScreenState extends State<BreedScreen> {
               ),
             ],
           ),
-          BreedDetails(breed: widget.breed)
+          BreedDetails(breed: breed)
         ]),
       ),
     );
@@ -235,8 +230,6 @@ class BreedDetails extends StatelessWidget {
 }
 
 Future<void> _addNewBreedToFavorites(String breedId) {
-  print('ok trying to add');
-  print(breedId);
   return Global.userDetailsRef.upsert(
     ({
       'favoriteBreeds': FieldValue.arrayUnion([breedId])
