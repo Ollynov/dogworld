@@ -24,6 +24,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     
     FirebaseUser user = Provider.of<FirebaseUser>(context);
+    UserDetails userDetails = Provider.of<UserDetails>(context);
+
+    // if (userDetails != null) {
+    //   setState(() {
+    //     has
+    //   });
+    // }
     
 
     if (user != null) {
@@ -38,10 +45,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-              (hasNewDisplay? Text(
-                'Welcome There $newDisplayName',
+              (userDetails != null && userDetails.displayName != ""? Text(
+                'Welcome There ${userDetails.displayName}',
                 style: TextStyle(height: 1.5, fontWeight: FontWeight.bold),
               ) :
+              // (hasNewDisplay? Text(
+              //   'Welcome There $newDisplayName',
+              //   style: TextStyle(height: 1.5, fontWeight: FontWeight.bold),
+              // ) :
               Text(
                 'Welcome There ${user.displayName}',
                 style: TextStyle(height: 1.5, fontWeight: FontWeight.bold),
