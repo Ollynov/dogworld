@@ -17,8 +17,8 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   final AuthService auth = AuthService();
   final UsersService userService = UsersService();
-  String newDisplayName = "";
-  bool hasNewDisplay = false;
+  // String newDisplayName = "";
+  // bool hasNewDisplay = false;
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +26,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     FirebaseUser user = Provider.of<FirebaseUser>(context);
     UserDetails userDetails = Provider.of<UserDetails>(context);
 
-    // if (userDetails != null) {
-    //   setState(() {
-    //     has
-    //   });
-    // }
-    
 
     if (user != null) {
       return Scaffold(
@@ -49,10 +43,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 'Welcome There ${userDetails.displayName}',
                 style: TextStyle(height: 1.5, fontWeight: FontWeight.bold),
               ) :
-              // (hasNewDisplay? Text(
-              //   'Welcome There $newDisplayName',
-              //   style: TextStyle(height: 1.5, fontWeight: FontWeight.bold),
-              // ) :
               Text(
                 'Welcome There ${user.displayName}',
                 style: TextStyle(height: 1.5, fontWeight: FontWeight.bold),
@@ -79,10 +69,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         );
                       },
                     );
-                    setState(() {
-                      newDisplayName = value;
-                      hasNewDisplay = true;
-                    });
+                    // setState(() {
+                    //   newDisplayName = value;
+                    //   hasNewDisplay = true;
+                    // });
                   }),
               Padding(
                 padding: EdgeInsets.only(top: 15, bottom: 200),
