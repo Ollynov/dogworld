@@ -83,32 +83,40 @@ class DashboardScreen extends StatelessWidget {
         bottomNavigationBar: AppBottomNav(route: 2, inactive: false,),
       );
     } else {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text('Dashboard'),
-        ),
-        body: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Sorry you are not logged in!!',
-              style: TextStyle(height: 1.5, fontWeight: FontWeight.bold),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: FlatButton(
-                  child: Text('Login'),
-                  color: Theme.of(context).accentColor,
-                  onPressed: () async {
-                    Navigator.pushNamed(context, '/login');
-                  }),
-            ),
-          ],
-        )),
-        bottomNavigationBar: AppBottomNav(route: 2, inactive: false),
-      );
+      DashNotLoggedIn();
     }
+  }
+}
+
+class DashNotLoggedIn extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Dashboard'),
+      ),
+      body: Center(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Sorry you are not logged in!!',
+            style: TextStyle(height: 1.5, fontWeight: FontWeight.bold),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: FlatButton(
+                child: Text('Login'),
+                color: Theme.of(context).accentColor,
+                onPressed: () async {
+                  Navigator.pushNamed(context, '/login');
+                }),
+          ),
+        ],
+      )),
+      bottomNavigationBar: AppBottomNav(route: 2, inactive: false),
+    );
   }
 }
 
