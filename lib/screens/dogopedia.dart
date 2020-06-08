@@ -122,7 +122,7 @@ class BreedScreen extends StatelessWidget {
   final Breed breed;
   BreedScreen({this.breed});
 
-
+  
   @override
   Widget build(BuildContext context) {
 
@@ -146,7 +146,7 @@ class BreedScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  FavoriteButton()
+                  FavoriteButton(breedId: breed.id)
                 ],
               ),
             ],
@@ -159,25 +159,47 @@ class BreedScreen extends StatelessWidget {
 }
 
 class FavoriteButton extends StatefulWidget {
+  FavoriteButton({Key key, this.breedId}) : super(key: key);
+  final String breedId;
+
+// AppBottomNav({Key key, this.route, this.inactive}) : super(key: key);
+//   final int route;
+//   final bool inactive;
+
 
   @override
   _FavoriteButtonState createState() => _FavoriteButtonState();
 }
 
 class _FavoriteButtonState extends State<FavoriteButton> {
-  final String breedId = null;
   bool isFavorited = false;
 
 
   @override 
   Widget build(BuildContext context) {
 
-    FirebaseUser user = Provider.of<FirebaseUser>(context);
+    // FirebaseUser user = Provider.of<FirebaseUser>(context);
+    UserDetails userDetails = Provider.of<UserDetails>(context);
+
+    print('ok going to check this breedId: ');
+    print(widget.breedId);
+    if (userDetails.favoriteBreeds.contains(widget.breedId)) {
+      print('ok about to set isFav to true;');
+      setState(() {
+        isFavorited = true;
+      });
+    }    
 
     return FlatButton(
       onPressed: () async {
-        if (user != null) {
-          _addNewBreedToFavorites(breedId);
+        if (userDetails.uid != "") {
+          if (isFavorited == false) {
+            // this means that we are now favoriting this breed for the first time, so lets add to DB
+            _addNewBreedToFavorites(widget.breedId);
+          } else {
+            //remove from DB
+            _removeBreedFromFavorites(widget.breedId);
+          }
           setState(() {
             isFavorited = !isFavorited;
           });
@@ -235,4 +257,11 @@ Future<void> _addNewBreedToFavorites(String breedId) {
       'favoriteBreeds': FieldValue.arrayUnion([breedId])
     }),
   );
+}
+Future<void> _removeBreedFromFavorites(String breedId) {
+  // return Global.userDetailsRef.upsert(
+  //   ({
+  //     'favoriteBreeds': FieldValue.arrayUnion([breedId])
+  //   }),
+  // );
 }
