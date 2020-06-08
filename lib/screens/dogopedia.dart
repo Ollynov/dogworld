@@ -151,7 +151,7 @@ class _BreedScreenState extends State<BreedScreen> {
                   FlatButton(
                     onPressed: () async {
                       // here we need to save to our favorites
-                      _addNewBreedToFavorites(widget.breed.id);
+                     _addNewBreedToFavorites(widget.breed.id);
                      setState(() {
                        isFavorited = !isFavorited;
                      });
@@ -200,12 +200,12 @@ class BreedDetails extends StatelessWidget {
   }
 }
 
-Future<void> _addNewBreedToFavorites(breedId) {
+Future<void> _addNewBreedToFavorites(String breedId) {
   print('ok trying to add');
   print(breedId);
   return Global.userDetailsRef.upsert(
     ({
-      'favoriteBreeds': FieldValue.arrayUnion(breedId),
+      'favoriteBreeds': FieldValue.arrayUnion([breedId])
     }),
   );
 }

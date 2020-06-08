@@ -133,8 +133,16 @@ class UserFavoriteBreeds extends StatelessWidget {
       future: Global.userDetailsRef.getDocument(),
       builder: (BuildContext context, AsyncSnapshot snap) {
 
-        if (snap.hasData) {
+        print('here is snap:');
+        print(snap);
+
+        if (!snap.hasData) {
+          return Text('Loading...');
+        } 
+         else {
+
           UserDetails userDetails = snap.data;
+          
           return Container(
             padding: EdgeInsets.all(20),
             child: Column(
@@ -173,9 +181,9 @@ class UserFavoriteBreeds extends StatelessWidget {
               }).toList(),
             ),
           );
-        } else {
-          return Loader();
         }
+          
+          
       },
     );
   }

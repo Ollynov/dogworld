@@ -31,7 +31,7 @@ class Report {
 class UserDetails {
   String uid;
   String displayName;
-  List favoriteBreeds;
+  List<dynamic> favoriteBreeds;
   String lastActivity;
 
 
@@ -41,7 +41,7 @@ class UserDetails {
       this.favoriteBreeds,
       this.lastActivity});
 
-  // so this parameter 'data' that we pass to our UserDetails is the data that we get back from firestore. This factory fromMap function can be seen as a secondary constructor method.
+  // so this parameter 'data' that we pass to our UserDetails is the data that we get back from firestore in the Map format. This factory fromMap function can be seen as a secondary constructor method. This will do 2 primary things: it will return our return value as an instance of UserDetails (instead of a Map), and it will also be sure to give us some default values in case we have none. 
   factory UserDetails.convertFromFireBaseMap(Map data) {
     return UserDetails(
         uid: data['uid'] ?? "",
