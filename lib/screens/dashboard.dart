@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:doggies/services/users.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,25 +5,18 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../services/services.dart';
 import '../shared/shared.dart';
 import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 
-class DashboardScreen extends StatefulWidget {
-  @override
-  _DashboardScreenState createState() => _DashboardScreenState();
-}
-
-class _DashboardScreenState extends State<DashboardScreen> {
+class DashboardScreen extends StatelessWidget {
   final AuthService auth = AuthService();
   final UsersService userService = UsersService();
-  String newDisplayName = "";
-  bool hasNewDisplay = false;
 
   @override
   Widget build(BuildContext context) {
     
     FirebaseUser user = Provider.of<FirebaseUser>(context);
-    
+    UserDetails userDetails = Provider.of<UserDetails>(context);
+
 
     if (user != null) {
       return Scaffold(
@@ -38,8 +30,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-              (hasNewDisplay? Text(
-                'Welcome There $newDisplayName',
+              (userDetails != null && userDetails.displayName != ""? Text(
+                'Welcome There ${userDetails.displayName}',
                 style: TextStyle(height: 1.5, fontWeight: FontWeight.bold),
               ) :
               Text(
@@ -68,10 +60,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         );
                       },
                     );
-                    setState(() {
-                      newDisplayName = value;
-                      hasNewDisplay = true;
-                    });
                   }),
               Padding(
                 padding: EdgeInsets.only(top: 15, bottom: 200),
@@ -88,7 +76,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               Text(
                 'Your Favorite Breeds:',
                 style: TextStyle(height: 1.5, fontWeight: FontWeight.bold)),
-              UserFavoriteBreeds()
+              UserFavoriteBreeds(userDetails: userDetails)
           ],
         ),
             )),
@@ -125,74 +113,68 @@ class _DashboardScreenState extends State<DashboardScreen> {
 }
 
 class UserFavoriteBreeds extends StatelessWidget {
-  // final dynamic userFavoriteBreeds = [];
+  final UserDetails userDetails;
+  UserFavoriteBreeds({this.userDetails});
 
   @override
   Widget build(BuildContext context) {
-    // FirebaseUser user = Provider.of<FirebaseUser>(context);
-    // String id = user.uid;
 
-
-    return FutureBuilder(
-      future: Global.userDetailsRef.getDocument(),
-      builder: (BuildContext context, AsyncSnapshot snap) {
-        UserDetails userDetails = snap.data;
-        print('ok got this userdetails: ');
-        print(snap);
-        print(snap.data);
-        return Container(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: userDetails.favoriteBreeds.map((opt) {
-              return Container(
-                height: 40,
-                margin: EdgeInsets.only(bottom: 6),
-                color: Colors.black26,
-                child: InkWell(
-                  onTap: () {
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(8),
-                    color: Colors.grey[300],
-                    child: Row(
-                      children: [
-                        Icon(
-                            FontAwesomeIcons.dog,
-                            size: 20),
-                        Expanded(
-                          child: Container(
-                            margin: EdgeInsets.only(left: 10),
-                            child: Text(
-                              opt,
-                              // opt.value,
-                              style: Theme.of(context).textTheme.bodyText2,
-                            ),
+    if (userDetails != null && userDetails.favoriteBreeds != []) {
+      print('ok we are here, and favs are: ');
+      print(userDetails.favoriteBreeds);
+      return Container(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: userDetails.favoriteBreeds.map((breedName) {
+            return Container(
+              height: 40,
+              margin: EdgeInsets.only(bottom: 6),
+              color: Colors.black26,
+              child: InkWell(
+                onTap: () {
+                },
+                child: Container(
+                  padding: EdgeInsets.all(8),
+                  color: Colors.grey[300],
+                  child: Row(
+                    children: [
+                      Icon(
+                          FontAwesomeIcons.dog,
+                          size: 20),
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.only(left: 10),
+                          child: Text(
+                            breedName,
+                            // breedName.value,
+                            style: Theme.of(context).textTheme.bodyText2,
                           ),
-                        )
-                      ],
-                    ),
+                        ),
+                      )
+                    ],
                   ),
                 ),
-              );
-            }).toList(),
-          ),
-        );
-      },
-    );
-  }
+              ),
+            );
+          }).toList(),
+        ),
+      );
+    } else {
+      return Loader();
+    }
+ 
+    
+  }   
 }
 
-Future<void> _updateUserDetails(UserDetails userDetails) {
-  // return Global.userDetailsRef.upsert(
-  //   ({
-  //     'total': FieldValue.increment(1),
-  //     'topics': {
-  //       '${quiz.topic}': FieldValue.arrayUnion([quiz.id])
-  //     }
-  //   }),
-  // );
-}
+// Future<void> _updateUserDetails(newBreed) {
+//   return Global.userDetailsRef.upsert(
+//     ({
+//       'favoriteBreeds': FieldValue.arrayUnion(newBreed),
+//     }),
+//   );
+// }
 
 
 

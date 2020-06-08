@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 import './globals.dart';
+import './models.dart';
 
 class Document<T> {
   final Firestore _db = Firestore.instance;
@@ -24,7 +25,13 @@ class Document<T> {
 
 // This is our money function. <T> can be any of the data models we have defined inside of our Global.models class. The reason we need to do this is because Dart is strongly types, so we can't just run the .fromMap function onto any generic type.
   Future<T> getData() {
-    return ref.get().then((v) => Global.models[T](v.data) as T);
+    try {
+      return ref.get().then((v) => Global.models[T](v.data) as T);
+    } catch(err) {
+      print('got error: ');
+      print(err);
+      throw "ok got error";
+    }
   }
 
   Stream<T> streamData() {
@@ -92,15 +99,32 @@ class UserData<T> {
   }
 
   Future<T> getDocument() async {
-    FirebaseUser user = await _auth.currentUser();
 
-    if (user != null) {
-      Document doc = Document<T>(path: '$collection/${user.uid}');
-      // This will return back a nice unserialized version of the user information.
-      return doc.getData();
-    } else {
-      return null;
+    try {
+      FirebaseUser user = await _auth.currentUser();
+      if (user!= null) {
+        Document doc = Document<T>(path: '$collection/${user.uid}');
+        // This will return back a nice unserialized version of the user information.
+        return doc.getData();
+      } else {
+        print('ok not logged in yet: ');
+        throw 'not even logged in';
+      }
+    } catch(err) {
+      print('ok getting error');
+      print(err);
+      throw "user is null";
     }
+
+    // if (user != null) {
+    //   Document doc = Document<T>(path: '$collection/${user.uid}');
+    //   // This will return back a nice unserialized version of the user information.
+    //   print('ok getting back user');
+    //   return doc.getData();
+    // } else {
+    //   print('ok getting null for logged in user');
+    //   return null;
+    // }
   }
 
   Future<void> upsert(Map data) async {
