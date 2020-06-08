@@ -127,12 +127,10 @@ class BreedScreen extends StatefulWidget {
 }
 
 class _BreedScreenState extends State<BreedScreen> {
-  bool isFavorited = false;
 
   @override
   Widget build(BuildContext context) {
 
-    FirebaseUser user = Provider.of<FirebaseUser>(context);
     
     return Scaffold(
       appBar: AppBar(
@@ -153,31 +151,7 @@ class _BreedScreenState extends State<BreedScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  FlatButton(
-                    onPressed: () async {
-                      // here we need to save to our favorites
-                      if (user != null) {
-                        _addNewBreedToFavorites(widget.breed.id);
-                        setState(() {
-                          isFavorited = !isFavorited;
-                        });
-                      }
-
-                    }, 
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        (isFavorited? FaIcon(FontAwesomeIcons.solidHeart, color: Theme.of(context).primaryColor):
-                        FaIcon(FontAwesomeIcons.heart, color: Theme.of(context).primaryColor)),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 12.0),
-                          child: Text('Favorite', style: TextStyle(fontSize: 20.0),),
-                        ),
-                      ],
-                    ),
-                    color: Theme.of(context).cardTheme.color,
-                    ),
+                  FavoriteButton()
                 ],
               ),
             ],
@@ -186,6 +160,51 @@ class _BreedScreenState extends State<BreedScreen> {
         ]),
       ),
     );
+  }
+}
+
+class FavoriteButton extends StatefulWidget {
+
+  @override
+  _FavoriteButtonState createState() => _FavoriteButtonState();
+}
+
+class _FavoriteButtonState extends State<FavoriteButton> {
+  final String breedId = null;
+  bool isFavorited = false;
+
+
+  @override 
+  Widget build(BuildContext context) {
+
+    FirebaseUser user = Provider.of<FirebaseUser>(context);
+
+    return FlatButton(
+      onPressed: () async {
+        if (user != null) {
+          _addNewBreedToFavorites(breedId);
+          setState(() {
+            isFavorited = !isFavorited;
+          });
+        } else {
+          Scaffold.of(context).showSnackBar(SnackBar(content: Text("nyooooo")));
+        }
+
+      }, 
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          (isFavorited? FaIcon(FontAwesomeIcons.solidHeart, color: Theme.of(context).primaryColor):
+          FaIcon(FontAwesomeIcons.heart, color: Theme.of(context).primaryColor)),
+          Padding(
+            padding: const EdgeInsets.only(left: 12.0),
+            child: Text('Favorite', style: TextStyle(fontSize: 20.0),),
+          ),
+        ],
+      ),
+      color: Theme.of(context).cardTheme.color,
+      );
   }
 }
 
