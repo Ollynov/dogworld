@@ -162,10 +162,6 @@ class FavoriteButton extends StatefulWidget {
   FavoriteButton({Key key, this.breedId}) : super(key: key);
   final String breedId;
 
-// AppBottomNav({Key key, this.route, this.inactive}) : super(key: key);
-//   final int route;
-//   final bool inactive;
-
 
   @override
   _FavoriteButtonState createState() => _FavoriteButtonState();
@@ -178,13 +174,10 @@ class _FavoriteButtonState extends State<FavoriteButton> {
   @override 
   Widget build(BuildContext context) {
 
-    // FirebaseUser user = Provider.of<FirebaseUser>(context);
     UserDetails userDetails = Provider.of<UserDetails>(context);
 
-    print('ok going to check this breedId: ');
-    print(widget.breedId);
+
     if (userDetails.favoriteBreeds.contains(widget.breedId)) {
-      print('ok about to set isFav to true;');
       setState(() {
         isFavorited = true;
       });
