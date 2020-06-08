@@ -166,9 +166,7 @@ class UserFavoriteBreeds extends StatelessWidget {
               }).toList(),
             ),
           );
-        }
-          
-          
+        }   
       },
     );
   }
