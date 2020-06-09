@@ -66,11 +66,12 @@ class BreedPreview extends StatelessWidget {
           clipBehavior: Clip.antiAlias,
           child: InkWell(
             onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (BuildContext context) => BreedScreen(breed: breed),
-                ),
-              );
+               Navigator.pushNamed(context, '/breed/${breed.id}');
+              // Navigator.of(context).push(
+              //   MaterialPageRoute(
+              //     builder: (BuildContext context) => BreedScreen(breed: breed),
+              //   ),
+              // );
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
