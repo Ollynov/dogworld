@@ -14,6 +14,7 @@ class Global {
 
   // Firestore References for Writes
   static final Collection<Breed> breedsRef = Collection<Breed>(path: 'Breed');
+  // static final Document<Breed> breedRef = Document<Breed>(path: 'Breed');
   static final UserData<Report> reportRef = UserData<Report>(collection: 'reports');
   static final UserData<UserDetails> userDetailsRef = UserData<UserDetails>(collection: 'users');
 }

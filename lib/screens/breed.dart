@@ -7,41 +7,58 @@ import 'package:provider/provider.dart';
 
 
 class BreedScreen extends StatelessWidget {
+  final String breedId;
   final Breed breed;
-  BreedScreen({this.breed});
+  BreedScreen({this.breedId, this.breed});
 
   
   @override
   Widget build(BuildContext context) {
-
+    print('will run with breedId: ');
+    print(breedId);
     
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('${breed.fullName}'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 10, bottom: 10),
-        child: ListView(children: [
-          Stack(
-            children: [
-              Hero(
-                tag: breed.img,
-                child: Image.asset(
-                  'assets/covers/${breed.img}',
-                  width: MediaQuery.of(context).size.width,
-                  height: 500,
-                )),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  FavoriteButton(breedId: breed.id)
-                ],
-              ),
-            ],
-          ),
-          BreedDetails(breed: breed)
-        ]),
-      ),
+    return FutureBuilder(
+      future: Document<Breed>(path: 'Breed/$breedId').getData(),
+      builder: (BuildContext context, AsyncSnapshot<Breed> snap) {
+
+        if (snap.hasData) {
+
+          Breed breed = snap.data;
+          return Scaffold(
+            appBar: AppBar(
+              title: Text('${breed.fullName}'),
+            ),
+            body: Padding(
+              padding: const EdgeInsets.only(top: 10, bottom: 10),
+              child: ListView(children: [
+                Stack(
+                  children: [
+                    Hero(
+                      tag: breed.img,
+                      child: Image.asset(
+                        'assets/covers/${breed.img}',
+                        width: MediaQuery.of(context).size.width,
+                        height: 500,
+                      )),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        FavoriteButton(breedId: breed.id)
+                      ],
+                    ),
+                  ],
+                ),
+                BreedDetails(breed: breed)
+              ]),
+            ),
+          );
+
+        } else {
+          return Text("Loading...");
+        }
+      
+
+      }
     );
   }
 }
