@@ -66,7 +66,7 @@ class BreedPreview extends StatelessWidget {
           clipBehavior: Clip.antiAlias,
           child: InkWell(
             onTap: () {
-               Navigator.pushNamed(context, '/breed/${breed.id}');
+               Navigator.pushNamed(context, '/breed/${breed.id}', arguments: {'breedId': breed.id});
               // Navigator.of(context).push(
               //   MaterialPageRoute(
               //     builder: (BuildContext context) => BreedScreen(breed: breed),

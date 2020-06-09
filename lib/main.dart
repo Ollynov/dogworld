@@ -77,19 +77,27 @@ class MyApp extends StatelessWidget {
           '/quiz': (context) => QuizScreen(),
           '/breed/*': (context) => BreedScreen(),
         },
-        onGenerateRoute: (RouteSettings settings) {
+        onGenerateRoute: (RouteSettings settings,) {
           print('ok getting this generated shit: ');
-          print(settings);
+          print(settings.name);
+          final dynamic args = ModalRoute.of(context).settings.arguments;
+          print(args.breedId);
+
+          if (args.breedId != null) {
+            return MaterialPageRoute(builder: (context)=> BreedScreen(breedId: 'labrador'));
+          }
+
           switch (settings.name) {
             case '/breed':
               print('just breed');
               return MaterialPageRoute(builder: (context)=> BreedScreen());
               break;
-            case '/breed/labrador':
+            case '/breed/${args.breedId}':
               print('lab son');
               return MaterialPageRoute(builder: (context)=> BreedScreen(breedId: 'labrador'));
               break;
           }
+          return null;
         },
         // WEB does not support firebase storage nor analytics so commenting out to avoid errors for now
         // navigatorObservers: [

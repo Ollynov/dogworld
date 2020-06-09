@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doggies/services/models.dart';
 import 'package:doggies/services/services.dart';
+import 'package:doggies/shared/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +17,10 @@ class BreedScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     print('will run with breedId: ');
     print(breedId);
+
+    final dynamic args = ModalRoute.of(context).settings.arguments;
+    print('here are args:');
+    print(args);
     
     return FutureBuilder(
       future: Document<Breed>(path: 'Breed/$breedId').getData(),
@@ -54,7 +59,7 @@ class BreedScreen extends StatelessWidget {
           );
 
         } else {
-          return Text("Loading...");
+          return LoadingScreen();
         }
       
 
