@@ -96,7 +96,7 @@ class DashNotLoggedIn extends StatelessWidget {
       appBar: AppBar(
         title: Text('Dashboard'),
       ),
-      body: Center(
+      body: Center( 
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
