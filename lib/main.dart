@@ -7,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'config/router.dart';
 import 'screens/admin/admin.dart';
+import 'screens/admin/editBreed.dart';
 import 'services/services.dart';
 import 'screens/screens.dart';
 import 'package:doggies/shared/bottom_nav.dart';
@@ -94,7 +95,8 @@ class _MyAppState extends State<MyApp> {
           '/login': (context) => LoginScreen(),
           '/quiz': (context) => QuizScreen(),
           // '/breed/*': (context) => BreedScreen(),
-          '/admin': (context) => AdminScreen()
+          '/admin': (context) => AdminScreen(),
+          '/admin/editBreed': (context) => EditBreedScreen()
         },
         onGenerateRoute: Application.router.generator
        

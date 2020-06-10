@@ -14,7 +14,7 @@ class AdminScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     
     FirebaseUser user = Provider.of<FirebaseUser>(context);
-    UserDetails userDetails = Provider.of<UserDetails>(context);
+    // UserDetails userDetails = Provider.of<UserDetails>(context);
 
 
     if (user != null) {
@@ -28,54 +28,16 @@ class AdminScreen extends StatelessWidget {
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-              Text('Select Breed to Edit'),
-              BreedListDropDown()
+            new InkWell(
+              child: new Text('Edit Breeds'),
+              onTap: () => Navigator.pushNamed(context, '/admin/editBreed')
+            ),
           ],
         ),
             )),
-        bottomNavigationBar: AppBottomNav(route: 2, inactive: false,),
       );
     } else {
-      return LoadingScreen();
+      return Text('Looks like you are not logged in as an admin');
     }
-  }
-}
-
-
-class BreedListDropDown extends StatefulWidget {
-  BreedListDropDown({Key key}) : super(key: key);
-
-  @override
-  _BreedListDropDownState createState() => _BreedListDropDownState();
-}
-
-class _BreedListDropDownState extends State<BreedListDropDown> {
-  String dropdownValue = 'One';
-
-  @override
-  Widget build(BuildContext context) {
-    return DropdownButton<String>(
-      value: dropdownValue,
-      icon: Icon(Icons.arrow_downward),
-      iconSize: 24,
-      elevation: 16,
-      style: TextStyle(color: Colors.deepPurple),
-      underline: Container(
-        height: 2,
-        color: Colors.deepPurpleAccent,
-      ),
-      onChanged: (String newValue) {
-        setState(() {
-          dropdownValue = newValue;
-        });
-      },
-      items: <String>['One', 'Two', 'Free', 'Four']
-          .map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-    );
   }
 }
