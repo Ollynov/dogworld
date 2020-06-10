@@ -128,7 +128,6 @@ class UserFavoriteBreeds extends StatelessWidget {
   Widget build(BuildContext context) {
 
     if (userDetails != null && userDetails.favoriteBreeds != []) {
-      print('ok we are here, and favs are: ');
       print(userDetails.favoriteBreeds);
       return Container(
         padding: EdgeInsets.all(20),
@@ -141,15 +140,14 @@ class UserFavoriteBreeds extends StatelessWidget {
               color: Colors.black26,
               child: InkWell(
                 onTap: () {
+                  Navigator.pushNamed(context, '/breed/$breedName');
                 },
                 child: Container(
                   padding: EdgeInsets.all(8),
                   color: Colors.grey[300],
                   child: Row(
                     children: [
-                      Icon(
-                          FontAwesomeIcons.dog,
-                          size: 20),
+                      Icon(FontAwesomeIcons.dog, size: 20),
                       Expanded(
                         child: Container(
                           margin: EdgeInsets.only(left: 10),
