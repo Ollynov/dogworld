@@ -66,7 +66,7 @@ class BreedPreview extends StatelessWidget {
           clipBehavior: Clip.antiAlias,
           child: InkWell(
             onTap: () {
-               Navigator.pushNamed(context, '/breed/${breed.id}', arguments: {'breedId': breed.id});
+              Navigator.pushNamed(context, '/breed/${breed.id}', arguments: {'breedId': breed.id});
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -92,7 +92,7 @@ class BreedPreview extends StatelessWidget {
                         child: Text(
                           breed.fullName,
                           style: TextStyle(
-                              height: 1.5, fontWeight: FontWeight.bold),
+                            height: 1.5, fontWeight: FontWeight.bold),
                           overflow: TextOverflow.fade,
                           softWrap: false,
                         ),

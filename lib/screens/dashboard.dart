@@ -61,6 +61,10 @@ class DashboardScreen extends StatelessWidget {
                       },
                     );
                   }),
+              InkWell(
+                child: Text('Go to admin page'),
+                onTap: () {Navigator.pushNamed(context, '/admin');},
+              ),
               Padding(
                 padding: EdgeInsets.only(top: 15, bottom: 200),
                 child: 
