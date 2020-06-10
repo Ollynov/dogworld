@@ -55,11 +55,10 @@ class _BreedListDropDownState extends State<BreedListDropDown> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Collection<dynamic>(path: 'allBreeds').getData(),
-      builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) { 
-        print('ok our snapshot bruh: ');
-        print(snapshot);
-        print(snapshot.data);
+      future: Collection<Breed>(path: 'allBreeds').getData(),
+      builder: (BuildContext context, AsyncSnapshot<List<Breed>> snapshot) { 
+        print('ok our first doggy bruh: ');
+        print(snapshot.data[0].fullName);
         return DropdownButton<String>(
           value: dropdownValue,
           icon: Icon(Icons.arrow_downward),
