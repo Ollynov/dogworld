@@ -67,11 +67,6 @@ class BreedPreview extends StatelessWidget {
           child: InkWell(
             onTap: () {
                Navigator.pushNamed(context, '/breed/${breed.id}', arguments: {'breedId': breed.id});
-              // Navigator.of(context).push(
-              //   MaterialPageRoute(
-              //     builder: (BuildContext context) => BreedScreen(breed: breed),
-              //   ),
-              // );
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,

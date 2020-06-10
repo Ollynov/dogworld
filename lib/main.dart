@@ -11,8 +11,6 @@ import 'screens/screens.dart';
 import 'package:doggies/shared/bottom_nav.dart';
 
 
-
-
 void main() {
   runApp(MyApp());
 }
@@ -107,15 +105,6 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-
-
-
-// class BreedInfo extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     throw UnimplementedError();
-//   }
-// }
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
