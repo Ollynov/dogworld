@@ -83,7 +83,7 @@ class DashboardScreen extends StatelessWidget {
         bottomNavigationBar: AppBottomNav(route: 2, inactive: false,),
       );
     } else {
-      DashNotLoggedIn();
+      return DashNotLoggedIn();
     }
   }
 }
