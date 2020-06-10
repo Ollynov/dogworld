@@ -1,26 +1,45 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'config/router.dart';
 import 'services/services.dart';
 import 'screens/screens.dart';
-
 import 'package:doggies/shared/bottom_nav.dart';
+
+
+
 
 void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class Application {
+  static Router router;
+}
 
+class MyApp extends StatefulWidget {
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   final Color primaryColor = Color(0xffff1744);
   final Color primaryColorDark = Color(0xffc4001d);
   final Color primaryColorLight = Color(0xffff616f);
   final Color secondaryColor = Color(0xffffd117);
   final Color secondaryColorDark = Color(0xffc7a000);
   final Color secondaryColorLight = Color(0xffffff58);
+
+  _MyAppState() {
+    final router = Router();
+    Routes.configureRoutes(router);
+    Application.router = router;
+  }
 
 
   @override
@@ -77,28 +96,8 @@ class MyApp extends StatelessWidget {
           '/quiz': (context) => QuizScreen(),
           '/breed/*': (context) => BreedScreen(),
         },
-        onGenerateRoute: (RouteSettings settings,) {
-          print('ok getting this generated shit: ');
-          print(settings.name);
-          final dynamic args = ModalRoute.of(context).settings.arguments;
-          print(args.breedId);
-
-          if (args.breedId != null) {
-            return MaterialPageRoute(builder: (context)=> BreedScreen(breedId: 'labrador'));
-          }
-
-          switch (settings.name) {
-            case '/breed':
-              print('just breed');
-              return MaterialPageRoute(builder: (context)=> BreedScreen());
-              break;
-            case '/breed/${args.breedId}':
-              print('lab son');
-              return MaterialPageRoute(builder: (context)=> BreedScreen(breedId: 'labrador'));
-              break;
-          }
-          return null;
-        },
+        onGenerateRoute: Application.router.generator
+       
         // WEB does not support firebase storage nor analytics so commenting out to avoid errors for now
         // navigatorObservers: [
         //   FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),
@@ -107,6 +106,9 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+
 
 // class BreedInfo extends StatelessWidget {
 //   @override
