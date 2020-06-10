@@ -29,8 +29,9 @@ const update = async() => {
       
       const ref = db.collection('allBreeds').doc(breed);
       await ref.set({
-        name: breed,
-      }, { merge: true });
+        id: breed,
+        fullName: breed,
+      }, { merge: false });
     })
 
 

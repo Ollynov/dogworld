@@ -54,28 +54,36 @@ class _BreedListDropDownState extends State<BreedListDropDown> {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<String>(
-      value: dropdownValue,
-      icon: Icon(Icons.arrow_downward),
-      iconSize: 24,
-      elevation: 16,
-      // style: TextStyle(color: Theme.of(context).primaryColor),
-      underline: Container(
-        height: 2,
-        // color: Theme.of(context).primaryColor,
-      ),
-      onChanged: (String newValue) {
-        setState(() {
-          dropdownValue = newValue;
-        });
-      },
-      items: <String>['One', 'Two', 'Free', 'Four']
-          .map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
+    return FutureBuilder(
+      future: Collection<dynamic>(path: 'allBreeds').getData(),
+      builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) { 
+        print('ok our snapshot bruh: ');
+        print(snapshot);
+        print(snapshot.data);
+        return DropdownButton<String>(
+          value: dropdownValue,
+          icon: Icon(Icons.arrow_downward),
+          iconSize: 24,
+          elevation: 16,
+          // style: TextStyle(color: Theme.of(context).primaryColor),
+          underline: Container(
+            height: 2,
+            // color: Theme.of(context).primaryColor,
+          ),
+          onChanged: (String newValue) {
+            setState(() {
+              dropdownValue = newValue;
+            });
+          },
+          items: <String>['One', 'Two', 'Free', 'Four']
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
         );
-      }).toList(),
+      }
     );
   }
 }
