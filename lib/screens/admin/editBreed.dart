@@ -113,14 +113,20 @@ class BreedDetails extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return FutureBuilder(
-      future: fetchBreed(),
+      future: fetchBreed(breedId),
       builder: (BuildContext context, AsyncSnapshot<TempModel> value) {
 
-        return Column(children: [
-          Text("here is data back: ${value.data.id}"),
-          Text("here is data back: ${value.data.name}"),
-          Text("here is data back: ${value.data.temperament}"),
-        ],);
+        if (value.data != null) {
+          return Column(children: [
+            Text("here is data back: ${value.data.id}"),
+            Text("here is data back: ${value.data.name}"),
+            Text("here is data back: ${value.data.temperament}"),
+          ],);
+        } else {
+          return Loader();
+        }
+
+
 
       }
       
@@ -137,16 +143,16 @@ class TempModel {
 
   factory TempModel.fromJson(Map<String, dynamic> json) {
     return TempModel(
-      name: json['name'],
-      id: json['id'],
-      temperament: json['temperament'],
+      name: json['name'] ?? "",
+      id: json['id'] ?? 0,
+      temperament: json['temperament'] ?? "",
     );
   }
 }
 
 
-Future<TempModel> fetchBreed() async {
-  final response = await http.get('https://api.thedogapi.com/v1/breeds/search?q=affen');
+Future<TempModel> fetchBreed(String breedId) async {
+  final response = await http.get('https://api.thedogapi.com/v1/breeds/search?q=$breedId');
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
@@ -154,11 +160,15 @@ Future<TempModel> fetchBreed() async {
     var decoded = json.decode(response.body);
     print('here is decoded: ');
     print(decoded);
-    return TempModel.fromJson(decoded[0]);
+    if (decoded.length > 0) {
+      return TempModel.fromJson(decoded[0]);
+    } else {
+      return null;
+    }
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
-    throw Exception('Failed to load album');
+    print('Failed to load album');
   }
 }
 
