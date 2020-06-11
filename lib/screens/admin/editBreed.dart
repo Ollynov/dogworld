@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:doggies/services/users.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -110,11 +112,53 @@ class BreedDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    // var selectedBreed = Provider.of<SelectedBreed>(context);
+    return FutureBuilder(
+      future: fetchBreed(),
+      builder: (BuildContext context, AsyncSnapshot<TempModel> value) {
 
-    return Container(
-      child: Text('Here is selected: $breedId'),
+        return Column(children: [
+          Text("here is data back: ${value.data.id}"),
+          Text("here is data back: ${value.data.name}"),
+          Text("here is data back: ${value.data.temperament}"),
+        ],);
+
+      }
+      
     );
   }
-
 }
+
+class TempModel {
+  final String name;
+  final int id;
+  final String temperament;
+
+  TempModel({this.name, this.id, this.temperament});
+
+  factory TempModel.fromJson(Map<String, dynamic> json) {
+    return TempModel(
+      name: json['name'],
+      id: json['id'],
+      temperament: json['temperament'],
+    );
+  }
+}
+
+
+Future<TempModel> fetchBreed() async {
+  final response = await http.get('https://api.thedogapi.com/v1/breeds/search?q=affen');
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    var decoded = json.decode(response.body);
+    print('here is decoded: ');
+    print(decoded);
+    return TempModel.fromJson(decoded[0]);
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  }
+}
+

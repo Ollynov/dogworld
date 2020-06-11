@@ -1,4 +1,6 @@
 // These functions in this file essentially allow us to deserialize data that we get back from firebase. Firebase sends us back data in the form of a map. It is possible to use that map directly to achieve what you need to but this gives us consistency, and also gives us a central area to define data.
+import 'package:doggies/services/services.dart';
+
 class Report {
   String uid;
   int total;
@@ -128,6 +130,14 @@ class Breed {
       // quizzes: (data['quizzes'] as List ?? [])
       //     .map((v) => Quiz.fromMap(v))
       //     .toList(), //data['quizzes'],
+    );
+  }
+
+  factory Breed.fromJsonDogAPI(Map<String, dynamic> json) {
+    return Breed(
+      id: json['userId'],
+      fullName: json['id'],
+      description: json['title'],
     );
   }
 
