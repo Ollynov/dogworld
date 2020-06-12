@@ -3,16 +3,11 @@ import 'dart:convert';
 import 'package:doggies/services/users.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import './../../services/services.dart';
 import './../../shared/shared.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
-
-class SelectedBreed {
- String breedId = 'Affenpinscher';
-}
-
-var stream = Stream.fromIterable([SelectedBreed()]);
 
 
 class EditBreedScreen extends StatelessWidget {
@@ -23,28 +18,23 @@ class EditBreedScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     
     FirebaseUser user = Provider.of<FirebaseUser>(context);
-    // UserDetails userDetails = Provider.of<UserDetails>(context);
-
 
     if (user != null) {
 
-      return StreamProvider<SelectedBreed>.value(
-        value: stream,
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text('Admin'),
-          ),
+      return Scaffold (
+          appBar: AppBar(title: Text('Admin'),),
           body: Center(
             child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text('Select Breed to Edit'),
               BreedListDropDown(),
+              EditAndSaveRow(),
+
             ],
           )),
           bottomNavigationBar: AppBottomNav(route: 2, inactive: false,),
-        ),
-      );
+        );
     } else {
       return LoadingScreen();
     }
@@ -144,28 +134,55 @@ class DataRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: [
-        Text("$text", style: TextStyle(fontWeight: FontWeight.bold)),
-        Text(" $data")
-    ]);
-  }
-}
-
-class TempModel {
-  final String name;
-  final int id;
-  final String temperament;
-
-  TempModel({this.name, this.id, this.temperament});
-
-  factory TempModel.fromJson(Map<String, dynamic> json) {
-    return TempModel(
-      name: json['name'] ?? "",
-      id: json['id'] ?? 0,
-      temperament: json['temperament'] ?? "",
+    return Padding(
+      padding: const EdgeInsets.only(top: 9),
+      child: Row(children: [
+          Text("$text", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'Roboto')),
+          Flexible(child: Text(" $data", style: TextStyle(fontSize: 20, fontFamily: 'Roboto'),))
+      ]),
     );
   }
 }
+
+class EditAndSaveRow extends StatelessWidget {
+  // final String text;
+  // final String data;
+  // const EditAndSaveRow({Key key, this.text, this.data}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+        RaisedButton.icon(
+          onPressed: ()=> {
+            print('pressy pressy')
+
+          }, 
+          padding: EdgeInsets.all(16),
+          icon: Icon(FontAwesomeIcons.edit), 
+          label: Text('Edit', style: TextStyle(fontSize: 22),)
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: RaisedButton.icon(
+            onPressed: ()=> {
+              print('pressy pressy')
+
+            }, 
+            padding: EdgeInsets.all(16),
+            icon: Icon(FontAwesomeIcons.save), 
+            label: Text('Save', style: TextStyle(fontSize: 22),)
+          ),
+        )
+      ]),
+    );
+  }
+}
+
+
 
 
 Future<Breed> fetchBreed(String breedId) async {
@@ -188,6 +205,7 @@ Future<Breed> fetchBreed(String breedId) async {
     // If the server did not return a 200 OK response,
     // then throw an exception.
     print('Failed to load album');
+    return null;
   }
 }
 
