@@ -119,19 +119,14 @@ class BreedDetails extends StatelessWidget {
             padding: const EdgeInsets.all(12.0),
             child: Column(
                   children: [
-                  Row(children: [Text("Name: ${value.data.fullName}")],),
-                  Row(children: [Text("Descriptiondddddddddd: ${value.data.description}")]),
-                  Row(children: [Text("Life Span: ${value.data.lifeSpan}")]),
-                  Row(children: [Text("Bred For: ${value.data.bredFor}")]),
-                  Row(children: [Text("Group: ${value.data.breedGroup}")]),
-                  // Row(children: [
-                  //   Text("Height (inch):", style: TextStyle(fontWeight: FontWeight.bold)), 
-                  //   Text(" ${value.data.height}")]),
+                  DataRow(text: 'Name:', data: value.data.fullName),
+                  DataRow(text: 'Description:', data: value.data.description),
+                  DataRow(text: 'Life Span:', data: value.data.lifeSpan),
+                  DataRow(text: 'Bred For:', data: value.data.bredFor),
+                  DataRow(text: 'Group:', data: value.data.breedGroup),
                   DataRow(text: 'Height (inch):', data: value.data.height),
                   DataRow(text: 'Weight (lb):', data: value.data.weight),
-                  DataRow(text: 'Weight (lb):', data: value.data.weight),
-
-                  Row(children: [Text("Origin: ${value.data.origin}")]),
+                  DataRow(text: 'Origin:', data: value.data.weight),
                 ],),
           );
         } else {
@@ -154,7 +149,6 @@ class DataRow extends StatelessWidget {
         Text(" $data")
     ]);
   }
-
 }
 
 class TempModel {
