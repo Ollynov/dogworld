@@ -35,16 +35,13 @@ class EditBreedScreen extends StatelessWidget {
             title: Text('Admin'),
           ),
           body: Center(
-            child: SizedBox(
-              width: 500,
-              child: Column(
+            child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-                Text('Select Breed to Edit'),
-                BreedListDropDown(),
+              Text('Select Breed to Edit'),
+              BreedListDropDown(),
             ],
-          ),
-              )),
+          )),
           bottomNavigationBar: AppBottomNav(route: 2, inactive: false,),
         ),
       );
@@ -118,26 +115,46 @@ class BreedDetails extends StatelessWidget {
       // builder: (BuildContext context, AsyncSnapshot<TempModel> value) {
 
         if (value.data != null) {
-          return Column(children: [
-            Text("here is data back: ${value.data.fullName}"),
-            Text("here is data back: ${value.data.description}"),
-            Text("here is data back: ${value.data.lifeSpan}"),
-            Text("here is data back: ${value.data.bredFor}"),
-            Text("here is data back: ${value.data.breedGroup}"),
-            Text("here is data back: ${value.data.height}"),
-            Text("here is data back: ${value.data.weight}"),
-            Text("here is data back: ${value.data.origin}"),
-          ],);
+          return Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+                  children: [
+                  Row(children: [Text("Name: ${value.data.fullName}")],),
+                  Row(children: [Text("Descriptiondddddddddd: ${value.data.description}")]),
+                  Row(children: [Text("Life Span: ${value.data.lifeSpan}")]),
+                  Row(children: [Text("Bred For: ${value.data.bredFor}")]),
+                  Row(children: [Text("Group: ${value.data.breedGroup}")]),
+                  // Row(children: [
+                  //   Text("Height (inch):", style: TextStyle(fontWeight: FontWeight.bold)), 
+                  //   Text(" ${value.data.height}")]),
+                  DataRow(text: 'Height (inch):', data: value.data.height),
+                  DataRow(text: 'Weight (lb):', data: value.data.weight),
+                  DataRow(text: 'Weight (lb):', data: value.data.weight),
+
+                  Row(children: [Text("Origin: ${value.data.origin}")]),
+                ],),
+          );
         } else {
           return Loader();
         }
-
-
-
       }
-      
     );
   }
+}
+
+class DataRow extends StatelessWidget {
+  final String text;
+  final String data;
+  const DataRow({Key key, this.text, this.data}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(children: [
+        Text("$text", style: TextStyle(fontWeight: FontWeight.bold)),
+        Text(" $data")
+    ]);
+  }
+
 }
 
 class TempModel {
