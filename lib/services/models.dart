@@ -139,14 +139,14 @@ class Breed {
 
   factory Breed.fromJsonDogAPI(Map<String, dynamic> json) {
     return Breed(
-      id: json['id'] ?? "",
+      // id: json['id'] ?? "",
       fullName: json['name'] ?? "",
       description: json['temperament'] ?? "",
       lifeSpan: json['life_span'] ?? "",
       bredFor: json['bred_for'] ?? "",
       breedGroup: json['breed_group'] ?? "",
-      height: json['height'] ?? "",
-      weight: json['weight'] ?? "",
+      height: json['height']['imperial'] ?? "",
+      weight: json['weight']['imperial'] ?? "",
       origin: json['origin'] ?? "",
     );
   }

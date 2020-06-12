@@ -114,13 +114,19 @@ class BreedDetails extends StatelessWidget {
 
     return FutureBuilder(
       future: fetchBreed(breedId),
-      builder: (BuildContext context, AsyncSnapshot<TempModel> value) {
+      builder: (BuildContext context, AsyncSnapshot<Breed> value) {
+      // builder: (BuildContext context, AsyncSnapshot<TempModel> value) {
 
         if (value.data != null) {
           return Column(children: [
-            Text("here is data back: ${value.data.id}"),
-            Text("here is data back: ${value.data.name}"),
-            Text("here is data back: ${value.data.temperament}"),
+            Text("here is data back: ${value.data.fullName}"),
+            Text("here is data back: ${value.data.description}"),
+            Text("here is data back: ${value.data.lifeSpan}"),
+            Text("here is data back: ${value.data.bredFor}"),
+            Text("here is data back: ${value.data.breedGroup}"),
+            Text("here is data back: ${value.data.height}"),
+            Text("here is data back: ${value.data.weight}"),
+            Text("here is data back: ${value.data.origin}"),
           ],);
         } else {
           return Loader();
@@ -151,7 +157,8 @@ class TempModel {
 }
 
 
-Future<TempModel> fetchBreed(String breedId) async {
+Future<Breed> fetchBreed(String breedId) async {
+// Future<TempModel> fetchBreed(String breedId) async {
   final response = await http.get('https://api.thedogapi.com/v1/breeds/search?q=$breedId');
 
   if (response.statusCode == 200) {
@@ -161,7 +168,8 @@ Future<TempModel> fetchBreed(String breedId) async {
     print('here is decoded: ');
     print(decoded);
     if (decoded.length > 0) {
-      return TempModel.fromJson(decoded[0]);
+      return Breed.fromJsonDogAPI(decoded[0]);
+      // return TempModel.fromJson(decoded[0]);
     } else {
       return null;
     }
