@@ -114,18 +114,22 @@ class Breed {
   final String fullName;
   final String description;
   final String img;
-  // final List<String> variations;
-  // final List<Quiz> quizzes;
-
-  Breed({this.fullName, this.description, this.img, this.id});
-  // Topic({this.id, this.title, this.description, this.img, this.quizzes});
+  final String lifeSpan;
+  final String bredFor;
+  final String breedGroup;
+  final String height;
+  final String weight;
+  final String origin;
+  
+  Breed({this.fullName, this.description, this.img, this.id, this.lifeSpan, this.bredFor, this.breedGroup, this.height, this.weight, this.origin});
 
   factory Breed.convertFromFireBaseMap(Map data) {
     return Breed(
       fullName: data['fullName'] ?? '',
       description: data['description'] ?? '',
       img: data['img'] ?? 'default.png',
-      id: data['id'] ?? ''
+      id: data['id'] ?? "",
+
       // variations: (data['variations'] as List<String> ?? [])
       // quizzes: (data['quizzes'] as List ?? [])
       //     .map((v) => Quiz.fromMap(v))
@@ -135,9 +139,15 @@ class Breed {
 
   factory Breed.fromJsonDogAPI(Map<String, dynamic> json) {
     return Breed(
-      id: json['userId'],
-      fullName: json['id'],
-      description: json['title'],
+      id: json['id'] ?? "",
+      fullName: json['name'] ?? "",
+      description: json['temperament'] ?? "",
+      lifeSpan: json['life_span'] ?? "",
+      bredFor: json['bred_for'] ?? "",
+      breedGroup: json['breed_group'] ?? "",
+      height: json['height'] ?? "",
+      weight: json['weight'] ?? "",
+      origin: json['origin'] ?? "",
     );
   }
 
