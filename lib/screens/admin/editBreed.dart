@@ -59,31 +59,38 @@ class _BreedListDropDownState extends State<BreedListDropDown> {
         FutureBuilder(
            future: Collection<Breed>(path: 'allBreeds').getData(),
            builder: (BuildContext context, AsyncSnapshot<List<Breed>> snapshot) { 
-             List<Breed> allBreeds = snapshot.data;
-          
-             return DropdownButton<String>(
-                value: dropdownValue,
-                icon: Icon(Icons.arrow_downward),
-                iconSize: 24,
-                elevation: 16,
-                style: TextStyle(color: Colors.black),
-                underline: Container(
-                  height: 2,
-                  color: Colors.black,
-                ),
-                onChanged: (String newValue) {
-                  setState(() {
-                    dropdownValue = newValue;
-                  });
 
-                },
-                items: allBreeds.map<DropdownMenuItem<String>>((Breed value) {
-                  return DropdownMenuItem<String>(
-                    value: value.id,
-                    child: Text(value.id),
-                  );
-                }).toList(),
-              );
+             if (snapshot.data != null) {
+              List<Breed> allBreeds = snapshot.data;
+          
+              return DropdownButton<String>(
+                  value: dropdownValue,
+                  icon: Icon(Icons.arrow_downward),
+                  iconSize: 24,
+                  elevation: 16,
+                  style: TextStyle(color: Colors.black),
+                  underline: Container(
+                    height: 2,
+                    color: Colors.black,
+                  ),
+                  onChanged: (String newValue) {
+                    setState(() {
+                      dropdownValue = newValue;
+                    });
+
+                  },
+                  items: allBreeds.map<DropdownMenuItem<String>>((Breed value) {
+                    return DropdownMenuItem<String>(
+                      value: value.id,
+                      child: Text(value.id),
+                    );
+                  }).toList(),
+                );
+             } else {
+               return Loader();
+
+             }
+             
            }
         ),
         BreedDetails(breedId: dropdownValue)
@@ -163,7 +170,8 @@ class EditAndSaveRow extends StatelessWidget {
           }, 
           padding: EdgeInsets.all(16),
           icon: Icon(FontAwesomeIcons.edit), 
-          label: Text('Edit', style: TextStyle(fontSize: 22),)
+          label: Text('Edit', style: TextStyle(fontSize: 22),),
+          color: Theme.of(context).accentColor,
         ),
         Padding(
           padding: const EdgeInsets.only(left: 8.0),
@@ -174,7 +182,8 @@ class EditAndSaveRow extends StatelessWidget {
             }, 
             padding: EdgeInsets.all(16),
             icon: Icon(FontAwesomeIcons.save), 
-            label: Text('Save', style: TextStyle(fontSize: 22),)
+            label: Text('Save', style: TextStyle(fontSize: 22),),
+            // color: Theme.of(context).primaryColor,
           ),
         )
       ]),

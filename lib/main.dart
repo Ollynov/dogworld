@@ -60,8 +60,12 @@ class _MyAppState extends State<MyApp> {
           visualDensity: VisualDensity.adaptivePlatformDensity,
           buttonTheme: ButtonThemeData(
             minWidth: 100,
-            padding: EdgeInsets.all(14)
+            padding: EdgeInsets.all(14),
+            buttonColor: Colors.black45,
+            // textTheme: ButtonTextTheme.primary,
+            colorScheme: Theme.of(context).colorScheme.copyWith(secondary: Colors.green)
           ),
+          
           // buttonTheme: ButtonThemeData().copyWith(
           //   buttonColor: secondaryColor
           // ),
