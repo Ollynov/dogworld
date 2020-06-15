@@ -144,8 +144,19 @@ class DataRow extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 9),
       child: Row(children: [
-          Text("$text", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'Roboto')),
+          Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: Container(
+              width: 130,
+              child: 
+                Text("$text", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'Roboto')),
+            ),
+          ),
+          // TextField(
+            
+          // ),
           Flexible(child: Text(" $data", style: TextStyle(fontSize: 20, fontFamily: 'Roboto'),))
+          // Flexible(child: Text(" $data", style: TextStyle(fontSize: 20, fontFamily: 'Roboto'),))
       ]),
     );
   }
@@ -171,7 +182,6 @@ class EditAndSaveRow extends StatelessWidget {
           padding: EdgeInsets.all(16),
           icon: Icon(FontAwesomeIcons.edit), 
           label: Text('Edit', style: TextStyle(fontSize: 22),),
-          color: Theme.of(context).accentColor,
         ),
         Padding(
           padding: const EdgeInsets.only(left: 8.0),

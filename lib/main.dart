@@ -61,9 +61,7 @@ class _MyAppState extends State<MyApp> {
           buttonTheme: ButtonThemeData(
             minWidth: 100,
             padding: EdgeInsets.all(14),
-            buttonColor: Colors.black45,
-            // textTheme: ButtonTextTheme.primary,
-            colorScheme: Theme.of(context).colorScheme.copyWith(secondary: Colors.green)
+            buttonColor: Colors.grey[300],
           ),
           
           // buttonTheme: ButtonThemeData().copyWith(
