@@ -113,15 +113,16 @@ class Breed {
   final String id;
   final String fullName;
   final String description;
-  final String img;
+  String img;
   final String lifeSpan;
   final String bredFor;
   final String breedGroup;
   final String height;
   final String weight;
   final String origin;
+  final int dogApiId;
   
-  Breed({this.fullName, this.description, this.img, this.id, this.lifeSpan, this.bredFor, this.breedGroup, this.height, this.weight, this.origin});
+  Breed({this.fullName, this.description, this.img, this.id, this.lifeSpan, this.bredFor, this.breedGroup, this.height, this.weight, this.origin, this.dogApiId});
 
   factory Breed.convertFromFireBaseMap(Map data) {
     return Breed(
@@ -139,7 +140,6 @@ class Breed {
 
   factory Breed.fromJsonDogAPI(Map<String, dynamic> json) {
     return Breed(
-      // id: json['id'] ?? "",
       fullName: json['name'] ?? "",
       description: json['temperament'] ?? "",
       lifeSpan: json['life_span'] ?? "",
@@ -148,6 +148,14 @@ class Breed {
       height: json['height']['imperial'] ?? "",
       weight: json['weight']['imperial'] ?? "",
       origin: json['origin'] ?? "",
+      dogApiId: json['id'] ?? null,
+      img: ""
+    );
+  }
+  factory Breed.fromJsonDogAPIJustImage(Map<String, dynamic> json) {
+    return Breed(
+      img: json['url'] ?? "www.example.com",
+      
     );
   }
 

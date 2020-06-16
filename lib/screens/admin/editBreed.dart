@@ -346,8 +346,17 @@ Future<Breed> fetchBreed(String breedId) async {
     // then parse the JSON.
     var decoded = json.decode(response.body);
     if (decoded.length > 0) {
-      return Breed.fromJsonDogAPI(decoded[0]);
-      // return TempModel.fromJson(decoded[0]);
+      // before we return, let's get the image:
+      Breed ourBreed = Breed.fromJsonDogAPI(decoded[0]);
+      int dogApiId = ourBreed.dogApiId;
+      final image = await http.get('https://api.thedogapi.com/v1/images/search?include_breed=1&breed_id=$dogApiId');
+      var decodedImage = json.decode(image.body)[0];
+      Breed ourImage = Breed.fromJsonDogAPIJustImage(decodedImage);
+      ourBreed.img = ourImage.img;
+      print('here is what we got: ');
+      print(ourImage.img);
+      return ourBreed;
+
     } else {
       return null;
     }
