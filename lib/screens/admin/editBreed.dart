@@ -219,7 +219,7 @@ class _BreedDetailsState extends State<BreedDetails> {
                         ),
                       ),
                     ],),
-                  EditAndSaveRow(fullName: _nameController, description: _descriptionController, lifeSpan: _lifeSpanController, bredFor: _bredForController, breedGroup: _groupController, height: _heightController, weight: _weightController, origin: _originController,),
+                  EditAndSaveRow(breedId: widget.breedId, fullName: _nameController, description: _descriptionController, lifeSpan: _lifeSpanController, bredFor: _bredForController, breedGroup: _groupController, height: _heightController, weight: _weightController, origin: _originController,),
 
                 ],),
           );
@@ -260,6 +260,7 @@ class TitleColumn extends StatelessWidget {
 }
 
 class EditAndSaveRow extends StatelessWidget {
+  final String breedId;
   final TextEditingController fullName;
   final TextEditingController description;
   final TextEditingController lifeSpan;
@@ -269,7 +270,7 @@ class EditAndSaveRow extends StatelessWidget {
   final TextEditingController weight;
   final TextEditingController origin;
 
-  const EditAndSaveRow({Key key, this.fullName, this.description, this.lifeSpan, this.bredFor, this.breedGroup, this.height, this.weight, this.origin}) : super(key: key);
+  const EditAndSaveRow({Key key, this.breedId, this.fullName, this.description, this.lifeSpan, this.bredFor, this.breedGroup, this.height, this.weight, this.origin}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -304,7 +305,9 @@ class EditAndSaveRow extends StatelessWidget {
   }
 }
 
-Future<Breed> saveBreed({String description, String fullName, String lifeSpan, String bredFor, String breedGroup, String height, String weight, String origin}) async {
+Future<Breed> saveBreed({String breedId, String description, String fullName, String lifeSpan, String bredFor, String breedGroup, String height, String weight, String origin}) async {
+
+  final Document<Breed> breedsRef = Document<Breed>(path: 'Breed/$breedId');
   print(description);
   print(fullName);
   print(lifeSpan);
