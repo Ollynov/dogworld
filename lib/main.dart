@@ -1,26 +1,45 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'config/router.dart';
+import 'screens/admin/admin.dart';
+import 'screens/admin/editBreed.dart';
 import 'services/services.dart';
 import 'screens/screens.dart';
-
 import 'package:doggies/shared/bottom_nav.dart';
+
 
 void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class Application {
+  static Router router;
+}
 
+class MyApp extends StatefulWidget {
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   final Color primaryColor = Color(0xffff1744);
   final Color primaryColorDark = Color(0xffc4001d);
   final Color primaryColorLight = Color(0xffff616f);
   final Color secondaryColor = Color(0xffffd117);
   final Color secondaryColorDark = Color(0xffc7a000);
   final Color secondaryColorLight = Color(0xffffff58);
+
+  _MyAppState() {
+    final router = Router();
+    Routes.configureRoutes(router);
+    Application.router = router;
+  }
 
 
   @override
@@ -41,8 +60,10 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
           buttonTheme: ButtonThemeData(
             minWidth: 100,
-            padding: EdgeInsets.all(14)
+            padding: EdgeInsets.all(14),
+            buttonColor: Colors.grey[300],
           ),
+          
           // buttonTheme: ButtonThemeData().copyWith(
           //   buttonColor: secondaryColor
           // ),
@@ -75,7 +96,12 @@ class MyApp extends StatelessWidget {
           '/search': (context) => SearchScreen(),
           '/login': (context) => LoginScreen(),
           '/quiz': (context) => QuizScreen(),
+          // '/breed/*': (context) => BreedScreen(),
+          '/admin': (context) => AdminScreen(),
+          '/admin/editBreed': (context) => EditBreedScreen()
         },
+        onGenerateRoute: Application.router.generator
+       
         // WEB does not support firebase storage nor analytics so commenting out to avoid errors for now
         // navigatorObservers: [
         //   FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),
@@ -85,12 +111,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// class BreedInfo extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     throw UnimplementedError();
-//   }
-// }
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);

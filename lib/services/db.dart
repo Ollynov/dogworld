@@ -56,8 +56,7 @@ class Collection<T> {
     var snapshots;
     try {
       snapshots = await ref.getDocuments();
-      // print(snapshots.documents[0].data);
-      // return snapshots.documents;
+
       return snapshots.documents
           .map<T>((doc) => Global.models[T](doc.data) as T)
           .toList();

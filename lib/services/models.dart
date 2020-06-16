@@ -1,4 +1,6 @@
 // These functions in this file essentially allow us to deserialize data that we get back from firebase. Firebase sends us back data in the form of a map. It is possible to use that map directly to achieve what you need to but this gives us consistency, and also gives us a central area to define data.
+import 'package:doggies/services/services.dart';
+
 class Report {
   String uid;
   int total;
@@ -111,23 +113,49 @@ class Breed {
   final String id;
   final String fullName;
   final String description;
-  final String img;
-  // final List<String> variations;
-  // final List<Quiz> quizzes;
-
-  Breed({this.fullName, this.description, this.img, this.id});
-  // Topic({this.id, this.title, this.description, this.img, this.quizzes});
+  String img;
+  final String lifeSpan;
+  final String bredFor;
+  final String breedGroup;
+  final String height;
+  final String weight;
+  final String origin;
+  final int dogApiId;
+  
+  Breed({this.fullName, this.description, this.img, this.id, this.lifeSpan, this.bredFor, this.breedGroup, this.height, this.weight, this.origin, this.dogApiId});
 
   factory Breed.convertFromFireBaseMap(Map data) {
     return Breed(
       fullName: data['fullName'] ?? '',
       description: data['description'] ?? '',
       img: data['img'] ?? 'default.png',
-      id: data['id'] ?? ''
+      id: data['id'] ?? "",
+
       // variations: (data['variations'] as List<String> ?? [])
       // quizzes: (data['quizzes'] as List ?? [])
       //     .map((v) => Quiz.fromMap(v))
       //     .toList(), //data['quizzes'],
+    );
+  }
+
+  factory Breed.fromJsonDogAPI(Map<String, dynamic> json) {
+    return Breed(
+      fullName: json['name'] ?? "",
+      description: json['temperament'] ?? "",
+      lifeSpan: json['life_span'] ?? "",
+      bredFor: json['bred_for'] ?? "",
+      breedGroup: json['breed_group'] ?? "",
+      height: json['height']['imperial'] ?? "",
+      weight: json['weight']['imperial'] ?? "",
+      origin: json['origin'] ?? "",
+      dogApiId: json['id'] ?? null,
+      img: ""
+    );
+  }
+  factory Breed.fromJsonDogAPIJustImage(Map<String, dynamic> json) {
+    return Breed(
+      img: json['url'] ?? "www.example.com",
+      
     );
   }
 

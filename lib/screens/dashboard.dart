@@ -61,6 +61,10 @@ class DashboardScreen extends StatelessWidget {
                       },
                     );
                   }),
+              InkWell(
+                child: Text('Go to admin page'),
+                onTap: () {Navigator.pushNamed(context, '/admin');},
+              ),
               Padding(
                 padding: EdgeInsets.only(top: 15, bottom: 200),
                 child: 
@@ -83,32 +87,40 @@ class DashboardScreen extends StatelessWidget {
         bottomNavigationBar: AppBottomNav(route: 2, inactive: false,),
       );
     } else {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text('Dashboard'),
-        ),
-        body: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Sorry you are not logged in!!',
-              style: TextStyle(height: 1.5, fontWeight: FontWeight.bold),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: FlatButton(
-                  child: Text('Login'),
-                  color: Theme.of(context).accentColor,
-                  onPressed: () async {
-                    Navigator.pushNamed(context, '/login');
-                  }),
-            ),
-          ],
-        )),
-        bottomNavigationBar: AppBottomNav(route: 2, inactive: false),
-      );
+      return DashNotLoggedIn();
     }
+  }
+}
+
+class DashNotLoggedIn extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Dashboard'),
+      ),
+      body: Center( 
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Sorry you are not logged in!!',
+            style: TextStyle(height: 1.5, fontWeight: FontWeight.bold),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: FlatButton(
+                child: Text('Login'),
+                color: Theme.of(context).accentColor,
+                onPressed: () async {
+                  Navigator.pushNamed(context, '/login');
+                }),
+          ),
+        ],
+      )),
+      bottomNavigationBar: AppBottomNav(route: 2, inactive: false),
+    );
   }
 }
 
@@ -120,7 +132,6 @@ class UserFavoriteBreeds extends StatelessWidget {
   Widget build(BuildContext context) {
 
     if (userDetails != null && userDetails.favoriteBreeds != []) {
-      print('ok we are here, and favs are: ');
       print(userDetails.favoriteBreeds);
       return Container(
         padding: EdgeInsets.all(20),
@@ -133,15 +144,14 @@ class UserFavoriteBreeds extends StatelessWidget {
               color: Colors.black26,
               child: InkWell(
                 onTap: () {
+                  Navigator.pushNamed(context, '/breed/$breedName');
                 },
                 child: Container(
                   padding: EdgeInsets.all(8),
                   color: Colors.grey[300],
                   child: Row(
                     children: [
-                      Icon(
-                          FontAwesomeIcons.dog,
-                          size: 20),
+                      Icon(FontAwesomeIcons.dog, size: 20),
                       Expanded(
                         child: Container(
                           margin: EdgeInsets.only(left: 10),
