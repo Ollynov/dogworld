@@ -293,7 +293,7 @@ class EditAndSaveRow extends StatelessWidget {
             child: RaisedButton.icon(
               onPressed: ()=> {
                 print('pressy pressy'),
-                saveBreed(fullName: fullName.text, description: description.text, lifeSpan: lifeSpan.text, bredFor: bredFor.text, breedGroup: breedGroup.text, height: height.text, weight: weight.text, origin: origin.text)
+                saveBreed(breedId: breedId, fullName: fullName.text, description: description.text, lifeSpan: lifeSpan.text, bredFor: bredFor.text, breedGroup: breedGroup.text, height: height.text, weight: weight.text, origin: origin.text)
               }, 
               padding: EdgeInsets.all(16),
               icon: Icon(FontAwesomeIcons.save), 
@@ -305,19 +305,25 @@ class EditAndSaveRow extends StatelessWidget {
   }
 }
 
-Future<Breed> saveBreed({String breedId, String description, String fullName, String lifeSpan, String bredFor, String breedGroup, String height, String weight, String origin}) async {
-
+Future<void> saveBreed({String breedId, String description, String fullName, String lifeSpan, String bredFor, String breedGroup, String height, String weight, String origin}) async {
+  print('here is breedId: ');
+  print(breedId);
   final Document<Breed> breedsRef = Document<Breed>(path: 'Breed/$breedId');
-  print(description);
-  print(fullName);
-  print(lifeSpan);
-  print(bredFor);
-  print(breedGroup);
-  print(height);
-  print(weight);
-  print(origin);
+  
+  final toSave = {
+    "fullName": fullName, 
+    "description": description,
+    "lifeSpan": lifeSpan,
+    "bredFor": bredFor,
+    "breedGroup": breedGroup,
+    "height": height,
+    "weight": weight,
+    "origin": origin
+  };
 
-  // final response = await http.get('https://api.thedogapi.com/v1/breeds/search?q=$breedId');
+  final response = await breedsRef.upsert(toSave);
+
+  return response;
 
   // if (true) {
     
@@ -338,8 +344,6 @@ Future<Breed> fetchBreed(String breedId) async {
     // If the server did return a 200 OK response,
     // then parse the JSON.
     var decoded = json.decode(response.body);
-    print('here is decoded: ');
-    print(decoded);
     if (decoded.length > 0) {
       return Breed.fromJsonDogAPI(decoded[0]);
       // return TempModel.fromJson(decoded[0]);
