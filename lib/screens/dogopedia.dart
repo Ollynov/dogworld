@@ -76,11 +76,17 @@ class BreedPreview extends StatelessWidget {
                   height: 330,
                   child: Padding(
                     padding: EdgeInsets.only(top: 20, bottom: 20),
-                    child: Image.asset(
-                      'assets/covers/${breed.img}',
-                      fit: BoxFit.contain,
-                      // fit: BoxFit.,
-                    ),
+                    child: 
+                      (breed.img.split("//")[0] == "https:"? 
+                        Image.network(
+                          breed.img, 
+                          fit: BoxFit.contain,
+                        ) :
+                        Image.asset(
+                          'assets/covers/${breed.img}',
+                          fit: BoxFit.contain,
+                        )
+                      )
                   ),
                 ),
                 Row(

@@ -122,8 +122,9 @@ class _FavoriteButtonState extends State<FavoriteButton> {
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          (isFavorited? FaIcon(FontAwesomeIcons.solidHeart, color: Theme.of(context).primaryColor):
-          FaIcon(FontAwesomeIcons.heart, color: Theme.of(context).primaryColor)),
+          (isFavorited? 
+            FaIcon(FontAwesomeIcons.solidHeart, color: Theme.of(context).primaryColor):
+            FaIcon(FontAwesomeIcons.heart, color: Theme.of(context).primaryColor)),
           Padding(
             padding: const EdgeInsets.only(left: 12.0),
             child: Text('Favorite', style: TextStyle(fontSize: 20.0),),
