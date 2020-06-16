@@ -29,7 +29,6 @@ class EditBreedScreen extends StatelessWidget {
             children: [
               Text('Select Breed to Edit'),
               BreedListDropDown(),
-              EditAndSaveRow(),
 
             ],
           )),
@@ -71,15 +70,11 @@ class _BreedListDropDownState extends State<BreedListDropDown> {
                     iconSize: 24,
                     elevation: 16,
                     style: TextStyle(color: Colors.black),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.black,
-                    ),
+                    underline: Container(height: 2, color: Colors.black,),
                     onChanged: (String newValue) {
                       setState(() {
                         dropdownValue = newValue;
                       });
-
                     },
                     items: allBreeds.map<DropdownMenuItem<String>>((Breed value) {
                       return DropdownMenuItem<String>(
@@ -91,9 +86,7 @@ class _BreedListDropDownState extends State<BreedListDropDown> {
               );
              } else {
                return Loader();
-
              }
-             
            }
         ),
         BreedDetails(breedId: dropdownValue)
@@ -102,33 +95,73 @@ class _BreedListDropDownState extends State<BreedListDropDown> {
   }
 }
 
-class BreedDetails extends StatelessWidget {
+class BreedDetails extends StatefulWidget {
   final String breedId;
   const BreedDetails({Key key, this.breedId}) : super(key: key);
+
+  @override
+  _BreedDetailsState createState() => _BreedDetailsState();
+}
+
+class _BreedDetailsState extends State<BreedDetails> {
+  TextEditingController _nameController;
+  TextEditingController _descriptionController;
+
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController();
+    _descriptionController = TextEditingController();
+  }
+
+  void dispose() {
+    _nameController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
 
     return FutureBuilder(
-      future: fetchBreed(breedId),
+      future: fetchBreed(widget.breedId),
       builder: (BuildContext context, AsyncSnapshot<Breed> value) {
       // builder: (BuildContext context, AsyncSnapshot<TempModel> value) {
 
         if (value.data != null) {
+          _nameController.text = value.data.fullName;
+          _descriptionController.text = value.data.description;
+
           return Padding(
             padding: const EdgeInsets.all(12.0),
             child: Column(
                   children: [
-                  MyInput(text: 'Name:', data: value.data.fullName),
-                  DataRow(text: 'Name:', data: value.data.fullName),
-                  MyInput(text: 'Description:', data: value.data.description),
-                  MyInput(text: 'Life Span:', data: value.data.lifeSpan),
-                  MyInput(text: 'Bred For:', data: value.data.bredFor),
-                  MyInput(text: 'Group:', data: value.data.breedGroup),
-                  MyInput(text: 'Height (inch):', data: value.data.height),
-                  MyInput(text: 'Weight (lb):', data: value.data.weight),
-                  MyInput(text: 'Origin:', data: value.data.origin),
-                  
+                    Row(children: [
+                      MyInput(text: 'Name'),
+                      Flexible(child: 
+                        TextField(
+                          controller: _nameController,
+                          style: TextStyle(fontSize: 20, fontFamily: 'Roboto'),)
+                      ),
+                    ],),
+                    Row(children: [
+                      MyInput(text: 'Description'),
+                      Flexible(child: 
+                        TextField(
+                          controller: _descriptionController,
+                          style: TextStyle(fontSize: 20, fontFamily: 'Roboto'),
+                          
+                        ),
+                      ),
+                    ],),
+                  // MyInput(text: 'Name:', data: value.data.fullName),
+                  // MyInput(text: 'Description:', data: value.data.description),
+                  // MyInput(text: 'Life Span:', data: value.data.lifeSpan),
+                  // MyInput(text: 'Bred For:', data: value.data.bredFor),
+                  // MyInput(text: 'Group:', data: value.data.breedGroup),
+                  // MyInput(text: 'Height (inch):', data: value.data.height),
+                  // MyInput(text: 'Weight (lb):', data: value.data.weight),
+                  // MyInput(text: 'Origin:', data: value.data.origin),
+                  EditAndSaveRow(fullName: _nameController, description: _descriptionController,),
 
                 ],),
           );
@@ -140,36 +173,12 @@ class BreedDetails extends StatelessWidget {
   }
 }
 
-class DataRow extends StatelessWidget {
-  final String text;
-  final String data;
-  const DataRow({Key key, this.text, this.data}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 9),
-      child: Row(children: [
-          Padding(
-            padding: const EdgeInsets.only(right: 12),
-            child: Container(
-              width: 130,
-              child: 
-                Text("$text", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'Roboto')),
-            ),
-          ),
-          Flexible(child: Text(" $data", style: TextStyle(fontSize: 20, fontFamily: 'Roboto'),))
-          // Flexible(child: Text(" $data", style: TextStyle(fontSize: 20, fontFamily: 'Roboto'),))
-      ]),
-    );
-  }
-}
 
 class MyInput extends StatefulWidget {
   final String text;
-  final String data;
+  // final String data;
 
-  MyInput({Key key, this.text, this.data}) : super(key: key);
+  MyInput({Key key, this.text}) : super(key: key);
 
 
   @override
@@ -191,11 +200,9 @@ class _MyInputState extends State<MyInput> {
   }
 
   Widget build(BuildContext context) {
-        _controller.text = widget.data;
+    // _controller.text = widget.data;
 
-    return Padding(
-      padding: const EdgeInsets.only(top: 9),
-      child: Row(children: [
+    return 
           Padding(
             padding: const EdgeInsets.only(right: 12),
             child: Container(
@@ -203,67 +210,65 @@ class _MyInputState extends State<MyInput> {
               child: 
                 Text("${widget.text}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'Roboto')),
             ),
-          ),
-          Flexible(child: 
-            TextField(
-              controller: _controller,
-              style: TextStyle(fontSize: 20, fontFamily: 'Roboto'),)
-          )
-          // Flexible(child: Text(" $data", style: TextStyle(fontSize: 20, fontFamily: 'Roboto'),))
-      ]),
-    );
-    // return 
-    // TextField(
-    //       controller: _controller,
-    //       onSubmitted: (String value) async {
-    //         print('ok here is our value: ');
-    //         print(value);
-    //         print(_controller.text);
-    //       },
-    //     );
+          );
+
   }
 }
 
 class EditAndSaveRow extends StatelessWidget {
-  // final String text;
-  // final String data;
-  // const EditAndSaveRow({Key key, this.text, this.data}) : super(key: key);
+  final TextEditingController fullName;
+  final TextEditingController description;
+
+  const EditAndSaveRow({Key key, this.fullName, this.description}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-        RaisedButton.icon(
-          onPressed: ()=> {
-            print('pressy pressy')
 
-          }, 
-          padding: EdgeInsets.all(16),
-          icon: Icon(FontAwesomeIcons.edit), 
-          label: Text('Edit', style: TextStyle(fontSize: 22),),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child: RaisedButton.icon(
+      return Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+          RaisedButton.icon(
             onPressed: ()=> {
               print('pressy pressy')
-
             }, 
             padding: EdgeInsets.all(16),
-            icon: Icon(FontAwesomeIcons.save), 
-            label: Text('Save', style: TextStyle(fontSize: 22),),
-            // color: Theme.of(context).primaryColor,
+            icon: Icon(FontAwesomeIcons.edit), 
+            label: Text('Edit', style: TextStyle(fontSize: 22),),
           ),
-        )
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: RaisedButton.icon(
+              onPressed: ()=> {
+                print('pressy pressy'),
+                saveBreed(fullName: fullName.text, description: description.text)
+              }, 
+              padding: EdgeInsets.all(16),
+              icon: Icon(FontAwesomeIcons.save), 
+              label: Text('Save', style: TextStyle(fontSize: 22),),
+            ),
+          )
       ]),
     );
   }
 }
 
+Future<Breed> saveBreed({String description, String fullName}) async {
+  print(description);
+  print(fullName);
 
+  // final response = await http.get('https://api.thedogapi.com/v1/breeds/search?q=$breedId');
+
+  // if (true) {
+    
+  //   return 'chii';
+  // } else {
+    
+  //   print('Failed to load album');
+  //   return null;
+  // }
+}
 
 
 Future<Breed> fetchBreed(String breedId) async {
