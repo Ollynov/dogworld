@@ -63,29 +63,32 @@ class _BreedListDropDownState extends State<BreedListDropDown> {
              if (snapshot.data != null) {
               List<Breed> allBreeds = snapshot.data;
           
-              return DropdownButton<String>(
-                  value: dropdownValue,
-                  icon: Icon(Icons.arrow_downward),
-                  iconSize: 24,
-                  elevation: 16,
-                  style: TextStyle(color: Colors.black),
-                  underline: Container(
-                    height: 2,
-                    color: Colors.black,
-                  ),
-                  onChanged: (String newValue) {
-                    setState(() {
-                      dropdownValue = newValue;
-                    });
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 70.0),
+                child: DropdownButton<String>(
+                    value: dropdownValue,
+                    icon: Icon(Icons.arrow_downward),
+                    iconSize: 24,
+                    elevation: 16,
+                    style: TextStyle(color: Colors.black),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.black,
+                    ),
+                    onChanged: (String newValue) {
+                      setState(() {
+                        dropdownValue = newValue;
+                      });
 
-                  },
-                  items: allBreeds.map<DropdownMenuItem<String>>((Breed value) {
-                    return DropdownMenuItem<String>(
-                      value: value.id,
-                      child: Text(value.id),
-                    );
-                  }).toList(),
-                );
+                    },
+                    items: allBreeds.map<DropdownMenuItem<String>>((Breed value) {
+                      return DropdownMenuItem<String>(
+                        value: value.id,
+                        child: Text(value.id),
+                      );
+                    }).toList(),
+                  ),
+              );
              } else {
                return Loader();
 
@@ -116,14 +119,17 @@ class BreedDetails extends StatelessWidget {
             padding: const EdgeInsets.all(12.0),
             child: Column(
                   children: [
+                  MyInput(text: 'Name:', data: value.data.fullName),
                   DataRow(text: 'Name:', data: value.data.fullName),
-                  DataRow(text: 'Description:', data: value.data.description),
-                  DataRow(text: 'Life Span:', data: value.data.lifeSpan),
-                  DataRow(text: 'Bred For:', data: value.data.bredFor),
-                  DataRow(text: 'Group:', data: value.data.breedGroup),
-                  DataRow(text: 'Height (inch):', data: value.data.height),
-                  DataRow(text: 'Weight (lb):', data: value.data.weight),
-                  DataRow(text: 'Origin:', data: value.data.weight),
+                  MyInput(text: 'Description:', data: value.data.description),
+                  MyInput(text: 'Life Span:', data: value.data.lifeSpan),
+                  MyInput(text: 'Bred For:', data: value.data.bredFor),
+                  MyInput(text: 'Group:', data: value.data.breedGroup),
+                  MyInput(text: 'Height (inch):', data: value.data.height),
+                  MyInput(text: 'Weight (lb):', data: value.data.weight),
+                  MyInput(text: 'Origin:', data: value.data.origin),
+                  
+
                 ],),
           );
         } else {
@@ -152,13 +158,69 @@ class DataRow extends StatelessWidget {
                 Text("$text", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'Roboto')),
             ),
           ),
-          // TextField(
-            
-          // ),
           Flexible(child: Text(" $data", style: TextStyle(fontSize: 20, fontFamily: 'Roboto'),))
           // Flexible(child: Text(" $data", style: TextStyle(fontSize: 20, fontFamily: 'Roboto'),))
       ]),
     );
+  }
+}
+
+class MyInput extends StatefulWidget {
+  final String text;
+  final String data;
+
+  MyInput({Key key, this.text, this.data}) : super(key: key);
+
+
+  @override
+  _MyInputState createState() => _MyInputState();
+}
+
+
+class _MyInputState extends State<MyInput> {
+  TextEditingController _controller;
+
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+  }
+
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Widget build(BuildContext context) {
+        _controller.text = widget.data;
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 9),
+      child: Row(children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: Container(
+              width: 130,
+              child: 
+                Text("${widget.text}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'Roboto')),
+            ),
+          ),
+          Flexible(child: 
+            TextField(
+              controller: _controller,
+              style: TextStyle(fontSize: 20, fontFamily: 'Roboto'),)
+          )
+          // Flexible(child: Text(" $data", style: TextStyle(fontSize: 20, fontFamily: 'Roboto'),))
+      ]),
+    );
+    // return 
+    // TextField(
+    //       controller: _controller,
+    //       onSubmitted: (String value) async {
+    //         print('ok here is our value: ');
+    //         print(value);
+    //         print(_controller.text);
+    //       },
+    //     );
   }
 }
 
