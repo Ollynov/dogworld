@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:doggies/services/users.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -220,7 +219,7 @@ class _BreedDetailsState extends State<BreedDetails> {
                         ),
                       ),
                     ],),
-                  EditAndSaveRow(fullName: _nameController, description: _descriptionController,),
+                  EditAndSaveRow(fullName: _nameController, description: _descriptionController, lifeSpan: _lifeSpanController, bredFor: _bredForController, breedGroup: _groupController, height: _heightController, weight: _weightController, origin: _originController,),
 
                 ],),
           );
@@ -231,6 +230,12 @@ class _BreedDetailsState extends State<BreedDetails> {
     );
   }
 }
+
+  // TextEditingController _bredForController;
+  // TextEditingController _groupController;
+  // TextEditingController _heightController;
+  // TextEditingController _weightController;
+  // TextEditingController _originController;
 
 
 class TitleColumn extends StatelessWidget {
@@ -257,14 +262,14 @@ class TitleColumn extends StatelessWidget {
 class EditAndSaveRow extends StatelessWidget {
   final TextEditingController fullName;
   final TextEditingController description;
-  final TextEditingController lifespan;
+  final TextEditingController lifeSpan;
   final TextEditingController bredFor;
   final TextEditingController breedGroup;
   final TextEditingController height;
   final TextEditingController weight;
   final TextEditingController origin;
 
-  const EditAndSaveRow({Key key, this.fullName, this.description, this.lifespan, this.bredFor, this.breedGroup, this.height, this.weight, this.origin}) : super(key: key);
+  const EditAndSaveRow({Key key, this.fullName, this.description, this.lifeSpan, this.bredFor, this.breedGroup, this.height, this.weight, this.origin}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -287,7 +292,7 @@ class EditAndSaveRow extends StatelessWidget {
             child: RaisedButton.icon(
               onPressed: ()=> {
                 print('pressy pressy'),
-                saveBreed(fullName: fullName.text, description: description.text, lifeSpan: lifespan.text, bredFor: bredFor.text, breedGroup: breedGroup.text, height: height.text, weight: weight.text, origin: origin.text)
+                saveBreed(fullName: fullName.text, description: description.text, lifeSpan: lifeSpan.text, bredFor: bredFor.text, breedGroup: breedGroup.text, height: height.text, weight: weight.text, origin: origin.text)
               }, 
               padding: EdgeInsets.all(16),
               icon: Icon(FontAwesomeIcons.save), 
