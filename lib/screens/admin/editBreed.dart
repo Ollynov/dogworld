@@ -111,6 +111,7 @@ class _BreedDetailsState extends State<BreedDetails> {
   TextEditingController _heightController;
   TextEditingController _weightController;
   TextEditingController _originController;
+  TextEditingController _imageController;
 
   void initState() {
     super.initState();
@@ -122,10 +123,11 @@ class _BreedDetailsState extends State<BreedDetails> {
     _heightController = TextEditingController();
     _weightController = TextEditingController();
     _originController = TextEditingController();
+    _imageController = TextEditingController();
   }
 
   void dispose() {
-    _nameController.dispose(); _descriptionController.dispose(); _lifeSpanController.dispose(); _bredForController.dispose(); _groupController.dispose(); _heightController.dispose(); _weightController.dispose(); _originController.dispose();
+    _nameController.dispose(); _descriptionController.dispose(); _lifeSpanController.dispose(); _bredForController.dispose(); _groupController.dispose(); _heightController.dispose(); _weightController.dispose(); _originController.dispose(); _imageController.dispose();
     super.dispose();
   }
 
@@ -146,6 +148,7 @@ class _BreedDetailsState extends State<BreedDetails> {
           _heightController.text = value.data.height;
           _weightController.text = value.data.weight;
           _originController.text = value.data.origin;
+          _imageController.text = value.data.img;
 
           return Padding(
             padding: const EdgeInsets.all(12.0),
@@ -219,7 +222,16 @@ class _BreedDetailsState extends State<BreedDetails> {
                         ),
                       ),
                     ],),
-                  EditAndSaveRow(breedId: widget.breedId, fullName: _nameController, description: _descriptionController, lifeSpan: _lifeSpanController, bredFor: _bredForController, breedGroup: _groupController, height: _heightController, weight: _weightController, origin: _originController,),
+                    Row(children: [
+                      TitleColumn(text: 'Image'),
+                      Flexible(child: 
+                        TextField(
+                          controller: _imageController,
+                          style: TextStyle(fontSize: 20, fontFamily: 'Roboto'),
+                        ),
+                      ),
+                    ],),
+                  EditAndSaveRow(breedId: widget.breedId, fullName: _nameController, description: _descriptionController, lifeSpan: _lifeSpanController, bredFor: _bredForController, breedGroup: _groupController, height: _heightController, weight: _weightController, origin: _originController, img: _imageController),
 
                 ],),
           );
@@ -269,8 +281,9 @@ class EditAndSaveRow extends StatelessWidget {
   final TextEditingController height;
   final TextEditingController weight;
   final TextEditingController origin;
+  final TextEditingController img;
 
-  const EditAndSaveRow({Key key, this.breedId, this.fullName, this.description, this.lifeSpan, this.bredFor, this.breedGroup, this.height, this.weight, this.origin}) : super(key: key);
+  const EditAndSaveRow({Key key, this.breedId, this.fullName, this.description, this.lifeSpan, this.bredFor, this.breedGroup, this.height, this.weight, this.origin, this.img}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -293,7 +306,7 @@ class EditAndSaveRow extends StatelessWidget {
             child: RaisedButton.icon(
               onPressed: ()=> {
                 print('pressy pressy'),
-                saveBreed(breedId: breedId, fullName: fullName.text, description: description.text, lifeSpan: lifeSpan.text, bredFor: bredFor.text, breedGroup: breedGroup.text, height: height.text, weight: weight.text, origin: origin.text)
+                saveBreed(breedId: breedId, fullName: fullName.text, description: description.text, lifeSpan: lifeSpan.text, bredFor: bredFor.text, breedGroup: breedGroup.text, height: height.text, weight: weight.text, origin: origin.text, img: img.text)
               }, 
               padding: EdgeInsets.all(16),
               icon: Icon(FontAwesomeIcons.save), 
@@ -305,7 +318,7 @@ class EditAndSaveRow extends StatelessWidget {
   }
 }
 
-Future<void> saveBreed({String breedId, String description, String fullName, String lifeSpan, String bredFor, String breedGroup, String height, String weight, String origin}) async {
+Future<void> saveBreed({String breedId, String description, String fullName, String lifeSpan, String bredFor, String breedGroup, String height, String weight, String origin, String img}) async {
   print('here is breedId: ');
   print(breedId);
   final Document<Breed> breedsRef = Document<Breed>(path: 'Breed/$breedId');
@@ -319,7 +332,8 @@ Future<void> saveBreed({String breedId, String description, String fullName, Str
     "breedGroup": breedGroup,
     "height": height,
     "weight": weight,
-    "origin": origin
+    "origin": origin,
+    "img": img
   };
 
   final response = await breedsRef.upsert(toSave);
