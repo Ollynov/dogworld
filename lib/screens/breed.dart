@@ -40,11 +40,25 @@ class BreedScreen extends StatelessWidget {
                   children: [
                     Hero(
                       tag: breed.img,
-                      child: Image.asset(
-                        'assets/covers/${breed.img}',
-                        width: MediaQuery.of(context).size.width,
-                        height: 500,
-                      )),
+                      child: 
+                        (breed.img.split("//")[0] == "https:"? 
+                          Image.network(
+                            breed.img, 
+                            width: MediaQuery.of(context).size.width,
+                            height: 500,
+                          ) :
+                          Image.asset(
+                            'assets/covers/${breed.img}',
+                            width: MediaQuery.of(context).size.width,
+                            height: 500,
+                          )
+                        )
+                    ),
+                      // child: Image.asset(
+                      //   'assets/covers/${breed.img}',
+                      //   width: MediaQuery.of(context).size.width,
+                      //   height: 500,
+                      // )),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
