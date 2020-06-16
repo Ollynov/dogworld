@@ -61,7 +61,7 @@ class BreedPreview extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Hero(
-        tag: breed.img,
+        tag: breed.id,
         child: Card(
           clipBehavior: Clip.antiAlias,
           child: InkWell(

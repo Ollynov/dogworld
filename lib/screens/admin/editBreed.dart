@@ -311,6 +311,7 @@ Future<void> saveBreed({String breedId, String description, String fullName, Str
   final Document<Breed> breedsRef = Document<Breed>(path: 'Breed/$breedId');
   
   final toSave = {
+    "id": breedId,
     "fullName": fullName, 
     "description": description,
     "lifeSpan": lifeSpan,
