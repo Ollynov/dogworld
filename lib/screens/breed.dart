@@ -35,7 +35,7 @@ class BreedScreen extends StatelessWidget {
             ),
             body: Padding(
               padding: const EdgeInsets.only(top: 10, bottom: 10),
-              child: ListView(children: [
+              child: Column(children: [
                 Stack(
                   children: [
                     Hero(
@@ -54,11 +54,6 @@ class BreedScreen extends StatelessWidget {
                           )
                         )
                     ),
-                      // child: Image.asset(
-                      //   'assets/covers/${breed.img}',
-                      //   width: MediaQuery.of(context).size.width,
-                      //   height: 500,
-                      // )),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -156,15 +151,50 @@ class BreedDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Container(
-        height: 300,
-        width: 300,
-        child: Text(
-          breed.description,
-          style: TextStyle(height: 2, fontSize: 20),
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 30.0),
+          child: Card(
+            child: Container(
+              child: Text(
+                breed.description,
+                style: TextStyle(height: 2, fontSize: 20),
+              ),
+            ),
+          ),
         ),
-      ),
+        ListView(
+          shrinkWrap: true,
+          children: const <Widget>[
+
+            Card(
+              child: ListTile(
+                leading: FlutterLogo(size: 56.0),
+                title: Text('Two-line ListTile'),
+                subtitle: Text('Here is a second line'),
+                trailing: Icon(Icons.more_vert),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                leading: FlutterLogo(size: 56.0),
+                title: Text('Two-line ListTile'),
+                subtitle: Text('Here is a second line'),
+                trailing: Icon(Icons.more_vert),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                leading: FlutterLogo(size: 56.0),
+                title: Text('Two-line ListTile'),
+                subtitle: Text('Here is a second line'),
+                trailing: Icon(Icons.more_vert),
+              ),
+            ),
+          ],
+        )
+      ],
     );
   }
 }
