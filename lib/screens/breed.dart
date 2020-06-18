@@ -166,65 +166,41 @@ class BreedDetails extends StatelessWidget {
           ),
         ),
         Container(
-          height: 300,
+          height: 320,
           child: ListView(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
             children: <Widget>[
 
-              Card(
-                child: ListTile(
-                  leading: FlutterLogo(size: 56.0),
-                  title: Text('Life Span'),
-                  subtitle: Text('${breed.height} years'),
-                  trailing: Icon(Icons.more_vert),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  leading: FlutterLogo(size: 56.0),
-                  title: Text('Bred For'),
-                  subtitle: Text('${breed.bredFor}'),
-                  trailing: Icon(Icons.more_vert),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  leading: FlutterLogo(size: 56.0),
-                  title: Text('Group'),
-                  subtitle: Text('${breed.breedGroup}'),
-                  trailing: Icon(Icons.more_vert),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  leading: FlutterLogo(size: 56.0),
-                  title: Text('Height'),
-                  subtitle: Text('${breed.height}'),
-                  trailing: Icon(Icons.more_vert),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  leading: FlutterLogo(size: 56.0),
-                  title: Text('Weight'),
-                  subtitle: Text('${breed.weight}'),
-                  trailing: Icon(Icons.more_vert),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  leading: FlutterLogo(size: 56.0),
-                  title: Text('Origin'),
-                  subtitle: Text('${breed.origin}'),
-                  trailing: Icon(Icons.more_vert),
-                ),
-              ),
+              ListItem(title: "Life Span", data: breed.lifeSpan),
+              ListItem(title: "Bred For", data: breed.bredFor),
+              ListItem(title: "Group", data: breed.breedGroup),
+              ListItem(title: "Height", data: breed.height),
+              ListItem(title: "Weight", data: breed.weight),
+              ListItem(title: "Origin", data: breed.origin)
             ],
           ),
         )
       ],
     );
+  }
+}
+
+class ListItem extends StatelessWidget {
+  final String title;
+  final String data;
+  ListItem({this.title, this.data});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+            child: ListTile(
+              leading: FlutterLogo(size: 56.0),
+              title: Text(title, style: TextStyle(fontSize: 30)),
+              subtitle: Text('$data', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+              trailing: Icon(Icons.more_vert),
+            ),
+           );
   }
 }
 
