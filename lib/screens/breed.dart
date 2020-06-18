@@ -172,12 +172,12 @@ class BreedDetails extends StatelessWidget {
             shrinkWrap: true,
             children: <Widget>[
 
-              ListItem(title: "Life Span", data: breed.lifeSpan),
-              ListItem(title: "Bred For", data: breed.bredFor),
-              ListItem(title: "Group", data: breed.breedGroup),
-              ListItem(title: "Height", data: breed.height),
-              ListItem(title: "Weight", data: breed.weight),
-              ListItem(title: "Origin", data: breed.origin)
+              ListItem(title: "Life Span", data: breed.lifeSpan, icon: FontAwesomeIcons.heart,),
+              ListItem(title: "Bred For", data: breed.bredFor, icon: FontAwesomeIcons.baby,),
+              ListItem(title: "Group", data: breed.breedGroup, icon: FontAwesomeIcons.layerGroup,),
+              ListItem(title: "Height", data: breed.height, icon: FontAwesomeIcons.textHeight),
+              ListItem(title: "Weight", data: breed.weight, icon: FontAwesomeIcons.weightHanging),
+              ListItem(title: "Origin", data: breed.origin, icon: FontAwesomeIcons.home,)
             ],
           ),
         )
@@ -189,15 +189,16 @@ class BreedDetails extends StatelessWidget {
 class ListItem extends StatelessWidget {
   final String title;
   final String data;
-  ListItem({this.title, this.data});
+  final IconData icon;
+  ListItem({this.title, this.data, this.icon});
 
   @override
   Widget build(BuildContext context) {
     return Card(
             child: ListTile(
-              leading: FlutterLogo(size: 56.0),
+              leading: Icon(icon),
               title: Text(title, style: TextStyle(fontSize: 30)),
-              subtitle: Text('$data', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+              subtitle: Text('$data', style: TextStyle(fontSize: 22, fontWeight: FontWeight.normal)),
               trailing: Icon(Icons.more_vert),
             ),
            );
