@@ -45,12 +45,12 @@ class BreedScreen extends StatelessWidget {
                           Image.network(
                             breed.img, 
                             width: MediaQuery.of(context).size.width,
-                            height: 500,
+                            height: 430,
                           ) :
                           Image.asset(
                             'assets/covers/${breed.img}',
                             width: MediaQuery.of(context).size.width,
-                            height: 500,
+                            height: 430,
                           )
                         )
                     ),
@@ -61,6 +61,10 @@ class BreedScreen extends StatelessWidget {
                       ],
                     ),
                   ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Text('${breed.fullName}', style: Theme.of(context).textTheme.headline1),
                 ),
                 BreedDetails(breed: breed)
               ]),
@@ -166,7 +170,7 @@ class BreedDetails extends StatelessWidget {
           ),
         ),
         Container(
-          height: 320,
+          height: 300,
           child: ListView(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
