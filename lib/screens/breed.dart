@@ -151,6 +151,7 @@ class BreedDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(breed.fullName);
     return Column(
       children: [
         Padding(
@@ -169,53 +170,53 @@ class BreedDetails extends StatelessWidget {
           child: ListView(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
-            children: const <Widget>[
+            children: <Widget>[
 
               Card(
                 child: ListTile(
                   leading: FlutterLogo(size: 56.0),
-                  title: Text('Two-line ListTile'),
-                  subtitle: Text('Here is a second line'),
+                  title: Text('Life Span'),
+                  subtitle: Text('${breed.height} years'),
                   trailing: Icon(Icons.more_vert),
                 ),
               ),
               Card(
                 child: ListTile(
                   leading: FlutterLogo(size: 56.0),
-                  title: Text('YEEE ListTile'),
-                  subtitle: Text('Here is a second line'),
+                  title: Text('Bred For'),
+                  subtitle: Text('${breed.bredFor}'),
                   trailing: Icon(Icons.more_vert),
                 ),
               ),
               Card(
                 child: ListTile(
                   leading: FlutterLogo(size: 56.0),
-                  title: Text('Two-line ListTile'),
-                  subtitle: Text('Here is a second line'),
+                  title: Text('Group'),
+                  subtitle: Text('${breed.breedGroup}'),
                   trailing: Icon(Icons.more_vert),
                 ),
               ),
               Card(
                 child: ListTile(
                   leading: FlutterLogo(size: 56.0),
-                  title: Text('Two-line ListTile'),
-                  subtitle: Text('Here is a second line'),
+                  title: Text('Height'),
+                  subtitle: Text('${breed.height}'),
                   trailing: Icon(Icons.more_vert),
                 ),
               ),
               Card(
                 child: ListTile(
                   leading: FlutterLogo(size: 56.0),
-                  title: Text('Two-line ListTile'),
-                  subtitle: Text('Here is a second line'),
+                  title: Text('Weight'),
+                  subtitle: Text('${breed.weight}'),
                   trailing: Icon(Icons.more_vert),
                 ),
               ),
               Card(
                 child: ListTile(
                   leading: FlutterLogo(size: 56.0),
-                  title: Text('Two-line ListTile'),
-                  subtitle: Text('Here is a second line'),
+                  title: Text('Origin'),
+                  subtitle: Text('${breed.origin}'),
                   trailing: Icon(Icons.more_vert),
                 ),
               ),

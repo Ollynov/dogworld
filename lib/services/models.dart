@@ -126,10 +126,16 @@ class Breed {
 
   factory Breed.convertFromFireBaseMap(Map data) {
     return Breed(
+      id: data['id'] ?? "",
       fullName: data['fullName'] ?? '',
       description: data['description'] ?? '',
       img: data['img'] ?? 'default.png',
-      id: data['id'] ?? "",
+      lifeSpan: data['lifeSpan'] ?? '',
+      bredFor: data['bredFor'] ?? '',
+      breedGroup: data['breedGroup'] ?? '',
+      height: data['height'] ?? "",
+      weight: data['weight'] ?? '',
+      origin: data['origin'] ?? '',
 
       // variations: (data['variations'] as List<String> ?? [])
       // quizzes: (data['quizzes'] as List ?? [])
