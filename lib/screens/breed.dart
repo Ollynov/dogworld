@@ -39,7 +39,7 @@ class BreedScreen extends StatelessWidget {
                 Stack(
                   children: [
                     Hero(
-                      tag: breed.img,
+                      tag: breed.id,
                       child: 
                         (breed.img.split("//")[0] == "https:"? 
                           Image.network(
