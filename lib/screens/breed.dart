@@ -33,41 +33,43 @@ class BreedScreen extends StatelessWidget {
             appBar: AppBar(
               title: Text('${breed.fullName}'),
             ),
-            body: Padding(
-              padding: const EdgeInsets.only(top: 10, bottom: 10),
-              child: Column(children: [
-                Stack(
-                  children: [
-                    Hero(
-                      tag: breed.id,
-                      child: 
-                        (breed.img.split("//")[0] == "https:"? 
-                          Image.network(
-                            breed.img, 
-                            width: MediaQuery.of(context).size.width,
-                            height: 430,
-                          ) :
-                          Image.asset(
-                            'assets/covers/${breed.img}',
-                            width: MediaQuery.of(context).size.width,
-                            height: 430,
+            body: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                child: Column(children: [
+                  Stack(
+                    children: [
+                      Hero(
+                        tag: breed.id,
+                        child: 
+                          (breed.img.split("//")[0] == "https:"? 
+                            Image.network(
+                              breed.img, 
+                              width: MediaQuery.of(context).size.width,
+                              height: 430,
+                            ) :
+                            Image.asset(
+                              'assets/covers/${breed.img}',
+                              width: MediaQuery.of(context).size.width,
+                              height: 430,
+                            )
                           )
-                        )
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        FavoriteButton(breedId: breed.id)
-                      ],
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Text('${breed.fullName}', style: Theme.of(context).textTheme.headline1),
-                ),
-                BreedDetails(breed: breed)
-              ]),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          FavoriteButton(breedId: breed.id)
+                        ],
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text('${breed.fullName}', style: Theme.of(context).textTheme.headline1),
+                  ),
+                  BreedDetails(breed: breed)
+                ]),
+              ),
             ),
           );
 
@@ -169,22 +171,34 @@ class BreedDetails extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-          height: 300,
-          child: ListView(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            children: <Widget>[
+        ListView(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          children: <Widget>[
 
-              ListItem(title: "Life Span", data: breed.lifeSpan, icon: FontAwesomeIcons.heart,),
-              ListItem(title: "Bred For", data: breed.bredFor, icon: FontAwesomeIcons.baby,),
-              ListItem(title: "Group", data: breed.breedGroup, icon: FontAwesomeIcons.layerGroup,),
-              ListItem(title: "Height", data: "${breed.height} inches", icon: FontAwesomeIcons.textHeight),
-              ListItem(title: "Weight", data: "${breed.weight} pounds", icon: FontAwesomeIcons.weightHanging),
-              ListItem(title: "Origin", data: breed.origin, icon: FontAwesomeIcons.home,)
-            ],
-          ),
+            ListItem(title: "Life Span", data: breed.lifeSpan, icon: FontAwesomeIcons.heart,),
+            ListItem(title: "Bred For", data: breed.bredFor, icon: FontAwesomeIcons.baby,),
+            ListItem(title: "Group", data: breed.breedGroup, icon: FontAwesomeIcons.layerGroup,),
+            ListItem(title: "Height", data: "${breed.height} inches", icon: FontAwesomeIcons.textHeight),
+            ListItem(title: "Weight", data: "${breed.weight} pounds", icon: FontAwesomeIcons.weightHanging),
+            ListItem(title: "Origin", data: breed.origin, icon: FontAwesomeIcons.home,)
+          ],
         )
+        // Container(
+        //   height: 300,
+        //   child: ListView(
+        //     shrinkWrap: true,
+        //     children: <Widget>[
+
+        //       ListItem(title: "Life Span", data: breed.lifeSpan, icon: FontAwesomeIcons.heart,),
+        //       ListItem(title: "Bred For", data: breed.bredFor, icon: FontAwesomeIcons.baby,),
+        //       ListItem(title: "Group", data: breed.breedGroup, icon: FontAwesomeIcons.layerGroup,),
+        //       ListItem(title: "Height", data: "${breed.height} inches", icon: FontAwesomeIcons.textHeight),
+        //       ListItem(title: "Weight", data: "${breed.weight} pounds", icon: FontAwesomeIcons.weightHanging),
+        //       ListItem(title: "Origin", data: breed.origin, icon: FontAwesomeIcons.home,)
+        //     ],
+        //   ),
+        // )
       ],
     );
   }
