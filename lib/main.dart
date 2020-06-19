@@ -71,6 +71,7 @@ class _MyAppState extends State<MyApp> {
           textTheme: TextTheme(
               bodyText1: TextStyle(fontSize: 18),
               bodyText2: TextStyle(fontSize: 16),
+              headline1: TextStyle(fontSize: 44),
               button: TextStyle(letterSpacing: 1.5, fontWeight: FontWeight.bold),
               subtitle1: TextStyle(color: Colors.grey, fontSize: 24)),
           cardTheme: CardTheme(

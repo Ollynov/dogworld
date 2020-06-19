@@ -125,11 +125,22 @@ class Breed {
   Breed({this.fullName, this.description, this.img, this.id, this.lifeSpan, this.bredFor, this.breedGroup, this.height, this.weight, this.origin, this.dogApiId});
 
   factory Breed.convertFromFireBaseMap(Map data) {
+    print('here is what we got back from firebase: ');
+    print(data);
+    if (data == null) { 
+      return null;
+    }
     return Breed(
+      id: data['id'] ?? "",
       fullName: data['fullName'] ?? '',
       description: data['description'] ?? '',
       img: data['img'] ?? 'default.png',
-      id: data['id'] ?? "",
+      lifeSpan: data['lifeSpan'] ?? '',
+      bredFor: data['bredFor'] ?? '',
+      breedGroup: data['breedGroup'] ?? '',
+      height: data['height'] ?? "",
+      weight: data['weight'] ?? '',
+      origin: data['origin'] ?? '',
 
       // variations: (data['variations'] as List<String> ?? [])
       // quizzes: (data['quizzes'] as List ?? [])

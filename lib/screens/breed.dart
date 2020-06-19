@@ -35,7 +35,7 @@ class BreedScreen extends StatelessWidget {
             ),
             body: Padding(
               padding: const EdgeInsets.only(top: 10, bottom: 10),
-              child: ListView(children: [
+              child: Column(children: [
                 Stack(
                   children: [
                     Hero(
@@ -45,20 +45,15 @@ class BreedScreen extends StatelessWidget {
                           Image.network(
                             breed.img, 
                             width: MediaQuery.of(context).size.width,
-                            height: 500,
+                            height: 430,
                           ) :
                           Image.asset(
                             'assets/covers/${breed.img}',
                             width: MediaQuery.of(context).size.width,
-                            height: 500,
+                            height: 430,
                           )
                         )
                     ),
-                      // child: Image.asset(
-                      //   'assets/covers/${breed.img}',
-                      //   width: MediaQuery.of(context).size.width,
-                      //   height: 500,
-                      // )),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -66,6 +61,10 @@ class BreedScreen extends StatelessWidget {
                       ],
                     ),
                   ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Text('${breed.fullName}', style: Theme.of(context).textTheme.headline1),
                 ),
                 BreedDetails(breed: breed)
               ]),
@@ -156,16 +155,57 @@ class BreedDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Container(
-        height: 300,
-        width: 300,
-        child: Text(
-          breed.description,
-          style: TextStyle(height: 2, fontSize: 20),
+    print(breed.fullName);
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 30.0),
+          child: Card(
+            child: Container(
+              child: Text(
+                breed.description,
+                style: TextStyle(height: 2, fontSize: 20),
+              ),
+            ),
+          ),
         ),
-      ),
+        Container(
+          height: 300,
+          child: ListView(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            children: <Widget>[
+
+              ListItem(title: "Life Span", data: breed.lifeSpan, icon: FontAwesomeIcons.heart,),
+              ListItem(title: "Bred For", data: breed.bredFor, icon: FontAwesomeIcons.baby,),
+              ListItem(title: "Group", data: breed.breedGroup, icon: FontAwesomeIcons.layerGroup,),
+              ListItem(title: "Height", data: "${breed.height} inches", icon: FontAwesomeIcons.textHeight),
+              ListItem(title: "Weight", data: "${breed.weight} pounds", icon: FontAwesomeIcons.weightHanging),
+              ListItem(title: "Origin", data: breed.origin, icon: FontAwesomeIcons.home,)
+            ],
+          ),
+        )
+      ],
     );
+  }
+}
+
+class ListItem extends StatelessWidget {
+  final String title;
+  final String data;
+  final IconData icon;
+  ListItem({this.title, this.data, this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+            child: ListTile(
+              leading: Icon(icon),
+              title: Text(title, style: TextStyle(fontSize: 30)),
+              subtitle: Text('$data', style: TextStyle(fontSize: 22, fontWeight: FontWeight.normal)),
+              trailing: Icon(Icons.more_vert),
+            ),
+           );
   }
 }
 
