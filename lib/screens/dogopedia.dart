@@ -45,17 +45,19 @@ class DogopediaScreen extends StatelessWidget {
             //       breeds.map((breed) => BreedPreview(breed: breed)).toList(),
             // ),
             body: 
-            ResponsiveGridRow(children: breeds.map((breed) => 
-              ResponsiveGridCol(
-                xs: 6,
-                md: 3,
-                child: Container(
-                  height: 300,
-                  alignment: Alignment(0, 0),
-                  child: BreedPreview(breed: breed),
-                ),
-              )
-            ).toList()),
+            SingleChildScrollView(
+              child: ResponsiveGridRow(children: breeds.map((breed) => 
+                ResponsiveGridCol(
+                  xs: 6,
+                  md: 3,
+                  child: Container(
+                    // height: 300,
+                    alignment: Alignment(0, 0),
+                    child: BreedPreview(breed: breed),
+                  ),
+                )
+              ).toList()),
+            ),
             bottomNavigationBar: AppBottomNav(route: 0, inactive: false,),
           );
         } else {
@@ -85,7 +87,7 @@ class BreedPreview extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                height: 280,
+                height: 240,
                 child: Padding(
                   padding: EdgeInsets.all(5),
                   child: 
