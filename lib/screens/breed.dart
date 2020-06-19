@@ -179,8 +179,8 @@ class BreedDetails extends StatelessWidget {
               ListItem(title: "Life Span", data: breed.lifeSpan, icon: FontAwesomeIcons.heart,),
               ListItem(title: "Bred For", data: breed.bredFor, icon: FontAwesomeIcons.baby,),
               ListItem(title: "Group", data: breed.breedGroup, icon: FontAwesomeIcons.layerGroup,),
-              ListItem(title: "Height", data: breed.height, icon: FontAwesomeIcons.textHeight),
-              ListItem(title: "Weight", data: breed.weight, icon: FontAwesomeIcons.weightHanging),
+              ListItem(title: "Height", data: "${breed.height} inches", icon: FontAwesomeIcons.textHeight),
+              ListItem(title: "Weight", data: "${breed.weight} pounds", icon: FontAwesomeIcons.weightHanging),
               ListItem(title: "Origin", data: breed.origin, icon: FontAwesomeIcons.home,)
             ],
           ),
