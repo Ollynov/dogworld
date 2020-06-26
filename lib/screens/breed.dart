@@ -83,6 +83,94 @@ class BreedScreen extends StatelessWidget {
   }
 }
 
+
+
+class BreedDetails extends StatelessWidget {
+  final Breed breed;
+  BreedDetails({Key key, this.breed});
+
+  @override
+  Widget build(BuildContext context) {
+    print(breed.fullName);
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 30.0),
+          child: Card(
+            child: Container(
+              child: Text(
+                breed.description,
+                style: TextStyle(height: 2, fontSize: 20),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            children: <Widget>[
+
+              ListItem(title: "Life Span", data: breed.lifeSpan, icon: FontAwesomeIcons.heart,),
+              ListItem(title: "Bred For", data: breed.bredFor, icon: FontAwesomeIcons.baby,),
+              ListItem(title: "Group", data: breed.breedGroup, icon: FontAwesomeIcons.layerGroup,),
+              ListItem(title: "Height", data: "${breed.height} inches", icon: FontAwesomeIcons.textHeight),
+              ListItem(title: "Weight", data: "${breed.weight} pounds", icon: FontAwesomeIcons.weightHanging),
+              ListItem(title: "Origin", data: breed.origin, icon: FontAwesomeIcons.home,)
+            ],
+          ),
+        )
+        // ListView(
+        //   scrollDirection: Axis.vertical,
+        //   shrinkWrap: true,
+        //   children: <Widget>[
+
+        //     ListItem(title: "Life Span", data: breed.lifeSpan, icon: FontAwesomeIcons.heart,),
+        //     ListItem(title: "Bred For", data: breed.bredFor, icon: FontAwesomeIcons.baby,),
+        //     ListItem(title: "Group", data: breed.breedGroup, icon: FontAwesomeIcons.layerGroup,),
+        //     ListItem(title: "Height", data: "${breed.height} inches", icon: FontAwesomeIcons.textHeight),
+        //     ListItem(title: "Weight", data: "${breed.weight} pounds", icon: FontAwesomeIcons.weightHanging),
+        //     ListItem(title: "Origin", data: breed.origin, icon: FontAwesomeIcons.home,)
+        //   ],
+        // )
+      ],
+    );
+  }
+}
+
+class ListItem extends StatelessWidget {
+  final String title;
+  final String data;
+  final IconData icon;
+  ListItem({this.title, this.data, this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+            child: ListTile(
+              leading: Icon(icon),
+              title: Text(title, style: TextStyle(fontSize: 30)),
+              subtitle: Text('$data', style: TextStyle(fontSize: 22, fontWeight: FontWeight.normal)),
+              trailing: Icon(Icons.more_vert),
+            ),
+           );
+  }
+}
+
+Future<void> _addNewBreedToFavorites(String breedId) {
+  return Global.userDetailsRef.upsert(
+    ({
+      'favoriteBreeds': FieldValue.arrayUnion([breedId])
+    }),
+  );
+}
+Future<void> _removeBreedFromFavorites(String breedId) {
+  return Global.userDetailsRef.upsert(
+    ({
+      'favoriteBreeds': FieldValue.arrayRemove([breedId])
+    }),
+  );
+}
+
 class FavoriteButton extends StatefulWidget {
   FavoriteButton({Key key, this.breedId}) : super(key: key);
   final String breedId;
@@ -149,91 +237,4 @@ class _FavoriteButtonState extends State<FavoriteButton> {
       color: Theme.of(context).cardTheme.color,
       );
   }
-}
-
-class BreedDetails extends StatelessWidget {
-  final Breed breed;
-  BreedDetails({Key key, this.breed});
-
-  @override
-  Widget build(BuildContext context) {
-    print(breed.fullName);
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: 30.0),
-          child: Card(
-            child: Container(
-              child: Text(
-                breed.description,
-                style: TextStyle(height: 2, fontSize: 20),
-              ),
-            ),
-          ),
-        ),
-        ListView(
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          children: <Widget>[
-
-            ListItem(title: "Life Span", data: breed.lifeSpan, icon: FontAwesomeIcons.heart,),
-            ListItem(title: "Bred For", data: breed.bredFor, icon: FontAwesomeIcons.baby,),
-            ListItem(title: "Group", data: breed.breedGroup, icon: FontAwesomeIcons.layerGroup,),
-            ListItem(title: "Height", data: "${breed.height} inches", icon: FontAwesomeIcons.textHeight),
-            ListItem(title: "Weight", data: "${breed.weight} pounds", icon: FontAwesomeIcons.weightHanging),
-            ListItem(title: "Origin", data: breed.origin, icon: FontAwesomeIcons.home,)
-          ],
-        )
-        // Container(
-        //   height: 300,
-        //   child: ListView(
-        //     shrinkWrap: true,
-        //     children: <Widget>[
-
-        //       ListItem(title: "Life Span", data: breed.lifeSpan, icon: FontAwesomeIcons.heart,),
-        //       ListItem(title: "Bred For", data: breed.bredFor, icon: FontAwesomeIcons.baby,),
-        //       ListItem(title: "Group", data: breed.breedGroup, icon: FontAwesomeIcons.layerGroup,),
-        //       ListItem(title: "Height", data: "${breed.height} inches", icon: FontAwesomeIcons.textHeight),
-        //       ListItem(title: "Weight", data: "${breed.weight} pounds", icon: FontAwesomeIcons.weightHanging),
-        //       ListItem(title: "Origin", data: breed.origin, icon: FontAwesomeIcons.home,)
-        //     ],
-        //   ),
-        // )
-      ],
-    );
-  }
-}
-
-class ListItem extends StatelessWidget {
-  final String title;
-  final String data;
-  final IconData icon;
-  ListItem({this.title, this.data, this.icon});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-            child: ListTile(
-              leading: Icon(icon),
-              title: Text(title, style: TextStyle(fontSize: 30)),
-              subtitle: Text('$data', style: TextStyle(fontSize: 22, fontWeight: FontWeight.normal)),
-              trailing: Icon(Icons.more_vert),
-            ),
-           );
-  }
-}
-
-Future<void> _addNewBreedToFavorites(String breedId) {
-  return Global.userDetailsRef.upsert(
-    ({
-      'favoriteBreeds': FieldValue.arrayUnion([breedId])
-    }),
-  );
-}
-Future<void> _removeBreedFromFavorites(String breedId) {
-  return Global.userDetailsRef.upsert(
-    ({
-      'favoriteBreeds': FieldValue.arrayRemove([breedId])
-    }),
-  );
 }
