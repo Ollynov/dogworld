@@ -82,10 +82,10 @@ class DashNotLoggedIn extends StatelessWidget {
       appBar: AppBar(
         title: Text('Dashboard'),
       ),
-      body: Center( 
+      body: SingleChildScrollView(
           child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
           Text(
             'Sorry you are not logged in!!',
             style: TextStyle(height: 1.5, fontWeight: FontWeight.bold),
@@ -100,8 +100,9 @@ class DashNotLoggedIn extends StatelessWidget {
                   Navigator.pushNamed(context, '/login');
                 }),
           ),
-        ],
-      )),
+          ],
+        ),
+      ),
       bottomNavigationBar: AppBottomNav(route: 2, inactive: false),
     );
   }

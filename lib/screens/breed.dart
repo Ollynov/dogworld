@@ -202,7 +202,7 @@ class _FavoriteButtonState extends State<FavoriteButton> {
 
     return FlatButton(
       onPressed: () async {
-        if (userDetails.uid != "") {
+        if (userDetails != null && userDetails.uid != "") {
           if (isFavorited == false) {
             // this means that we are now favoriting this breed for the first time, so lets add to DB
             _addNewBreedToFavorites(widget.breedId);
