@@ -152,7 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         ],
       ),
-      backgroundColor: Theme.of(context).accentColor,
+      backgroundColor: Colors.white,
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
@@ -173,7 +173,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/DogWorld.png')
+            Image.asset('assets/WhiteDogWorld.png')
           ],
         ),
       ),

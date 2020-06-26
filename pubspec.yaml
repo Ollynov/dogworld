@@ -64,6 +64,7 @@ flutter:
     - assets/
     - assets/covers/
     - assets/DogWorld.png
+    - assets/WhiteDogWorld.png
     - assets/smallDogWorldLogo.png
     - assets/congrats.gif
 

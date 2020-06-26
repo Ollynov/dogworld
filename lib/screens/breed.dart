@@ -76,8 +76,7 @@ class BreedScreen extends StatelessWidget {
         } else {
           return LoadingScreen();
         }
-      
-
+  
       }
     );
   }
