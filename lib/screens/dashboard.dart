@@ -53,8 +53,8 @@ class DashboardScreen extends StatelessWidget {
                   FlatButton(
                     child: Text('Logout'),
                     color: Colors.red[400],
+                    padding: EdgeInsets.all(16),
                     onPressed: () async {
-                      print('ok you just signed out bruh');
                       await auth.signOut();
                       Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
                   }),
@@ -91,8 +91,9 @@ class DashNotLoggedIn extends StatelessWidget {
             style: TextStyle(height: 1.5, fontWeight: FontWeight.bold),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(8.0),
             child: FlatButton(
+                padding: EdgeInsets.all(16),
                 child: Text('Login'),
                 color: Theme.of(context).accentColor,
                 onPressed: () async {
