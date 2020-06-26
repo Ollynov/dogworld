@@ -27,8 +27,6 @@ class Document<T> {
   Future<T> getData() {
     try {
       var result = ref.get().then((v) => Global.models[T](v.data) as T);
-      print('here is result: ');
-      print(result);
       return result;
     } catch(err) {
       print('got error: ');

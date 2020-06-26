@@ -82,27 +82,28 @@ class DashNotLoggedIn extends StatelessWidget {
       appBar: AppBar(
         title: Text('Dashboard'),
       ),
-      body: SingleChildScrollView(
+      body: Center( 
+        child: SingleChildScrollView(
           child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-          Text(
-            'Sorry you are not logged in!!',
-            style: TextStyle(height: 1.5, fontWeight: FontWeight.bold),
-          ),
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: FlatButton(
-                padding: EdgeInsets.all(16),
-                child: Text('Login'),
-                color: Theme.of(context).accentColor,
-                onPressed: () async {
-                  Navigator.pushNamed(context, '/login');
-                }),
-          ),
+              Text(
+                'Sorry you are not logged in!!',
+                style: TextStyle(height: 1.5, fontWeight: FontWeight.bold),
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: FlatButton(
+                    padding: EdgeInsets.all(16),
+                    child: Text('Login'),
+                    color: Theme.of(context).accentColor,
+                    onPressed: () async {
+                      Navigator.pushNamed(context, '/login');
+                    }),
+              ),
           ],
         ),
-      ),
+          )),
       bottomNavigationBar: AppBottomNav(route: 2, inactive: false),
     );
   }

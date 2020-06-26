@@ -125,8 +125,6 @@ class Breed {
   Breed({this.fullName, this.description, this.img, this.id, this.lifeSpan, this.bredFor, this.breedGroup, this.height, this.weight, this.origin, this.dogApiId});
 
   factory Breed.convertFromFireBaseMap(Map data) {
-    print('here is what we got back from firebase: ');
-    print(data);
     if (data == null) { 
       return null;
     }

@@ -15,6 +15,8 @@ class BreedScreen extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+    print('here is what we got for breedID');
+    print(breedId);
 
     // the args here is if we want to use data that we pass from the dogopedia screen. The big benefit here is one less API call, and simply pass in the data we already have. The downside is that if someone visits the page directly they will have no data. The best approach is a combo of both. 
     // final dynamic args = ModalRoute.of(context).settings.arguments;
