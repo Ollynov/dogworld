@@ -21,6 +21,11 @@ class AdminScreen extends StatelessWidget {
       return Scaffold(
         appBar: AppBar(
           title: Text('Admin'),
+            leading: IconButton(
+              icon: const Icon(Icons.home),
+              onPressed: () { Scaffold.of(context).openDrawer();},
+              tooltip: "Go Home",
+            )
         ),
         body: Center(
           child: SizedBox(

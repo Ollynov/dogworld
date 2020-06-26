@@ -22,7 +22,11 @@ class DashboardScreen extends StatelessWidget {
       return Scaffold(
         appBar: AppBar(
           title: Text('Dashboard'),
-          backgroundColor: Theme.of(context).primaryColorDark,
+          leading: IconButton(
+            icon: const Icon(Icons.home),
+            onPressed: () { Scaffold.of(context).openDrawer();},
+            tooltip: "Go Home",
+          )
         ),
         body: Center(
           child: SizedBox(

@@ -11,7 +11,7 @@ class SearchScreen extends StatelessWidget {
       body: Center(
         child: Text(
           
-          'Here is your search...',)
+          'Coming Soon...',)
           // style: TextStyle(fontFamily: 'IndieFlower')),
       ),
       bottomNavigationBar: AppBottomNav(route: 1, inactive: false,),

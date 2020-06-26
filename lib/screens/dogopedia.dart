@@ -20,30 +20,20 @@ class DogopediaScreen extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               title: Text('Breeds'),
-              actions: [
-                IconButton(
-                  icon: Icon(
-                    FontAwesomeIcons.home,
-                  ),
-                  onPressed: () => Navigator.pushNamed(context, '/'),
-                ),
-                IconButton(
-                  icon: Icon(
-                    FontAwesomeIcons.userCircle,
-                  ),
-                  onPressed: () => Navigator.pushNamed(context, '/login'),
-                )
-              ],
+              leading: IconButton(
+                icon: const Icon(Icons.home),
+                onPressed: () { Navigator.pushNamed(context, '/');},
+                tooltip: "Go Home",
+              ),
+              // actions: [
+              //   IconButton(
+              //     icon: Icon(
+              //       FontAwesomeIcons.userCircle,
+              //     ),
+              //     onPressed: () => Navigator.pushNamed(context, '/login'),
+              //   )
+              // ],
             ),
-            // drawer: TopicDrawer(topics: snap.data),
-            // body: GridView.count(
-            //   primary: false,
-            //   padding: const EdgeInsets.all(20.0),
-            //   crossAxisSpacing: 10.0,
-            //   crossAxisCount: 4,
-            //   children:
-            //       breeds.map((breed) => BreedPreview(breed: breed)).toList(),
-            // ),
             body: 
             SingleChildScrollView(
               child: ResponsiveGridRow(children: breeds.map((breed) => 

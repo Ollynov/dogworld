@@ -87,7 +87,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
         // initialRoute: '/dogopedia',
-        home: MyHomePage(title: "Homepage"),
+        home: MyHomePage(),
         routes: {
           // '/breed-information': (context) => BreedInfo(),
           // '/dog': (context) => Dog(),
@@ -114,8 +114,7 @@ class _MyAppState extends State<MyApp> {
 
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+  MyHomePage({Key key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -135,16 +134,19 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
-        leading: Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-              icon: const Icon(Icons.home),
-              onPressed: () { Scaffold.of(context).openDrawer();},
-              tooltip: "Go Home",
-            );
-          },
-        ),
+        // builder widget does 2 things essentially: 
+        // waits until the parent widget is done building before returning it's child
+        // gives the child the context of the build
+        // this normally happens anyways if you had a completely separate widget, but if you just have something very small then you may not want to create a compmletely new widget.
+        // leading: Builder(
+        //   builder: (BuildContext context) {
+        //     return IconButton(
+        //       icon: const Icon(Icons.home),
+        //       // onPressed: () { Scaffold.of(context).openDrawer();},
+        //       tooltip: "Go Home",
+        //     );
+        //   },
+        // ),
         actions: [
           IconButton(
             icon: Icon(FontAwesomeIcons.userCircle),

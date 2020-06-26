@@ -15,12 +15,8 @@ class BreedScreen extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    print('will run with breedId: ');
-    print(breedId);
 
     final dynamic args = ModalRoute.of(context).settings.arguments;
-    print('here are args:');
-    print(args);
     
     return FutureBuilder(
       future: Document<Breed>(path: 'Breed/$breedId').getData(),
@@ -31,7 +27,11 @@ class BreedScreen extends StatelessWidget {
           Breed breed = snap.data;
           return Scaffold(
             appBar: AppBar(
-              title: Text('${breed.fullName}'),
+              leading: IconButton(
+                icon: const Icon(Icons.home),
+                onPressed: () { Scaffold.of(context).openDrawer();},
+                tooltip: "Go Home",
+              )
             ),
             body: SingleChildScrollView(
               child: Padding(
