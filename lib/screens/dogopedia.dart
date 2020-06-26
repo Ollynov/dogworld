@@ -112,7 +112,7 @@ class BreedPreview extends StatelessWidget {
                         breed.fullName,
                         style: TextStyle(
                           height: 1.5, fontWeight: FontWeight.bold),
-                        overflow: TextOverflow.visible,
+                        overflow: TextOverflow.ellipsis,
                         softWrap: false,
                       ),
                     ),
