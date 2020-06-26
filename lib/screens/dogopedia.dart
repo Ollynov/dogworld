@@ -3,6 +3,7 @@ import 'package:doggies/services/services.dart';
 import 'package:doggies/shared/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:responsive_grid/responsive_grid.dart';
 
 import 'breed.dart';
 
@@ -18,30 +19,43 @@ class DogopediaScreen extends StatelessWidget {
           List<Breed> breeds = snap.data;
           return Scaffold(
             appBar: AppBar(
-              title: Text('Breeds'),
-              actions: [
-                IconButton(
-                  icon: Icon(
-                    FontAwesomeIcons.home,
-                  ),
-                  onPressed: () => Navigator.pushNamed(context, '/'),
-                ),
-                IconButton(
-                  icon: Icon(
-                    FontAwesomeIcons.userCircle,
-                  ),
-                  onPressed: () => Navigator.pushNamed(context, '/login'),
-                )
-              ],
+              leading: IconButton(
+                icon: const Icon(Icons.home),
+                onPressed: () { Navigator.pushNamed(context, '/');},
+                tooltip: "Go Home",
+              ),
+              // actions: [
+              //   IconButton(
+              //     icon: Icon(
+              //       FontAwesomeIcons.userCircle,
+              //     ),
+              //     onPressed: () => Navigator.pushNamed(context, '/login'),
+              //   )
+              // ],
             ),
-            // drawer: TopicDrawer(topics: snap.data),
-            body: GridView.count(
-              primary: false,
-              padding: const EdgeInsets.all(20.0),
-              crossAxisSpacing: 10.0,
-              crossAxisCount: 2,
-              children:
-                  breeds.map((breed) => BreedPreview(breed: breed)).toList(),
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text("The Dogopedia", style: Theme.of(context).textTheme.headline1),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(8),
+                    child: ResponsiveGridRow(children: breeds.map((breed) => 
+                      ResponsiveGridCol(
+                        xs: 6,
+                        md: 3,
+                        child: Container(
+                          // height: 300,
+                          alignment: Alignment(0, 0),
+                          child: BreedPreview(breed: breed),
+                        ),
+                      )
+                    ).toList()),
+                  ),
+                ],
+              ),
             ),
             bottomNavigationBar: AppBottomNav(route: 0, inactive: false,),
           );
@@ -59,57 +73,55 @@ class BreedPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Hero(
-        tag: breed.id,
-        child: Card(
-          clipBehavior: Clip.antiAlias,
-          child: InkWell(
-            onTap: () {
-              Navigator.pushNamed(context, '/breed/${breed.id}', arguments: {'breedId': breed.id});
-            },
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  height: 330,
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 20, bottom: 20),
-                    child: 
-                      (breed.img.split("//")[0] == "https:"? 
-                        Image.network(
-                          breed.img, 
-                          fit: BoxFit.contain,
-                        ) :
-                        Image.asset(
-                          'assets/covers/${breed.img}',
-                          fit: BoxFit.contain,
-                        )
+    return Hero(
+      tag: breed.id,
+      child: Card(
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: () {
+            Navigator.pushNamed(context, '/breed/${breed.id}', arguments: {'breedId': breed.id});
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                height: 240,
+                child: Padding(
+                  padding: EdgeInsets.all(5),
+                  child: 
+                    (breed.img.split("//")[0] == "https:"? 
+                      Image.network(
+                        breed.img, 
+                        fit: BoxFit.contain,
+                      ) :
+                      Image.asset(
+                        'assets/covers/${breed.img}',
+                        fit: BoxFit.contain,
                       )
-                  ),
+                    )
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 10, bottom: 10),
-                        child: Text(
-                          breed.fullName,
-                          style: TextStyle(
-                            height: 1.5, fontWeight: FontWeight.bold),
-                          overflow: TextOverflow.fade,
-                          softWrap: false,
-                        ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 10, bottom: 10),
+                      child: Text(
+                        breed.fullName,
+                        style: TextStyle(
+                          height: 1.5, fontWeight: FontWeight.bold),
+                        overflow: TextOverflow.fade,
+                        softWrap: false,
                       ),
                     ),
-                  ],
-                ),
-                // )
-                // TopicProgress(topic: topic),
-              ],
-            ),
+                  ),
+                ],
+              ),
+              // )
+              // TopicProgress(topic: topic),
+            ],
           ),
         ),
       ),

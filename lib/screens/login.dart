@@ -30,12 +30,17 @@ class LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColorDark,
         title: Text("Login"),
-        actions: [
-          IconButton(
-            icon: Icon(FontAwesomeIcons.userCircle,),
-            onPressed: () => Navigator.pushNamed(context, '/login'),
-          )
-        ],
+        leading: IconButton(
+                icon: const Icon(Icons.home),
+                onPressed: () { Navigator.pushNamed(context, '/');},
+                tooltip: "Go Home",
+              ),
+        // actions: [
+        //   IconButton(
+        //     icon: Icon(FontAwesomeIcons.userCircle,),
+        //     onPressed: () => Navigator.pushNamed(context, '/login'),
+        //   )
+        // ],
       ),
       body: Container(
         padding: EdgeInsets.all(30),

@@ -21,7 +21,14 @@ class EditBreedScreen extends StatelessWidget {
     if (user != null) {
 
       return Scaffold (
-          appBar: AppBar(title: Text('Admin'),),
+          appBar: AppBar(
+            title: Text('Admin'),
+            leading: IconButton(
+              icon: const Icon(Icons.home),
+              onPressed: () { Navigator.pushNamed(context, '/');},
+              tooltip: "Go Home",
+            )
+          ),
           body: Center(
             child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

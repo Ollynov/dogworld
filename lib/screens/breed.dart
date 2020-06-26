@@ -15,12 +15,9 @@ class BreedScreen extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    print('will run with breedId: ');
-    print(breedId);
 
-    final dynamic args = ModalRoute.of(context).settings.arguments;
-    print('here are args:');
-    print(args);
+    // the args here is if we want to use data that we pass from the dogopedia screen. The big benefit here is one less API call, and simply pass in the data we already have. The downside is that if someone visits the page directly they will have no data. The best approach is a combo of both. 
+    // final dynamic args = ModalRoute.of(context).settings.arguments;
     
     return FutureBuilder(
       future: Document<Breed>(path: 'Breed/$breedId').getData(),
@@ -31,54 +28,151 @@ class BreedScreen extends StatelessWidget {
           Breed breed = snap.data;
           return Scaffold(
             appBar: AppBar(
-              title: Text('${breed.fullName}'),
+              leading: IconButton(
+                icon: const Icon(Icons.home),
+                onPressed: () { Navigator.pushNamed(context, '/');},
+                tooltip: "Go Home",
+              )
             ),
-            body: Padding(
-              padding: const EdgeInsets.only(top: 10, bottom: 10),
-              child: Column(children: [
-                Stack(
-                  children: [
-                    Hero(
-                      tag: breed.img,
-                      child: 
-                        (breed.img.split("//")[0] == "https:"? 
-                          Image.network(
-                            breed.img, 
-                            width: MediaQuery.of(context).size.width,
-                            height: 430,
-                          ) :
-                          Image.asset(
-                            'assets/covers/${breed.img}',
-                            width: MediaQuery.of(context).size.width,
-                            height: 430,
+            body: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                child: Column(children: [
+                  Stack(
+                    children: [
+                      Hero(
+                        tag: breed.id,
+                        child: 
+                          (breed.img.split("//")[0] == "https:"? 
+                            Image.network(
+                              breed.img, 
+                              width: MediaQuery.of(context).size.width,
+                              height: 430,
+                            ) :
+                            Image.asset(
+                              'assets/covers/${breed.img}',
+                              width: MediaQuery.of(context).size.width,
+                              height: 430,
+                            )
                           )
-                        )
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        FavoriteButton(breedId: breed.id)
-                      ],
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Text('${breed.fullName}', style: Theme.of(context).textTheme.headline1),
-                ),
-                BreedDetails(breed: breed)
-              ]),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          FavoriteButton(breedId: breed.id)
+                        ],
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text('${breed.fullName}', style: Theme.of(context).textTheme.headline1),
+                  ),
+                  BreedDetails(breed: breed)
+                ]),
+              ),
             ),
           );
 
         } else {
           return LoadingScreen();
         }
-      
-
+  
       }
     );
   }
+}
+
+
+
+class BreedDetails extends StatelessWidget {
+  final Breed breed;
+  BreedDetails({Key key, this.breed});
+
+  @override
+  Widget build(BuildContext context) {
+    print(breed.fullName);
+    return Column(
+      children: [
+        Container(
+          padding: EdgeInsets.all(12),
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 30.0),
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  breed.description,
+                  style: TextStyle(height: 2, fontSize: 20),
+                ),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            children: <Widget>[
+
+              ListItem(title: "Life Span", data: breed.lifeSpan, icon: FontAwesomeIcons.heart,),
+              ListItem(title: "Bred For", data: breed.bredFor, icon: FontAwesomeIcons.baby,),
+              ListItem(title: "Group", data: breed.breedGroup, icon: FontAwesomeIcons.layerGroup,),
+              ListItem(title: "Height", data: "${breed.height} inches", icon: FontAwesomeIcons.textHeight),
+              ListItem(title: "Weight", data: "${breed.weight} pounds", icon: FontAwesomeIcons.weightHanging),
+              ListItem(title: "Origin", data: breed.origin, icon: FontAwesomeIcons.home,)
+            ],
+          ),
+        )
+        // ListView(
+        //   scrollDirection: Axis.vertical,
+        //   shrinkWrap: true,
+        //   children: <Widget>[
+
+        //     ListItem(title: "Life Span", data: breed.lifeSpan, icon: FontAwesomeIcons.heart,),
+        //     ListItem(title: "Bred For", data: breed.bredFor, icon: FontAwesomeIcons.baby,),
+        //     ListItem(title: "Group", data: breed.breedGroup, icon: FontAwesomeIcons.layerGroup,),
+        //     ListItem(title: "Height", data: "${breed.height} inches", icon: FontAwesomeIcons.textHeight),
+        //     ListItem(title: "Weight", data: "${breed.weight} pounds", icon: FontAwesomeIcons.weightHanging),
+        //     ListItem(title: "Origin", data: breed.origin, icon: FontAwesomeIcons.home,)
+        //   ],
+        // )
+      ],
+    );
+  }
+}
+
+class ListItem extends StatelessWidget {
+  final String title;
+  final String data;
+  final IconData icon;
+  ListItem({this.title, this.data, this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+            child: ListTile(
+              leading: Icon(icon),
+              title: Text(title, style: TextStyle(fontSize: 30)),
+              subtitle: Text('$data', style: TextStyle(fontSize: 22, fontWeight: FontWeight.normal)),
+              // trailing: Icon(Icons.more_vert),
+            ),
+           );
+  }
+}
+
+Future<void> _addNewBreedToFavorites(String breedId) {
+  return Global.userDetailsRef.upsert(
+    ({
+      'favoriteBreeds': FieldValue.arrayUnion([breedId])
+    }),
+  );
+}
+Future<void> _removeBreedFromFavorites(String breedId) {
+  return Global.userDetailsRef.upsert(
+    ({
+      'favoriteBreeds': FieldValue.arrayRemove([breedId])
+    }),
+  );
 }
 
 class FavoriteButton extends StatefulWidget {
@@ -147,79 +241,4 @@ class _FavoriteButtonState extends State<FavoriteButton> {
       color: Theme.of(context).cardTheme.color,
       );
   }
-}
-
-class BreedDetails extends StatelessWidget {
-  final Breed breed;
-  BreedDetails({Key key, this.breed});
-
-  @override
-  Widget build(BuildContext context) {
-    print(breed.fullName);
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: 30.0),
-          child: Card(
-            child: Container(
-              child: Text(
-                breed.description,
-                style: TextStyle(height: 2, fontSize: 20),
-              ),
-            ),
-          ),
-        ),
-        Container(
-          height: 300,
-          child: ListView(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            children: <Widget>[
-
-              ListItem(title: "Life Span", data: breed.lifeSpan, icon: FontAwesomeIcons.heart,),
-              ListItem(title: "Bred For", data: breed.bredFor, icon: FontAwesomeIcons.baby,),
-              ListItem(title: "Group", data: breed.breedGroup, icon: FontAwesomeIcons.layerGroup,),
-              ListItem(title: "Height", data: "${breed.height} inches", icon: FontAwesomeIcons.textHeight),
-              ListItem(title: "Weight", data: "${breed.weight} pounds", icon: FontAwesomeIcons.weightHanging),
-              ListItem(title: "Origin", data: breed.origin, icon: FontAwesomeIcons.home,)
-            ],
-          ),
-        )
-      ],
-    );
-  }
-}
-
-class ListItem extends StatelessWidget {
-  final String title;
-  final String data;
-  final IconData icon;
-  ListItem({this.title, this.data, this.icon});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-            child: ListTile(
-              leading: Icon(icon),
-              title: Text(title, style: TextStyle(fontSize: 30)),
-              subtitle: Text('$data', style: TextStyle(fontSize: 22, fontWeight: FontWeight.normal)),
-              trailing: Icon(Icons.more_vert),
-            ),
-           );
-  }
-}
-
-Future<void> _addNewBreedToFavorites(String breedId) {
-  return Global.userDetailsRef.upsert(
-    ({
-      'favoriteBreeds': FieldValue.arrayUnion([breedId])
-    }),
-  );
-}
-Future<void> _removeBreedFromFavorites(String breedId) {
-  return Global.userDetailsRef.upsert(
-    ({
-      'favoriteBreeds': FieldValue.arrayRemove([breedId])
-    }),
-  );
 }

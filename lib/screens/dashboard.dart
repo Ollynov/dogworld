@@ -22,7 +22,11 @@ class DashboardScreen extends StatelessWidget {
       return Scaffold(
         appBar: AppBar(
           title: Text('Dashboard'),
-          backgroundColor: Theme.of(context).primaryColorDark,
+          leading: IconButton(
+            icon: const Icon(Icons.home),
+            onPressed: () { Navigator.pushNamed(context, '/');},
+            tooltip: "Go Home",
+          )
         ),
         body: Center(
           child: SizedBox(
@@ -38,29 +42,7 @@ class DashboardScreen extends StatelessWidget {
                 'Welcome There ${user.displayName}',
                 style: TextStyle(height: 1.5, fontWeight: FontWeight.bold),
               )),
-              TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'New Display Name',
-                  ),
-                  onSubmitted: (String value) async {
-                    await userService.updateUserPreferences(user, value);
-                    await showDialog<void>(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('Great!'),
-                          content: Text('Your new display name is "$value".'),
-                          actions: <Widget>[
-                            FlatButton(
-                              onPressed: () { Navigator.pop(context);},
-                              child: const Text('OK'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  }),
+              // NewDisplayName(),
               InkWell(
                 child: Text('Go to admin page'),
                 onTap: () {Navigator.pushNamed(context, '/admin');},
@@ -176,6 +158,40 @@ class UserFavoriteBreeds extends StatelessWidget {
  
     
   }   
+}
+
+class NewDisplayName extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+  final UsersService userService = UsersService();
+  FirebaseUser user = Provider.of<FirebaseUser>(context);
+
+    return 
+      TextField(
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: 'New Display Name',
+          ),
+          onSubmitted: (String value) async {
+            await userService.updateUserPreferences(user, value);
+            await showDialog<void>(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text('Great!'),
+                  content: Text('Your new display name is "$value".'),
+                  actions: <Widget>[
+                    FlatButton(
+                      onPressed: () { Navigator.pop(context);},
+                      child: const Text('OK'),
+                    ),
+                  ],
+                );
+              },
+            );
+      });
+  }
 }
 
 // Future<void> _updateUserDetails(newBreed) {

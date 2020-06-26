@@ -7,11 +7,16 @@ class SearchScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Search'),
+        leading: IconButton(
+          icon: const Icon(Icons.home),
+          onPressed: () { Navigator.pushNamed(context, '/');},
+          tooltip: "Go Home",
+        ),
       ),
       body: Center(
         child: Text(
           
-          'Here is your search...',)
+          'Coming Soon...',)
           // style: TextStyle(fontFamily: 'IndieFlower')),
       ),
       bottomNavigationBar: AppBottomNav(route: 1, inactive: false,),
