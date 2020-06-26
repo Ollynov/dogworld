@@ -94,13 +94,17 @@ class BreedDetails extends StatelessWidget {
     print(breed.fullName);
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: 30.0),
-          child: Card(
-            child: Container(
-              child: Text(
-                breed.description,
-                style: TextStyle(height: 2, fontSize: 20),
+        Container(
+          padding: EdgeInsets.all(12),
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 30.0),
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  breed.description,
+                  style: TextStyle(height: 2, fontSize: 20),
+                ),
               ),
             ),
           ),
@@ -150,7 +154,7 @@ class ListItem extends StatelessWidget {
               leading: Icon(icon),
               title: Text(title, style: TextStyle(fontSize: 30)),
               subtitle: Text('$data', style: TextStyle(fontSize: 22, fontWeight: FontWeight.normal)),
-              trailing: Icon(Icons.more_vert),
+              // trailing: Icon(Icons.more_vert),
             ),
            );
   }
