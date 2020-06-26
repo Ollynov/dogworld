@@ -7,6 +7,11 @@ class SearchScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Search'),
+        leading: IconButton(
+          icon: const Icon(Icons.home),
+          onPressed: () { Navigator.pushNamed(context, '/');},
+          tooltip: "Go Home",
+        ),
       ),
       body: Center(
         child: Text(

@@ -24,7 +24,7 @@ class DashboardScreen extends StatelessWidget {
           title: Text('Dashboard'),
           leading: IconButton(
             icon: const Icon(Icons.home),
-            onPressed: () { Scaffold.of(context).openDrawer();},
+            onPressed: () { Navigator.pushNamed(context, '/');},
             tooltip: "Go Home",
           )
         ),

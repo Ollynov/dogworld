@@ -25,7 +25,7 @@ class EditBreedScreen extends StatelessWidget {
             title: Text('Admin'),
             leading: IconButton(
               icon: const Icon(Icons.home),
-              onPressed: () { Scaffold.of(context).openDrawer();},
+              onPressed: () { Navigator.pushNamed(context, '/');},
               tooltip: "Go Home",
             )
           ),

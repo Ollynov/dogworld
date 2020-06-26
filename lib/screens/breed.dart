@@ -16,7 +16,8 @@ class BreedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final dynamic args = ModalRoute.of(context).settings.arguments;
+    // the args here is if we want to use data that we pass from the dogopedia screen. The big benefit here is one less API call, and simply pass in the data we already have. The downside is that if someone visits the page directly they will have no data. The best approach is a combo of both. 
+    // final dynamic args = ModalRoute.of(context).settings.arguments;
     
     return FutureBuilder(
       future: Document<Breed>(path: 'Breed/$breedId').getData(),
@@ -29,7 +30,7 @@ class BreedScreen extends StatelessWidget {
             appBar: AppBar(
               leading: IconButton(
                 icon: const Icon(Icons.home),
-                onPressed: () { Scaffold.of(context).openDrawer();},
+                onPressed: () { Navigator.pushNamed(context, '/');},
                 tooltip: "Go Home",
               )
             ),
