@@ -19,7 +19,6 @@ class DogopediaScreen extends StatelessWidget {
           List<Breed> breeds = snap.data;
           return Scaffold(
             appBar: AppBar(
-              title: Text('Breeds'),
               leading: IconButton(
                 icon: const Icon(Icons.home),
                 onPressed: () { Navigator.pushNamed(context, '/');},
@@ -34,19 +33,29 @@ class DogopediaScreen extends StatelessWidget {
               //   )
               // ],
             ),
-            body: 
-            SingleChildScrollView(
-              child: ResponsiveGridRow(children: breeds.map((breed) => 
-                ResponsiveGridCol(
-                  xs: 6,
-                  md: 3,
-                  child: Container(
-                    // height: 300,
-                    alignment: Alignment(0, 0),
-                    child: BreedPreview(breed: breed),
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text("The Dogopedia", style: Theme.of(context).textTheme.headline1),
                   ),
-                )
-              ).toList()),
+                  Container(
+                    padding: EdgeInsets.all(8),
+                    child: ResponsiveGridRow(children: breeds.map((breed) => 
+                      ResponsiveGridCol(
+                        xs: 6,
+                        md: 3,
+                        child: Container(
+                          // height: 300,
+                          alignment: Alignment(0, 0),
+                          child: BreedPreview(breed: breed),
+                        ),
+                      )
+                    ).toList()),
+                  ),
+                ],
+              ),
             ),
             bottomNavigationBar: AppBottomNav(route: 0, inactive: false,),
           );
