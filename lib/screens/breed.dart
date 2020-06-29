@@ -70,12 +70,13 @@ class BreedScreen extends StatelessWidget {
                         children: [
                           FavoriteButton(breedId: breed.id)
                         ],
+                        
                       ),
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(6.0),
-                    child: Text('${breed.fullName}', style: Theme.of(context).textTheme.headline1),
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text('${breed.fullName}', style: Theme.of(context).textTheme.headline2),
                   ),
                   BreedDetails(breed: breed)
                 ]),
@@ -209,45 +210,49 @@ class _FavoriteButtonState extends State<FavoriteButton> {
       });
     }    
 
-    return FlatButton(
-      onPressed: () async {
-        if (userDetails != null && userDetails.uid != "") {
-          if (isFavorited == false) {
-            // this means that we are now favoriting this breed for the first time, so lets add to DB
-            _addNewBreedToFavorites(widget.breedId);
+    return Opacity(
+      opacity: .85,
+      child: RaisedButton(
+        padding: EdgeInsets.all(9),
+        onPressed: () async {
+          if (userDetails != null && userDetails.uid != "") {
+            if (isFavorited == false) {
+              // this means that we are now favoriting this breed for the first time, so lets add to DB
+              _addNewBreedToFavorites(widget.breedId);
+            } else {
+              //remove from DB
+              _removeBreedFromFavorites(widget.breedId);
+            }
+            setState(() {
+              isFavorited = !isFavorited;
+            });
           } else {
-            //remove from DB
-            _removeBreedFromFavorites(widget.breedId);
+            Scaffold.of(context).showSnackBar(SnackBar(
+              content: GestureDetector(
+                child: Text("You must be logged in to save a favorite dog breed."),
+                onTap: () {Navigator.pushNamed(context, '/login');},
+              ),
+              backgroundColor: Theme.of(context).primaryColorLight,
+            ));
           }
-          setState(() {
-            isFavorited = !isFavorited;
-          });
-        } else {
-          Scaffold.of(context).showSnackBar(SnackBar(
-            content: GestureDetector(
-              child: Text("You must be logged in to save a favorite dog breed."),
-              onTap: () {Navigator.pushNamed(context, '/login');},
-            ),
-            
-            backgroundColor: Theme.of(context).primaryColorLight,
-          ));
-        }
 
-      }, 
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          (isFavorited? 
-            FaIcon(FontAwesomeIcons.solidHeart, color: Theme.of(context).primaryColor):
-            FaIcon(FontAwesomeIcons.heart, color: Theme.of(context).primaryColor)),
-          Padding(
-            padding: const EdgeInsets.only(left: 12.0),
-            child: Text('Favorite', style: TextStyle(fontSize: 20.0),),
-          ),
-        ],
-      ),
-      color: Theme.of(context).cardTheme.color,
-      );
+        }, 
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          // mainAxisSize: MainAxisSize.min,
+          children: [
+            (isFavorited? 
+              FaIcon(FontAwesomeIcons.solidHeart, color: Theme.of(context).primaryColor, size: 16,):
+              FaIcon(FontAwesomeIcons.heart, color: Theme.of(context).primaryColor, size: 16,)),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Text('Favorite', style: TextStyle(fontSize: 14.0),),
+            ),
+          ],
+        ),
+        color: Theme.of(context).cardTheme.color,
+        
+        ),
+    );
   }
 }
