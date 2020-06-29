@@ -28,11 +28,11 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.3
-  firebase_core: 0.4.4+3
-  firebase_analytics: 5.0.11
+  firebase_core: ^0.4.0+9
+  firebase_analytics: ^5.0.11
   cloud_firestore: 0.13.4+2
   firebase_auth: 0.15.5+3
-  google_sign_in: 4.4.1
+  google_sign_in: ^4.4.1
   apple_sign_in: 0.1.0
   firebase_auth_web:
   rxdart: 0.23.1
@@ -47,6 +47,13 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  flutter_launcher_icons: "^0.7.3"
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/smallDogWorldLogo.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -63,10 +70,10 @@ flutter:
   assets:
     - assets/
     - assets/covers/
+    - assets/icons/
     - assets/DogWorld.png
     - assets/WhiteDogWorld.png
-    - assets/smallDogWorldLogo.png
-    - assets/congrats.gif
+    - assets/icons/smallDogWorldLogo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

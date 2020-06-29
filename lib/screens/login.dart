@@ -53,7 +53,7 @@ class LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // FlutterLogo(size: 150,),
-                Image.asset('assets/smallDogWorldLogo.png'),
+                Image.asset('assets/icons/smallDogWorldLogo.png'),
                 // Image(image: AssetImage('assets/smallDogWorldLogo.png')),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 100, top: 20),
@@ -94,12 +94,12 @@ class LoginScreenState extends State<LoginScreen> {
                         return Container();
                       }
                     }),
-                LoginButton(
-                  text: 'CONTINUE AS GUEST',
-                  icon: FontAwesomeIcons.user, 
-                  loginMethod: auth.anonLogin,
-                  color: Theme.of(context).primaryColorDark,
-                  destination: '/dashboard',),
+                // LoginButton(
+                //   text: 'CONTINUE AS GUEST',
+                //   icon: FontAwesomeIcons.user, 
+                //   loginMethod: auth.anonLogin,
+                //   color: Theme.of(context).primaryColorDark,
+                //   destination: '/dashboard',),
               ],
             ),
           ],

@@ -115,6 +115,8 @@ class UserFavoriteBreeds extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('here is our userDetails: ');
+    print(userDetails);
 
     if (userDetails != null && userDetails.favoriteBreeds != []) {
       print(userDetails.favoriteBreeds);
@@ -156,7 +158,7 @@ class UserFavoriteBreeds extends StatelessWidget {
         ),
       );
     } else {
-      return Loader();
+      return Container();
     }
  
     
