@@ -38,49 +38,49 @@ class BreedScreen extends StatelessWidget {
               )
             ),
             body: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Column(children: [
-                  Stack(
-                    children: [
-                      ConstrainedBox(
-                        constraints: new BoxConstraints(
+              child: Column(children: [
+                Stack(
+                  children: [
+                    ConstrainedBox(
+                      constraints: new BoxConstraints(
               
-                          maxHeight: 360,
-                        ),
-                        child: Hero(
-                          tag: breed.id,
-                          child: 
-                            (breed.img.split("//")[0] == "https:"? 
-                              Image.network(
-                                breed.img, 
-                                width: MediaQuery.of(context).size.width,
-                                // height: 340,
-                              ) :
-                              Image.asset(
-                                'assets/covers/${breed.img}',
-                                width: MediaQuery.of(context).size.width,
-                                height: 430,
-                              )
+                        maxHeight: 360,
+                      ),
+                      child: Hero(
+                        tag: breed.id,
+                        child: 
+                          (breed.img.split("//")[0] == "https:"? 
+                            Image.network(
+                              breed.img, 
+                              width: MediaQuery.of(context).size.width,
+                              // height: 340,
+                            ) :
+                            Image.asset(
+                              'assets/covers/${breed.img}',
+                              width: MediaQuery.of(context).size.width,
+                              height: 430,
                             )
-                        ),
+                          )
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          FavoriteButton(breedId: breed.id)
-                        ],
-                        
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text('${breed.fullName}', style: Theme.of(context).textTheme.headline2),
-                  ),
-                  BreedDetails(breed: breed)
-                ]),
-              ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 4.0),
+                          child: FavoriteButton(breedId: breed.id),
+                        )
+                      ],
+                      
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('${breed.fullName}', style: Theme.of(context).textTheme.headline2),
+                ),
+                BreedDetails(breed: breed)
+              ]),
             ),
           );
 
@@ -105,9 +105,9 @@ class BreedDetails extends StatelessWidget {
     return Column(
       children: [
         Container(
-          padding: EdgeInsets.all(12),
+          padding: EdgeInsets.all(10),
           child: Padding(
-            padding: const EdgeInsets.only(bottom: 30.0),
+            padding: const EdgeInsets.only(bottom: 10.0),
             child: Card(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -213,7 +213,7 @@ class _FavoriteButtonState extends State<FavoriteButton> {
     return Opacity(
       opacity: .85,
       child: RaisedButton(
-        padding: EdgeInsets.all(9),
+        padding: EdgeInsets.all(5),
         onPressed: () async {
           if (userDetails != null && userDetails.uid != "") {
             if (isFavorited == false) {
