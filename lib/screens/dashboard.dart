@@ -90,7 +90,7 @@ class DashNotLoggedIn extends StatelessWidget {
               Text(
                 'Sorry you are not logged in!!',
                 style: TextStyle(height: 1.5, fontWeight: FontWeight.bold),
-              ),
+              ), 
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: FlatButton(

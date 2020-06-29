@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doggies/services/models.dart';
 import 'package:doggies/services/services.dart';
@@ -37,25 +39,31 @@ class BreedScreen extends StatelessWidget {
             ),
             body: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                padding: const EdgeInsets.only(top: 10),
                 child: Column(children: [
                   Stack(
                     children: [
-                      Hero(
-                        tag: breed.id,
-                        child: 
-                          (breed.img.split("//")[0] == "https:"? 
-                            Image.network(
-                              breed.img, 
-                              width: MediaQuery.of(context).size.width,
-                              height: 430,
-                            ) :
-                            Image.asset(
-                              'assets/covers/${breed.img}',
-                              width: MediaQuery.of(context).size.width,
-                              height: 430,
+                      ConstrainedBox(
+                        constraints: new BoxConstraints(
+              
+                          maxHeight: 360,
+                        ),
+                        child: Hero(
+                          tag: breed.id,
+                          child: 
+                            (breed.img.split("//")[0] == "https:"? 
+                              Image.network(
+                                breed.img, 
+                                width: MediaQuery.of(context).size.width,
+                                // height: 340,
+                              ) :
+                              Image.asset(
+                                'assets/covers/${breed.img}',
+                                width: MediaQuery.of(context).size.width,
+                                height: 430,
+                              )
                             )
-                          )
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -66,7 +74,7 @@ class BreedScreen extends StatelessWidget {
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(12.0),
+                    padding: const EdgeInsets.all(6.0),
                     child: Text('${breed.fullName}', style: Theme.of(context).textTheme.headline1),
                   ),
                   BreedDetails(breed: breed)
