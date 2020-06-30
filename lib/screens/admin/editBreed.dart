@@ -97,8 +97,8 @@ class _BreedListDropDownState extends State<BreedListDropDown> {
              }
            }
         ),
-        BreedDetails(breedId: dropdownValue),
-        BreedDetails(breedId: dropdownValue)
+        BreedDetails(breedId: dropdownValue, dataSource: "Dog World"),
+        BreedDetails(breedId: dropdownValue, dataSource: "Dog CEO",)
       ],
     );
   }
@@ -106,7 +106,8 @@ class _BreedListDropDownState extends State<BreedListDropDown> {
 
 class BreedDetails extends StatefulWidget {
   final String breedId;
-  const BreedDetails({Key key, this.breedId}) : super(key: key);
+  final String dataSource;
+  const BreedDetails({Key key, this.breedId, this.dataSource}) : super(key: key);
 
   @override
   _BreedDetailsState createState() => _BreedDetailsState();
@@ -145,7 +146,7 @@ class _BreedDetailsState extends State<BreedDetails> {
   Widget build(BuildContext context) {
 
     return FutureBuilder(
-      future: fetchBreed(widget.breedId),
+      future: _fetchBreed(widget.dataSource),
       builder: (BuildContext context, AsyncSnapshot<Breed> value) {
       // builder: (BuildContext context, AsyncSnapshot<TempModel> value) {
 
@@ -165,7 +166,7 @@ class _BreedDetailsState extends State<BreedDetails> {
             child: Column(
                   children: [
                     Row(children: [
-                      Text("Title Goes Here", style: Theme.of(context).textTheme.headline2)
+                      Text(widget.dataSource, style: Theme.of(context).textTheme.headline2)
                     ],),
                     Row(children: [
                       TitleColumn(text: 'Name'),
@@ -244,7 +245,9 @@ class _BreedDetailsState extends State<BreedDetails> {
                         ),
                       ),
                     ],),
-                  EditAndSaveRow(breedId: widget.breedId, fullName: _nameController, description: _descriptionController, lifeSpan: _lifeSpanController, bredFor: _bredForController, breedGroup: _groupController, height: _heightController, weight: _weightController, origin: _originController, img: _imageController),
+                  if (widget.dataSource == "Dog World")
+                    // this should only be displayed if it's Dog World
+                    EditAndSaveRow(breedId: widget.breedId, fullName: _nameController, description: _descriptionController, lifeSpan: _lifeSpanController, bredFor: _bredForController, breedGroup: _groupController, height: _heightController, weight: _weightController, origin: _originController, img: _imageController),
 
                 ],),
           );
@@ -253,6 +256,16 @@ class _BreedDetailsState extends State<BreedDetails> {
         }
       }
     );
+  }
+
+  _fetchBreed(dataSource) {
+    //widget.breedId
+    if (dataSource == "Dog CEO") {
+      return fetchBreedFromDogCEO(widget.breedId);
+    } else if (dataSource == "Dog World") {
+      return fetchBreedFromDogWorld(widget.breedId);
+    }
+    
   }
 }
 
@@ -354,7 +367,9 @@ Future<void> saveBreed({String breedId, String description, String fullName, Str
 }
 
 
-Future<Breed> fetchBreed(String breedId) async {
+
+
+Future<Breed> fetchBreedFromDogWorld(String breedId) async {
 
   // THIS NEEDS TO PERIORITIZE GRABBING FROM OUR OWN DB FIRST
   final Document<Breed> breedsRef = Document<Breed>(path: 'Breed/$breedId');
@@ -363,12 +378,19 @@ Future<Breed> fetchBreed(String breedId) async {
   print('here is what we got: ');
   print(fromOurDb);
 
-  if (fromOurDb != null) {
-    print('ok got some goodi back: ');
-    print(fromOurDb.fullName);
-    return fromOurDb;
+  return fromOurDb;
 
-  } else {
+  // if (fromOurDb != null) {
+  //   print('ok got some goodi back: ');
+  //   print(fromOurDb.fullName);
+  //   return fromOurDb;
+
+  // } 
+}
+
+Future<Breed> fetchBreedFromDogCEO(String breedId) async {
+
+
     final response = await http.get('https://api.thedogapi.com/v1/breeds/search?q=$breedId');
 
     if (response.statusCode == 200) {
@@ -394,9 +416,6 @@ Future<Breed> fetchBreed(String breedId) async {
       print('Failed to load album');
       return null;
     }
-  }
-
-
-
+  
 }
 
