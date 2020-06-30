@@ -2,10 +2,7 @@ import 'package:doggies/services/models.dart';
 import 'package:doggies/services/services.dart';
 import 'package:doggies/shared/shared.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:responsive_grid/responsive_grid.dart';
-
-import 'breed.dart';
 
 
 class DogopediaScreen extends StatelessWidget {

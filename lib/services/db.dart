@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 import './globals.dart';
-import './models.dart';
 
 class Document<T> {
   final Firestore _db = Firestore.instance;
@@ -78,7 +77,7 @@ class Collection<T> {
 
 // The cool thing about UserData class is that it gets the user information based on whoever is logged in. And does not require you to pass in a user id as a parameter.
 class UserData<T> {
-  final Firestore _db = Firestore.instance;
+  // final Firestore _db = Firestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final String collection;
 

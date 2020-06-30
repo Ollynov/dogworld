@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doggies/services/models.dart';
@@ -9,6 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 
+// ignore: must_be_immutable
 class BreedScreen extends StatelessWidget {
   String breedId;
   final Breed breed;

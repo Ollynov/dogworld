@@ -1,8 +1,7 @@
-import 'package:apple_sign_in/apple_sign_in.dart';
+// import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../services/services.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   createState() => LoginScreenState();
