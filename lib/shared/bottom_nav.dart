@@ -50,7 +50,7 @@ class _AppBottomNavState extends State<AppBottomNav> {
       currentIndex: _selectedIndex,
       // selectedItemColor: Theme.of(context).accentColor,
       selectedItemColor: selected,
-      unselectedItemColor: Colors.black38,
+      unselectedItemColor: Colors.black54,
       backgroundColor: Theme.of(context).primaryColorDark,
       onTap: (int idx) {
         // setState(() {

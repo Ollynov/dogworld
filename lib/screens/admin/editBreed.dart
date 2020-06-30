@@ -29,15 +29,17 @@ class EditBreedScreen extends StatelessWidget {
               tooltip: "Go Home",
             )
           ),
-          body: Center(
-            child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Select Breed to Edit'),
-              BreedListDropDown(),
+          body: SingleChildScrollView(
+            child: Center(
+              child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Select Breed to Edit'),
+                BreedListDropDown(),
 
-            ],
-          )),
+              ],
+            )),
+          ),
           bottomNavigationBar: AppBottomNav(route: 2, inactive: false,),
         );
     } else {
@@ -95,6 +97,7 @@ class _BreedListDropDownState extends State<BreedListDropDown> {
              }
            }
         ),
+        BreedDetails(breedId: dropdownValue),
         BreedDetails(breedId: dropdownValue)
       ],
     );
@@ -161,6 +164,9 @@ class _BreedDetailsState extends State<BreedDetails> {
             padding: const EdgeInsets.all(12.0),
             child: Column(
                   children: [
+                    Row(children: [
+                      Text("Title Goes Here", style: Theme.of(context).textTheme.headline2)
+                    ],),
                     Row(children: [
                       TitleColumn(text: 'Name'),
                       Flexible(child: 
@@ -344,17 +350,7 @@ Future<void> saveBreed({String breedId, String description, String fullName, Str
   };
 
   final response = await breedsRef.upsert(toSave);
-
   return response;
-
-  // if (true) {
-    
-  //   return 'chii';
-  // } else {
-    
-  //   print('Failed to load album');
-  //   return null;
-  // }
 }
 
 
