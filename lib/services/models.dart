@@ -113,6 +113,7 @@ class Breed {
   final String fullName;
   final String description;
   String img;
+  List additionalImages;
   final String lifeSpan;
   final String bredFor;
   final String breedGroup;
@@ -121,7 +122,7 @@ class Breed {
   final String origin;
   final int dogApiId;
   
-  Breed({this.fullName, this.description, this.img, this.id, this.lifeSpan, this.bredFor, this.breedGroup, this.height, this.weight, this.origin, this.dogApiId});
+  Breed({this.fullName, this.description, this.img, this.additionalImages, this.id, this.lifeSpan, this.bredFor, this.breedGroup, this.height, this.weight, this.origin, this.dogApiId});
 
   factory Breed.convertFromFireBaseMap(Map data) {
     if (data == null) { 
@@ -132,6 +133,7 @@ class Breed {
       fullName: data['fullName'] ?? '',
       description: data['description'] ?? '',
       img: data['img'] ?? 'default.png',
+      additionalImages: data['additionalImages'] ?? [],
       lifeSpan: data['lifeSpan'] ?? '',
       bredFor: data['bredFor'] ?? '',
       breedGroup: data['breedGroup'] ?? '',

@@ -123,6 +123,7 @@ class _BreedDetailsState extends State<BreedDetails> {
   TextEditingController _weightController;
   TextEditingController _originController;
   TextEditingController _imageController;
+  TextEditingController _additionalImagesController;
 
   void initState() {
     super.initState();
@@ -135,10 +136,12 @@ class _BreedDetailsState extends State<BreedDetails> {
     _weightController = TextEditingController();
     _originController = TextEditingController();
     _imageController = TextEditingController();
+    if (widget.dataSource == "Dog World") 
+      _additionalImagesController = TextEditingController();
   }
 
   void dispose() {
-    _nameController.dispose(); _descriptionController.dispose(); _lifeSpanController.dispose(); _bredForController.dispose(); _groupController.dispose(); _heightController.dispose(); _weightController.dispose(); _originController.dispose(); _imageController.dispose();
+    _nameController.dispose(); _descriptionController.dispose(); _lifeSpanController.dispose(); _bredForController.dispose(); _groupController.dispose(); _heightController.dispose(); _weightController.dispose(); _originController.dispose(); _imageController.dispose(); _additionalImagesController.dispose();
     super.dispose();
   }
 
@@ -160,6 +163,8 @@ class _BreedDetailsState extends State<BreedDetails> {
           _weightController.text = value.data.weight;
           _originController.text = value.data.origin;
           _imageController.text = value.data.img;
+          if (widget.dataSource == "Dog World") 
+            _additionalImagesController.text = value.data.additionalImages.join(', ');
 
           return Padding(
             padding: const EdgeInsets.all(12.0),
@@ -237,7 +242,7 @@ class _BreedDetailsState extends State<BreedDetails> {
                       ),
                     ],),
                     Row(children: [
-                      TitleColumn(text: 'Image'),
+                      TitleColumn(text: 'Primary Image'),
                       Flexible(child: 
                         TextField(
                           controller: _imageController,
@@ -245,7 +250,17 @@ class _BreedDetailsState extends State<BreedDetails> {
                         ),
                       ),
                     ],),
+
                   if (widget.dataSource == "Dog World") 
+                    Row(children: [
+                      TitleColumn(text: 'Additional Images'),
+                      Flexible(child: 
+                        TextField(
+                          controller: _additionalImagesController,
+                          style: TextStyle(fontSize: 20, fontFamily: 'Roboto'),
+                        ),
+                      ),
+                    ],),
                     // this should only be displayed if it's Dog World
                     EditAndSaveRow(breedId: widget.breedId, fullName: _nameController, description: _descriptionController, lifeSpan: _lifeSpanController, bredFor: _bredForController, breedGroup: _groupController, height: _heightController, weight: _weightController, origin: _originController, img: _imageController),
                   
