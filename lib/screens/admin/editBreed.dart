@@ -245,10 +245,11 @@ class _BreedDetailsState extends State<BreedDetails> {
                         ),
                       ),
                     ],),
-                  if (widget.dataSource == "Dog World")
+                  if (widget.dataSource == "Dog World") 
                     // this should only be displayed if it's Dog World
                     EditAndSaveRow(breedId: widget.breedId, fullName: _nameController, description: _descriptionController, lifeSpan: _lifeSpanController, bredFor: _bredForController, breedGroup: _groupController, height: _heightController, weight: _weightController, origin: _originController, img: _imageController),
-
+                  
+                  ImageCard(imagePath: _imageController.text) 
                 ],),
           );
         } else {
@@ -268,12 +269,6 @@ class _BreedDetailsState extends State<BreedDetails> {
     
   }
 }
-
-  // TextEditingController _bredForController;
-  // TextEditingController _groupController;
-  // TextEditingController _heightController;
-  // TextEditingController _weightController;
-  // TextEditingController _originController;
 
 
 class TitleColumn extends StatelessWidget {
@@ -331,7 +326,6 @@ class EditAndSaveRow extends StatelessWidget {
             padding: const EdgeInsets.only(left: 8.0),
             child: RaisedButton.icon(
               onPressed: ()=> {
-                print('pressy pressy'),
                 saveBreed(breedId: breedId, fullName: fullName.text, description: description.text, lifeSpan: lifeSpan.text, bredFor: bredFor.text, breedGroup: breedGroup.text, height: height.text, weight: weight.text, origin: origin.text, img: img.text)
               }, 
               padding: EdgeInsets.all(16),
@@ -365,6 +359,37 @@ Future<void> saveBreed({String breedId, String description, String fullName, Str
   final response = await breedsRef.upsert(toSave);
   return response;
 }
+
+
+class ImageCard extends StatelessWidget {
+  final String imagePath;
+  const ImageCard({Key key, this.imagePath}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            height: 240,
+            child: Padding(
+              padding: EdgeInsets.all(5),
+              child: 
+                Image.network(
+                  imagePath, 
+                  fit: BoxFit.contain,
+                ) 
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 
 
 
