@@ -41,6 +41,7 @@ dependencies:
   logger: ^0.7.0+2
   fluro: "^1.6.3"
   responsive_grid: ^1.1.1
+  carousel_slider: ^2.2.1
 
 
 

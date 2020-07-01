@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doggies/services/models.dart';
 import 'package:doggies/services/services.dart';
+import 'package:doggies/shared/carousel.dart';
 import 'package:doggies/shared/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -42,25 +43,22 @@ class BreedScreen extends StatelessWidget {
                 Stack(
                   children: [
                     ConstrainedBox(
-                      constraints: new BoxConstraints(
-              
-                        maxHeight: 360,
-                      ),
+                      constraints: new BoxConstraints(maxHeight: 360),
                       child: Hero(
                         tag: breed.id,
-                        child: 
-                          (breed.img.split("//")[0] == "https:"? 
-                            Image.network(
-                              breed.img, 
-                              width: MediaQuery.of(context).size.width,
-                              // height: 340,
-                            ) :
-                            Image.asset(
-                              'assets/covers/${breed.img}',
-                              width: MediaQuery.of(context).size.width,
-                              height: 430,
-                            )
-                          )
+                        child: Carousel()
+                          // (breed.img.split("//")[0] == "https:"? 
+                          //   Image.network(
+                          //     breed.img, 
+                          //     width: MediaQuery.of(context).size.width,
+                          //     // height: 340,
+                          //   ) :
+                          //   Image.asset(
+                          //     'assets/covers/${breed.img}',
+                          //     width: MediaQuery.of(context).size.width,
+                          //     height: 430,
+                          //   )
+                          // )
                       ),
                     ),
                     Row(
@@ -79,7 +77,7 @@ class BreedScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Text('${breed.fullName}', style: Theme.of(context).textTheme.headline2),
                 ),
-                BreedDetails(breed: breed)
+                BreedDetails(breed: breed),
               ]),
             ),
           );
@@ -133,19 +131,6 @@ class BreedDetails extends StatelessWidget {
             ],
           ),
         )
-        // ListView(
-        //   scrollDirection: Axis.vertical,
-        //   shrinkWrap: true,
-        //   children: <Widget>[
-
-        //     ListItem(title: "Life Span", data: breed.lifeSpan, icon: FontAwesomeIcons.heart,),
-        //     ListItem(title: "Bred For", data: breed.bredFor, icon: FontAwesomeIcons.baby,),
-        //     ListItem(title: "Group", data: breed.breedGroup, icon: FontAwesomeIcons.layerGroup,),
-        //     ListItem(title: "Height", data: "${breed.height} inches", icon: FontAwesomeIcons.textHeight),
-        //     ListItem(title: "Weight", data: "${breed.weight} pounds", icon: FontAwesomeIcons.weightHanging),
-        //     ListItem(title: "Origin", data: breed.origin, icon: FontAwesomeIcons.home,)
-        //   ],
-        // )
       ],
     );
   }
@@ -163,7 +148,7 @@ class ListItem extends StatelessWidget {
             child: ListTile(
               leading: Icon(icon),
               title: Text(title, style: TextStyle(fontSize: 30)),
-              subtitle: Text('$data', style: TextStyle(fontSize: 22, fontWeight: FontWeight.normal)),
+              subtitle: Text('$data', style: TextStyle(fontSize: 20, fontWeight: FontWeight.normal)),
               // trailing: Icon(Icons.more_vert),
             ),
            );

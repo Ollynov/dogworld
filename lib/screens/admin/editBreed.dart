@@ -3,6 +3,7 @@ import 'package:doggies/services/users.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:responsive_grid/responsive_grid.dart';
 import './../../services/services.dart';
 import './../../shared/shared.dart';
 import 'package:provider/provider.dart';
@@ -268,16 +269,12 @@ class _BreedDetailsState extends State<BreedDetails> {
                     children: [
                       Column(children: [ImageCard(imagePath: _imageController.text)],),
                       if (widget.dataSource == "Dog World") 
-                        Column(children: [
-                          Row(
-                            children: _additionalImagesController.text.split(", ").map((imagePath) => 
-                              ImageCard(imagePath: imagePath,)
-                            ).toList()
-                            // children: [
-                            //   ImageCard(imagePath: _additionalImagesController.text,),
-                            // ],
-                          )
-                        ],)
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(children: _additionalImagesController.text.split(", ").map((imagePath) => 
+                            ImageCard(imagePath: imagePath,)
+                          ).toList(),),
+                        )
                     ],
                   )
                 ],),
