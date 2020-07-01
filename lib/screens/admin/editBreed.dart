@@ -262,7 +262,7 @@ class _BreedDetailsState extends State<BreedDetails> {
                       ),
                     ],),
                     // this should only be displayed if it's Dog World
-                    EditAndSaveRow(breedId: widget.breedId, fullName: _nameController, description: _descriptionController, lifeSpan: _lifeSpanController, bredFor: _bredForController, breedGroup: _groupController, height: _heightController, weight: _weightController, origin: _originController, img: _imageController),
+                    EditAndSaveRow(breedId: widget.breedId, fullName: _nameController, description: _descriptionController, lifeSpan: _lifeSpanController, bredFor: _bredForController, breedGroup: _groupController, height: _heightController, weight: _weightController, origin: _originController, img: _imageController, additionalImages: _additionalImagesController),
                   
                   ImageCard(imagePath: _imageController.text) 
                 ],),
@@ -318,8 +318,9 @@ class EditAndSaveRow extends StatelessWidget {
   final TextEditingController weight;
   final TextEditingController origin;
   final TextEditingController img;
+  final TextEditingController additionalImages;
 
-  const EditAndSaveRow({Key key, this.breedId, this.fullName, this.description, this.lifeSpan, this.bredFor, this.breedGroup, this.height, this.weight, this.origin, this.img}) : super(key: key);
+  const EditAndSaveRow({Key key, this.breedId, this.fullName, this.description, this.lifeSpan, this.bredFor, this.breedGroup, this.height, this.weight, this.origin, this.img, this.additionalImages}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -341,7 +342,7 @@ class EditAndSaveRow extends StatelessWidget {
             padding: const EdgeInsets.only(left: 8.0),
             child: RaisedButton.icon(
               onPressed: ()=> {
-                saveBreed(breedId: breedId, fullName: fullName.text, description: description.text, lifeSpan: lifeSpan.text, bredFor: bredFor.text, breedGroup: breedGroup.text, height: height.text, weight: weight.text, origin: origin.text, img: img.text)
+                saveBreed(breedId: breedId, fullName: fullName.text, description: description.text, lifeSpan: lifeSpan.text, bredFor: bredFor.text, breedGroup: breedGroup.text, height: height.text, weight: weight.text, origin: origin.text, img: img.text, additionalImages: additionalImages.text)
               }, 
               padding: EdgeInsets.all(16),
               icon: Icon(FontAwesomeIcons.save), 
@@ -353,10 +354,14 @@ class EditAndSaveRow extends StatelessWidget {
   }
 }
 
-Future<void> saveBreed({String breedId, String description, String fullName, String lifeSpan, String bredFor, String breedGroup, String height, String weight, String origin, String img}) async {
+Future<void> saveBreed({String breedId, String description, String fullName, String lifeSpan, String bredFor, String breedGroup, String height, String weight, String origin, String img, dynamic additionalImages}) async {
   print('here is breedId: ');
   print(breedId);
   final Document<Breed> breedsRef = Document<Breed>(path: 'Breed/$breedId');
+
+  additionalImages = additionalImages.split(", ");
+  print('ok here is what we will save: ');
+  print(additionalImages);
   
   final toSave = {
     "id": breedId,
@@ -368,7 +373,8 @@ Future<void> saveBreed({String breedId, String description, String fullName, Str
     "height": height,
     "weight": weight,
     "origin": origin,
-    "img": img
+    "img": img,
+    "additionalImages": additionalImages
   };
 
   final response = await breedsRef.upsert(toSave);
