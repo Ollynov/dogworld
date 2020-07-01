@@ -3,12 +3,16 @@ import 'package:carousel_slider/carousel_slider.dart';
 
 class Carousel extends StatelessWidget {
   CarouselController buttonCarouselController = CarouselController();
+  List images;
+  Carousel({this.images});
+
 
  @override
   Widget build(BuildContext context) => Column(
-    children: <Widget>[
+    // children: <Widget>[
+    children: [
       CarouselSlider(
-        items: [1,2,3,4,5].map((i) {
+        items: images.map((i) {
             return Builder(
               builder: (BuildContext context) {
                 return Container(
@@ -32,7 +36,7 @@ class Carousel extends StatelessWidget {
         ),
       ),
       RaisedButton(
-        onPressed: () => buttonCarouselController.previousPage(
+        onPressed: () => buttonCarouselController.nextPage(
             duration: Duration(milliseconds: 300), curve: Curves.linear),
         child: Text('→'),
       )

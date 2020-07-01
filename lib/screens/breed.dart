@@ -46,7 +46,7 @@ class BreedScreen extends StatelessWidget {
                       constraints: new BoxConstraints(maxHeight: 360),
                       child: Hero(
                         tag: breed.id,
-                        child: Carousel()
+                        child: Carousel(images: new List.from([breed.img])..addAll(breed.additionalImages))
                           // (breed.img.split("//")[0] == "https:"? 
                           //   Image.network(
                           //     breed.img, 
