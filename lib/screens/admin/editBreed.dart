@@ -263,8 +263,23 @@ class _BreedDetailsState extends State<BreedDetails> {
                     ],),
                     // this should only be displayed if it's Dog World
                     EditAndSaveRow(breedId: widget.breedId, fullName: _nameController, description: _descriptionController, lifeSpan: _lifeSpanController, bredFor: _bredForController, breedGroup: _groupController, height: _heightController, weight: _weightController, origin: _originController, img: _imageController, additionalImages: _additionalImagesController),
-                  
-                  ImageCard(imagePath: _imageController.text) 
+
+                  Row(
+                    children: [
+                      Column(children: [ImageCard(imagePath: _imageController.text)],),
+                      if (widget.dataSource == "Dog World") 
+                        Column(children: [
+                          Row(
+                            children: _additionalImagesController.text.split(", ").map((imagePath) => 
+                              ImageCard(imagePath: imagePath,)
+                            ).toList()
+                            // children: [
+                            //   ImageCard(imagePath: _additionalImagesController.text,),
+                            // ],
+                          )
+                        ],)
+                    ],
+                  )
                 ],),
           );
         } else {
@@ -388,6 +403,8 @@ class ImageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('her is our imagepath: ');
+    print(imagePath);
     return Card(
       clipBehavior: Clip.antiAlias,
       child: Column(
