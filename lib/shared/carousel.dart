@@ -12,17 +12,29 @@ class Carousel extends StatelessWidget {
     // children: <Widget>[
     children: [
       CarouselSlider(
-        items: images.map((i) {
+        items: images.map((image) {
             return Builder(
               builder: (BuildContext context) {
-                return Container(
-                  width: MediaQuery.of(context).size.width,
-                  margin: EdgeInsets.symmetric(horizontal: 5.0),
-                  decoration: BoxDecoration(
-                    color: Colors.amber
-                  ),
-                  child: Text('text $i', style: TextStyle(fontSize: 16.0),)
-                );
+                // return Container(
+                //   width: MediaQuery.of(context).size.width,
+                //   margin: EdgeInsets.symmetric(horizontal: 5.0),
+                //   decoration: BoxDecoration(
+                //     color: Colors.amber
+                //   ),
+                //   child: Text('text $i', style: TextStyle(fontSize: 16.0),)
+                // );
+                return (image.split("//")[0] == "https:"? 
+                    Image.network(
+                      image, 
+                      width: MediaQuery.of(context).size.width,
+                      // height: 340,
+                    ) :
+                    Image.asset(
+                      'assets/covers/$image',
+                      width: MediaQuery.of(context).size.width,
+                      height: 430,
+                    )
+                  );
               },
             );
           }).toList(),
