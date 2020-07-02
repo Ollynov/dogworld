@@ -27,7 +27,8 @@ class Carousel extends StatelessWidget {
                 return (image.split("//")[0] == "https:"? 
                     Image.network(
                       image, 
-                      width: 440
+                      // width: 440,
+                      fit: BoxFit.contain,
                       // width: MediaQuery.of(context).size.width,
                       // height: 340,
                     ) :
@@ -44,9 +45,10 @@ class Carousel extends StatelessWidget {
         options: CarouselOptions(
           autoPlay: false,
           enlargeCenterPage: true,
-          height: 320,
-          viewportFraction: .9,
-          aspectRatio: 3/2,
+          // height: MediaQuery.of(context).size.height,
+          height: MediaQuery.of(context).size.height / 3,
+          viewportFraction: 2,
+          // aspectRatio: 1,
           initialPage: 0,
         ),
       ),
