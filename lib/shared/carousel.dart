@@ -26,13 +26,14 @@ class Carousel extends StatelessWidget {
                 return (image.split("//")[0] == "https:"? 
                     Image.network(
                       image, 
-                      width: MediaQuery.of(context).size.width,
+                      width: 440
+                      // width: MediaQuery.of(context).size.width,
                       // height: 340,
                     ) :
                     Image.asset(
                       'assets/covers/$image',
                       width: MediaQuery.of(context).size.width,
-                      height: 430,
+                      // height: 430,
                     )
                   );
               },
@@ -42,9 +43,10 @@ class Carousel extends StatelessWidget {
         options: CarouselOptions(
           autoPlay: false,
           enlargeCenterPage: true,
-          viewportFraction: 0.9,
-          aspectRatio: 2.0,
-          initialPage: 2,
+          height: 310,
+          viewportFraction: .9,
+          aspectRatio: 3/2,
+          initialPage: 0,
         ),
       ),
       RaisedButton(
