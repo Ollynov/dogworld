@@ -59,18 +59,21 @@ class Carousel extends StatelessWidget {
           child: Opacity(
             opacity: .7,
             child: Row(
-              
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                RaisedButton(
+                FlatButton(
                   onPressed: () => buttonCarouselController.previousPage(
                       duration: Duration(milliseconds: 300), curve: Curves.linear),
                   child: Icon(FontAwesomeIcons.arrowLeft),
+                  color: Colors.transparent,
+                  padding: EdgeInsets.only(top: 80, bottom: 80),
                 ),
-                RaisedButton(
+                FlatButton(
                   onPressed: () => buttonCarouselController.nextPage(
                       duration: Duration(milliseconds: 300), curve: Curves.linear),
                   child: Icon(FontAwesomeIcons.arrowRight),
+                  color: Colors.transparent,
+                  padding: EdgeInsets.only(top: 80, bottom: 80),
                 )
               ],
             ),
