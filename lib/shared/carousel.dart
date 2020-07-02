@@ -8,7 +8,7 @@ class Carousel extends StatelessWidget {
   Carousel({this.images});
 
 
- @override
+  @override
   Widget build(BuildContext context) => Column(
     // children: <Widget>[
     children: [
@@ -54,20 +54,27 @@ class Carousel extends StatelessWidget {
             initialPage: 0,
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            RaisedButton(
-              onPressed: () => buttonCarouselController.previousPage(
-                  duration: Duration(milliseconds: 300), curve: Curves.linear),
-              child: Icon(FontAwesomeIcons.arrowLeft),
+        Padding(
+          padding: const EdgeInsets.only(top: 100),
+          child: Opacity(
+            opacity: .7,
+            child: Row(
+              
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                RaisedButton(
+                  onPressed: () => buttonCarouselController.previousPage(
+                      duration: Duration(milliseconds: 300), curve: Curves.linear),
+                  child: Icon(FontAwesomeIcons.arrowLeft),
+                ),
+                RaisedButton(
+                  onPressed: () => buttonCarouselController.nextPage(
+                      duration: Duration(milliseconds: 300), curve: Curves.linear),
+                  child: Icon(FontAwesomeIcons.arrowRight),
+                )
+              ],
             ),
-            RaisedButton(
-              onPressed: () => buttonCarouselController.nextPage(
-                  duration: Duration(milliseconds: 300), curve: Curves.linear),
-              child: Icon(FontAwesomeIcons.arrowRight),
-            )
-          ],
+          ),
         )
         ]
       ),
