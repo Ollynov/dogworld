@@ -44,7 +44,7 @@ class Carousel extends StatelessWidget {
         options: CarouselOptions(
           autoPlay: false,
           enlargeCenterPage: true,
-          height: 310,
+          height: 320,
           viewportFraction: .9,
           aspectRatio: 3/2,
           initialPage: 0,
