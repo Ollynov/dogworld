@@ -12,51 +12,66 @@ class Carousel extends StatelessWidget {
   Widget build(BuildContext context) => Column(
     // children: <Widget>[
     children: [
-      CarouselSlider(
-        items: images.map((image) {
-            return Builder(
-              builder: (BuildContext context) {
-                // return Container(
-                //   width: MediaQuery.of(context).size.width,
-                //   margin: EdgeInsets.symmetric(horizontal: 5.0),
-                //   decoration: BoxDecoration(
-                //     color: Colors.amber
-                //   ),
-                //   child: Text('text $i', style: TextStyle(fontSize: 16.0),)
-                // );
-                return (image.split("//")[0] == "https:"? 
-                    Image.network(
-                      image, 
-                      // width: 440,
-                      fit: BoxFit.contain,
-                      // width: MediaQuery.of(context).size.width,
-                      // height: 340,
-                    ) :
-                    Image.asset(
-                      'assets/covers/$image',
-                      width: MediaQuery.of(context).size.width,
-                      // height: 430,
-                    )
-                  );
-              },
-            );
-          }).toList(),
-        carouselController: buttonCarouselController,
-        options: CarouselOptions(
-          autoPlay: false,
-          enlargeCenterPage: true,
-          // height: MediaQuery.of(context).size.height,
-          height: MediaQuery.of(context).size.height * .36,
-          viewportFraction: 2,
-          // aspectRatio: 1,
-          initialPage: 0,
+      Stack(
+        children: [
+          CarouselSlider(
+          items: images.map((image) {
+              return Builder(
+                builder: (BuildContext context) {
+                  // return Container(
+                  //   width: MediaQuery.of(context).size.width,
+                  //   margin: EdgeInsets.symmetric(horizontal: 5.0),
+                  //   decoration: BoxDecoration(
+                  //     color: Colors.amber
+                  //   ),
+                  //   child: Text('text $i', style: TextStyle(fontSize: 16.0),)
+                  // );
+                  return (image.split("//")[0] == "https:"? 
+                      Image.network(
+                        image, 
+                        // width: 440,
+                        fit: BoxFit.contain,
+                        // width: MediaQuery.of(context).size.width,
+                        // height: 340,
+                      ) :
+                      Image.asset(
+                        'assets/covers/$image',
+                        width: MediaQuery.of(context).size.width,
+                        // height: 430,
+                      )
+                    );
+                },
+              );
+            }).toList(),
+          carouselController: buttonCarouselController,
+          options: CarouselOptions(
+            autoPlay: false,
+            enlargeCenterPage: true,
+            // height: MediaQuery.of(context).size.height,
+            height: MediaQuery.of(context).size.height * .36,
+            viewportFraction: 2,
+            // aspectRatio: 1,
+            initialPage: 0,
+          ),
         ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            RaisedButton(
+              onPressed: () => buttonCarouselController.previousPage(
+                  duration: Duration(milliseconds: 300), curve: Curves.linear),
+              child: Icon(FontAwesomeIcons.arrowLeft),
+            ),
+            RaisedButton(
+              onPressed: () => buttonCarouselController.nextPage(
+                  duration: Duration(milliseconds: 300), curve: Curves.linear),
+              child: Icon(FontAwesomeIcons.arrowRight),
+            )
+          ],
+        )
+        ]
       ),
-      // RaisedButton(
-      //   onPressed: () => buttonCarouselController.nextPage(
-      //       duration: Duration(milliseconds: 300), curve: Curves.linear),
-      //   child: Icon(FontAwesomeIcons.arrowRight),
-      // )
+
     ]
   );
 }
