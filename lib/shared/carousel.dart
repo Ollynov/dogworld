@@ -55,7 +55,7 @@ class Carousel extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 100),
+          padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * .08),
           child: Opacity(
             opacity: .7,
             child: Row(
