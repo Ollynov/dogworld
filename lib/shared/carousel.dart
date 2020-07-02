@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Carousel extends StatelessWidget {
   CarouselController buttonCarouselController = CarouselController();
@@ -49,11 +50,11 @@ class Carousel extends StatelessWidget {
           initialPage: 0,
         ),
       ),
-      RaisedButton(
-        onPressed: () => buttonCarouselController.nextPage(
-            duration: Duration(milliseconds: 300), curve: Curves.linear),
-        child: Text('→'),
-      )
+      // RaisedButton(
+      //   onPressed: () => buttonCarouselController.nextPage(
+      //       duration: Duration(milliseconds: 300), curve: Curves.linear),
+      //   child: Icon(FontAwesomeIcons.arrowRight),
+      // )
     ]
   );
 }

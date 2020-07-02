@@ -42,24 +42,11 @@ class BreedScreen extends StatelessWidget {
               child: Column(children: [
                 Stack(
                   children: [
-                    ConstrainedBox(
-                      constraints: new BoxConstraints(maxHeight: 360),
-                      child: Hero(
-                        tag: breed.id,
-                        child: Carousel(images: new List.from([breed.img])..addAll(breed.additionalImages))
-                          // (breed.img.split("//")[0] == "https:"? 
-                          //   Image.network(
-                          //     breed.img, 
-                          //     width: MediaQuery.of(context).size.width,
-                          //     // height: 340,
-                          //   ) :
-                          //   Image.asset(
-                          //     'assets/covers/${breed.img}',
-                          //     width: MediaQuery.of(context).size.width,
-                          //     height: 430,
-                          //   )
-                          // )
-                      ),
+                    // ConstrainedBox(
+                    //   constraints: new BoxConstraints(maxHeight: 640),
+                    Hero(
+                      tag: breed.id,
+                      child: Carousel(images: new List.from([breed.img])..addAll(breed.additionalImages))
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
