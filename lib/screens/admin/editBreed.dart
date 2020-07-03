@@ -146,6 +146,12 @@ class _BreedDetailsState extends State<BreedDetails> {
     super.dispose();
   }
 
+  void clear() {
+    _nameController.clear(); _descriptionController.clear(); _lifeSpanController.clear(); _bredForController.clear(); _groupController.clear(); _heightController.clear(); _weightController.clear(); _originController.clear(); _imageController.clear(); 
+    if (widget.dataSource == "Dog World")
+      _additionalImagesController.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
 
