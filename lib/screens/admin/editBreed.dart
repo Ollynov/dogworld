@@ -107,6 +107,7 @@ class _BreedListDropDownState extends State<BreedListDropDown> {
 class BreedDetails extends StatefulWidget {
   final String breedId;
   final String dataSource;
+
   const BreedDetails({Key key, this.breedId, this.dataSource}) : super(key: key);
 
   @override
@@ -136,8 +137,7 @@ class _BreedDetailsState extends State<BreedDetails> {
     _weightController = TextEditingController();
     _originController = TextEditingController();
     _imageController = TextEditingController();
-    if (widget.dataSource == "Dog World") 
-      _additionalImagesController = TextEditingController();
+    _additionalImagesController = TextEditingController();
   }
 
   void dispose() {
@@ -146,11 +146,14 @@ class _BreedDetailsState extends State<BreedDetails> {
   }
 
   void clear() {
-    print('running clear');
-    _nameController.clear(); _descriptionController.clear(); _lifeSpanController.clear(); _bredForController.clear(); _groupController.clear(); _heightController.clear(); _weightController.clear(); _originController.clear(); _imageController.clear(); 
-    if (widget.dataSource == "Dog World")
+    setState(() => {
+      _nameController.text = ""
+    });
+    _descriptionController.clear(); _lifeSpanController.clear(); _bredForController.clear(); _groupController.clear(); _heightController.clear(); _weightController.clear(); _originController.clear(); _imageController.clear(); 
       _additionalImagesController.clear();
   }
+
+  set copyValues(String value) => setState(() => _nameController.text = value);
 
   @override
   Widget build(BuildContext context) {
@@ -170,8 +173,12 @@ class _BreedDetailsState extends State<BreedDetails> {
           _weightController.text = value.data.weight;
           _originController.text = value.data.origin;
           _imageController.text = value.data.img;
-          if (widget.dataSource == "Dog World") 
+          if (value.data.additionalImages != null) {
             _additionalImagesController.text = value.data.additionalImages.join(', ');
+          } else {
+            _additionalImagesController.text = "";
+
+          }
         } 
 
           return Padding(
@@ -259,7 +266,7 @@ class _BreedDetailsState extends State<BreedDetails> {
                       ),
                     ],),
 
-                  if (widget.dataSource == "Dog World") 
+                  if (widget.dataSource == "Dog World")
                     Row(children: [
                       TitleColumn(text: 'Additional Images'),
                       Flexible(child: 
@@ -270,8 +277,8 @@ class _BreedDetailsState extends State<BreedDetails> {
                       ),
                     ],),
                     // this should only be displayed if it's Dog World
-                    EditAndSaveRow(breedId: widget.breedId, fullName: _nameController, description: _descriptionController, lifeSpan: _lifeSpanController, bredFor: _bredForController, breedGroup: _groupController, height: _heightController, weight: _weightController, origin: _originController, img: _imageController, additionalImages: _additionalImagesController),
-
+                  EditAndSaveRow(breedId: widget.breedId, fullName: _nameController, description: _descriptionController, lifeSpan: _lifeSpanController, bredFor: _bredForController, breedGroup: _groupController, height: _heightController, weight: _weightController, origin: _originController, img: _imageController, additionalImages: _additionalImagesController),
+                  
                   Row(
                     children: [
                       Column(children: [ImageCard(imagePath: _imageController.text)],),
@@ -350,14 +357,14 @@ class EditAndSaveRow extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-          RaisedButton.icon(
-            onPressed: ()=> {
-              print('pressy pressy')
-            }, 
-            padding: EdgeInsets.all(16),
-            icon: Icon(FontAwesomeIcons.edit), 
-            label: Text('Edit', style: TextStyle(fontSize: 22),),
-          ),
+          // RaisedButton.icon(
+          //   onPressed: ()=> {
+          //     print('pressy pressy')
+          //   }, 
+          //   padding: EdgeInsets.all(16),
+          //   icon: Icon(FontAwesomeIcons.edit), 
+          //   label: Text('Edit', style: TextStyle(fontSize: 22),),
+          // ),
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: RaisedButton.icon(
@@ -374,12 +381,42 @@ class EditAndSaveRow extends StatelessWidget {
     );
   }
 }
+typedef void StringCallback(String name);
+
+class Copy extends StatelessWidget {
+  final _BreedDetailsState parentState;
+  final TextEditingController fullName;
+
+
+  const Copy({Key key, this.parentState, this.fullName}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+
+      return Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+          RaisedButton.icon(
+            onPressed: () => {
+              this.parentState._nameController.text = "chiii",
+              print('ok should be chiing')
+            }, 
+            padding: EdgeInsets.all(16),
+            icon: Icon(FontAwesomeIcons.copy), 
+            label: Text('Overwrite our db', style: TextStyle(fontSize: 22),),
+          ),
+      ]),
+    );
+  }
+}
 
 Future<void> saveBreed({String breedId, String description, String fullName, String lifeSpan, String bredFor, String breedGroup, String height, String weight, String origin, String img, dynamic additionalImages}) async {
-  print('here is breedId: ');
-  print(breedId);
+
   final Document<Breed> breedsRef = Document<Breed>(path: 'Breed/$breedId');
 
+  print('ok running save');
   additionalImages = additionalImages.split(", ");
   
   final toSave = {
