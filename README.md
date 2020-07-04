@@ -4,7 +4,8 @@ Welcome.
 
 ## Useful Commands
 
-- Specifically running flutter web server on google auth authorized port: `flutter run -d chrome --web-hostname localhost --web-port 7357`
+- Specifically running flutter web server on google auth authorized port: flutter run -d chrome --web-hostname localhost --web-port 7357
+
 - Deployment: 
 
 - For web first run `flutter build web` then `firebase deploy`

@@ -3,7 +3,6 @@ import 'package:doggies/services/users.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:responsive_grid/responsive_grid.dart';
 import './../../services/services.dart';
 import './../../shared/shared.dart';
 import 'package:provider/provider.dart';
@@ -147,6 +146,7 @@ class _BreedDetailsState extends State<BreedDetails> {
   }
 
   void clear() {
+    print('running clear');
     _nameController.clear(); _descriptionController.clear(); _lifeSpanController.clear(); _bredForController.clear(); _groupController.clear(); _heightController.clear(); _weightController.clear(); _originController.clear(); _imageController.clear(); 
     if (widget.dataSource == "Dog World")
       _additionalImagesController.clear();
@@ -172,6 +172,7 @@ class _BreedDetailsState extends State<BreedDetails> {
           _imageController.text = value.data.img;
           if (widget.dataSource == "Dog World") 
             _additionalImagesController.text = value.data.additionalImages.join(', ');
+        } 
 
           return Padding(
             padding: const EdgeInsets.all(12.0),
@@ -285,15 +286,16 @@ class _BreedDetailsState extends State<BreedDetails> {
                   )
                 ],),
           );
-        } else {
-          return Loader();
-        }
+        // } else {
+        //   return Loader();
+        // }
       }
     );
   }
 
   _fetchBreed(dataSource) {
     //widget.breedId
+    clear();
     if (dataSource == "Dog CEO") {
       return fetchBreedFromDogCEO(widget.breedId);
     } else if (dataSource == "Dog World") {
@@ -359,8 +361,9 @@ class EditAndSaveRow extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: RaisedButton.icon(
-              onPressed: ()=> {
+              onPressed: () => {
                 saveBreed(breedId: breedId, fullName: fullName.text, description: description.text, lifeSpan: lifeSpan.text, bredFor: bredFor.text, breedGroup: breedGroup.text, height: height.text, weight: weight.text, origin: origin.text, img: img.text, additionalImages: additionalImages.text)
+                // .then((value) => print(value))
               }, 
               padding: EdgeInsets.all(16),
               icon: Icon(FontAwesomeIcons.save), 
@@ -378,8 +381,6 @@ Future<void> saveBreed({String breedId, String description, String fullName, Str
   final Document<Breed> breedsRef = Document<Breed>(path: 'Breed/$breedId');
 
   additionalImages = additionalImages.split(", ");
-  print('ok here is what we will save: ');
-  print(additionalImages);
   
   final toSave = {
     "id": breedId,
@@ -396,6 +397,15 @@ Future<void> saveBreed({String breedId, String description, String fullName, Str
   };
 
   final response = await breedsRef.upsert(toSave);
+            // Scaffold.of(context).showSnackBar(SnackBar(
+            //   content: GestureDetector(
+            //     child: Text("You must be logged in to save a favorite dog breed."),
+            //     onTap: () {Navigator.pushNamed(context, '/login');},
+            //   ),
+            //   backgroundColor: Theme.of(context).primaryColorLight,
+            // ));
+            // print('this is what we got');
+            // print(response);
   return response;
 }
 
@@ -441,17 +451,10 @@ Future<Breed> fetchBreedFromDogWorld(String breedId) async {
   final Document<Breed> breedsRef = Document<Breed>(path: 'Breed/$breedId');
   final fromOurDb = await breedsRef.getData();
 
-  print('here is what we got: ');
+  print('here is what we GOT: ');
   print(fromOurDb);
 
   return fromOurDb;
-
-  // if (fromOurDb != null) {
-  //   print('ok got some goodi back: ');
-  //   print(fromOurDb.fullName);
-  //   return fromOurDb;
-
-  // } 
 }
 
 Future<Breed> fetchBreedFromDogCEO(String breedId) async {
