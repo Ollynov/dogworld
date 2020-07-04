@@ -276,8 +276,7 @@ class _BreedDetailsState extends State<BreedDetails> {
                         ),
                       ),
                     ],),
-                    // this should only be displayed if it's Dog World
-                  EditAndSaveRow(breedId: widget.breedId, fullName: _nameController, description: _descriptionController, lifeSpan: _lifeSpanController, bredFor: _bredForController, breedGroup: _groupController, height: _heightController, weight: _weightController, origin: _originController, img: _imageController, additionalImages: _additionalImagesController),
+                  EditAndSaveRow(source: widget.dataSource, breedId: widget.breedId, fullName: _nameController, description: _descriptionController, lifeSpan: _lifeSpanController, bredFor: _bredForController, breedGroup: _groupController, height: _heightController, weight: _weightController, origin: _originController, img: _imageController, additionalImages: _additionalImagesController),
                   
                   Row(
                     children: [
@@ -335,6 +334,7 @@ class TitleColumn extends StatelessWidget {
 }
 
 class EditAndSaveRow extends StatelessWidget {
+  final String source;
   final String breedId;
   final TextEditingController fullName;
   final TextEditingController description;
@@ -347,7 +347,7 @@ class EditAndSaveRow extends StatelessWidget {
   final TextEditingController img;
   final TextEditingController additionalImages;
 
-  const EditAndSaveRow({Key key, this.breedId, this.fullName, this.description, this.lifeSpan, this.bredFor, this.breedGroup, this.height, this.weight, this.origin, this.img, this.additionalImages}) : super(key: key);
+  const EditAndSaveRow({Key key, this.breedId, this.fullName, this.description, this.lifeSpan, this.bredFor, this.breedGroup, this.height, this.weight, this.origin, this.img, this.additionalImages, this.source}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -374,7 +374,9 @@ class EditAndSaveRow extends StatelessWidget {
               }, 
               padding: EdgeInsets.all(16),
               icon: Icon(FontAwesomeIcons.save), 
-              label: Text('Save', style: TextStyle(fontSize: 22),),
+              label: (source == "Dog CEO") ?
+                  Text('Overwrite Database', style: TextStyle(fontSize: 22)) :
+                  Text('Save', style: TextStyle(fontSize: 22))
             ),
           )
       ]),
@@ -416,7 +418,6 @@ Future<void> saveBreed({String breedId, String description, String fullName, Str
 
   final Document<Breed> breedsRef = Document<Breed>(path: 'Breed/$breedId');
 
-  print('ok running save');
   additionalImages = additionalImages.split(", ");
   
   final toSave = {
