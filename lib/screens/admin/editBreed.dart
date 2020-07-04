@@ -153,7 +153,7 @@ class _BreedDetailsState extends State<BreedDetails> {
       _additionalImagesController.clear();
   }
 
-  set copyValues(String value) => setState(() => _nameController.text = value);
+  // set copyValues(String value) => setState(() => _nameController.text = value);
 
   @override
   Widget build(BuildContext context) {
@@ -349,8 +349,39 @@ class EditAndSaveRow extends StatelessWidget {
 
   const EditAndSaveRow({Key key, this.breedId, this.fullName, this.description, this.lifeSpan, this.bredFor, this.breedGroup, this.height, this.weight, this.origin, this.img, this.additionalImages, this.source}) : super(key: key);
 
+
   @override
-  Widget build(BuildContext context) {
+    Widget build(BuildContext context) {
+
+      _showDialog() {
+        // flutter defined function
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            // return object of type Dialog
+            return AlertDialog(
+              title: new Text("Warning!"),
+              content: new Text("This will overwrite everything we have in our DB, are you sure?"),
+              actions: <Widget>[
+                // usually buttons at the bottom of the dialog
+                new FlatButton(
+                  child: new Text("Close"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                new FlatButton(
+                  child: new Text("Accept"),
+                  onPressed: () {
+                    saveBreed(breedId: breedId, fullName: fullName.text, description: description.text, lifeSpan: lifeSpan.text, bredFor: bredFor.text, breedGroup: breedGroup.text, height: height.text, weight: weight.text, origin: origin.text, img: img.text, additionalImages: additionalImages.text);
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
 
       return Padding(
         padding: const EdgeInsets.all(16.0),
@@ -368,7 +399,9 @@ class EditAndSaveRow extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: RaisedButton.icon(
-              onPressed: () => {
+              onPressed: (source == "Dog CEO") ? 
+                () => _showDialog()
+              : () => {
                 saveBreed(breedId: breedId, fullName: fullName.text, description: description.text, lifeSpan: lifeSpan.text, bredFor: bredFor.text, breedGroup: breedGroup.text, height: height.text, weight: weight.text, origin: origin.text, img: img.text, additionalImages: additionalImages.text)
                 // .then((value) => print(value))
               }, 
@@ -383,36 +416,7 @@ class EditAndSaveRow extends StatelessWidget {
     );
   }
 }
-typedef void StringCallback(String name);
 
-class Copy extends StatelessWidget {
-  final _BreedDetailsState parentState;
-  final TextEditingController fullName;
-
-
-  const Copy({Key key, this.parentState, this.fullName}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-
-      return Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-          RaisedButton.icon(
-            onPressed: () => {
-              this.parentState._nameController.text = "chiii",
-              print('ok should be chiing')
-            }, 
-            padding: EdgeInsets.all(16),
-            icon: Icon(FontAwesomeIcons.copy), 
-            label: Text('Overwrite our db', style: TextStyle(fontSize: 22),),
-          ),
-      ]),
-    );
-  }
-}
 
 Future<void> saveBreed({String breedId, String description, String fullName, String lifeSpan, String bredFor, String breedGroup, String height, String weight, String origin, String img, dynamic additionalImages}) async {
 

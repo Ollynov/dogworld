@@ -33,11 +33,11 @@ class BreedScreen extends StatelessWidget {
           Breed breed = snap.data;
           return Scaffold(
             appBar: AppBar(
-              leading: IconButton(
-                icon: const Icon(Icons.home),
-                onPressed: () { Navigator.pushNamed(context, '/');},
-                tooltip: "Go Home",
-              )
+              // leading: IconButton(
+              //   icon: const Icon(Icons.home),
+              //   onPressed: () { Navigator.pushNamed(context, '/');},
+              //   tooltip: "Go Home",
+              // )
             ),
             body: SingleChildScrollView(
               child: Column(children: [
