@@ -13,18 +13,32 @@ class DogopediaScreen extends StatefulWidget {
 }
 
 class _DogopediaScreenState extends State<DogopediaScreen> {
-  List pagesOfData;
+  // List pagesOfData;
+  List<String> previousBreeds = [];
   bool loading; 
   int perPageLimit = 10;
   String lastBreedId;
 
-  _getMoreBreeds(last) async {
-
+  _getMoreBreeds(allBreeds) {
+    String last = allBreeds[allBreeds.length - 1].id;
+    // String first = allBreeds[0].id;
     setState(() {
       lastBreedId = last;
     });
+    previousBreeds.add(last);
+    // pagesOfData.add(allBreeds);
   }
+  _getPreviousBreeds() {
+    var previousBreedId; 
+    previousBreeds.length > 1 ? previousBreedId = previousBreeds[previousBreeds.length - 2] : previousBreedId = null;
 
+    print('previous: ');
+    print(previousBreedId);
+    // var previousBreeds = pagesOfData[pagesOfData.length - 1];
+    setState(() {
+      lastBreedId = previousBreedId;
+    });
+  }
   // @override
   // void initState() {
   //   super.initState();
@@ -72,13 +86,13 @@ class _DogopediaScreenState extends State<DogopediaScreen> {
                   Row(
                     children: [
                       FlatButton(
-                        onPressed: () => _getMoreBreeds(breeds[breeds.length - 1].id),
+                        onPressed: () => _getPreviousBreeds(),
                         child: Icon(FontAwesomeIcons.arrowLeft),
                         color: Colors.transparent,
                         padding: EdgeInsets.only(top: 80, bottom: 80),
                       ),
                       FlatButton(
-                        onPressed: () => _getMoreBreeds(breeds[breeds.length - 1].id),
+                        onPressed: () => _getMoreBreeds(breeds),
                         child: Icon(FontAwesomeIcons.arrowRight),
                         color: Colors.transparent,
                         padding: EdgeInsets.only(top: 80, bottom: 80),
