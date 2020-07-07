@@ -20,17 +20,17 @@ class _DogopediaScreenState extends State<DogopediaScreen> {
 
   _getMoreBreeds() async {
     print('running');
-    Query q = Firestore.instance.collection('Breed').startAfter([lastDocument]).limit(perPageLimit);
+    Query q = Firestore.instance.collection('Breed').orderBy("id").startAfter(["American Foxhound"]).limit(perPageLimit);
+    // Query q = Firestore.instance.collection('Breed').startAfter([lastDocument]).limit(perPageLimit);
     QuerySnapshot querySnapshot = await q.getDocuments();
-    print('ok query: ');
-    print(querySnapshot);
+
     var newy = querySnapshot.documents[querySnapshot.documents.length - 1];
 
     print('here is what our last doc looks like: ');
-    print(newy);
-    print('here are our new dogies: ');
-    print(querySnapshot.documents);
-    pagesOfData.add(querySnapshot.documents);
+    print(newy.data);
+    print('here are our first dogies: ');
+    print(querySnapshot.documents[0].data);
+    // pagesOfData.add(querySnapshot.documents);
   }
 
   @override
