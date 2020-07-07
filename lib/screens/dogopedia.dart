@@ -16,21 +16,18 @@ class _DogopediaScreenState extends State<DogopediaScreen> {
   List pagesOfData;
   bool loading; 
   int perPageLimit;
-  Breed lastDocument;
+  // String lastBreedId;
+  String toRunWith;
 
-  _getMoreBreeds() async {
-    print('running');
-    Query q = Firestore.instance.collection('Breed').orderBy("id").startAfter(["American Foxhound"]).limit(perPageLimit);
-    // Query q = Firestore.instance.collection('Breed').startAfter([lastDocument]).limit(perPageLimit);
-    QuerySnapshot querySnapshot = await q.getDocuments();
+  _getMoreBreeds(lastBreedId) async {
 
-    var newy = querySnapshot.documents[querySnapshot.documents.length - 1];
-
-    print('here is what our last doc looks like: ');
-    print(newy.data);
-    print('here are our first dogies: ');
-    print(querySnapshot.documents[0].data);
-    // pagesOfData.add(querySnapshot.documents);
+    //Query q = Firestore.instance.collection('Breed').orderBy("id").startAfter([lastBreedId]).limit(perPageLimit);
+    //QuerySnapshot querySnapshot = await q.getDocuments();
+    print('ok setting state to : ');
+    print(lastBreedId);
+    setState(() {
+      toRunWith = lastBreedId;
+    });
   }
 
   @override
@@ -43,7 +40,7 @@ class _DogopediaScreenState extends State<DogopediaScreen> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Global.breedsRef.getData(perPageLimit),
+      future: Global.breedsRef.getData(perPageLimit, toRunWith),
       builder: (BuildContext context, AsyncSnapshot snap) {
 
         if (snap.hasData) {
@@ -51,8 +48,9 @@ class _DogopediaScreenState extends State<DogopediaScreen> {
           //   loading = false;
           //   lastDocument = snap.data[snap.data.length - 1];
           // });
-           lastDocument = snap.data[snap.data.length - 1];
           List<Breed> breeds = snap.data;
+          // lastBreedId = breeds[breeds.length - 1].id;
+
           return Scaffold(
             appBar: AppBar(
               leading: IconButton(
@@ -93,13 +91,13 @@ class _DogopediaScreenState extends State<DogopediaScreen> {
                   Row(
                     children: [
                       FlatButton(
-                        onPressed: () => _getMoreBreeds(),
+                        onPressed: () => _getMoreBreeds(breeds[breeds.length - 1].id),
                         child: Icon(FontAwesomeIcons.arrowLeft),
                         color: Colors.transparent,
                         padding: EdgeInsets.only(top: 80, bottom: 80),
                       ),
                       FlatButton(
-                        onPressed: () => _getMoreBreeds(),
+                        onPressed: () => _getMoreBreeds(breeds[breeds.length - 1].id),
                         child: Icon(FontAwesomeIcons.arrowRight),
                         color: Colors.transparent,
                         padding: EdgeInsets.only(top: 80, bottom: 80),

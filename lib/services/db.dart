@@ -56,10 +56,12 @@ class Collection<T> {
     
   }
 
-  Future<List<T>> getData(limit) async {
+  Future<List<T>> getData(limit, startAfter) async {
     try {
       QuerySnapshot snapshots;
-      if (limit != null) {
+      if (limit != null && startAfter != null) {
+        snapshots = await ref.orderBy("id").startAfter([startAfter]).limit(limit).getDocuments();
+      } else if (limit != null) {
         snapshots = await ref.limit(limit).getDocuments();
       } else {
         snapshots = await ref.getDocuments();
