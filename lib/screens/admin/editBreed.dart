@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doggies/services/users.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -64,11 +65,13 @@ class _BreedListDropDownState extends State<BreedListDropDown> {
     return Column(
       children: [
         FutureBuilder(
-           future: Collection<Breed>(path: 'allBreeds').getData(),
-           builder: (BuildContext context, AsyncSnapshot<List<Breed>> snapshot) { 
+          //  future: Collection<String>(path: 'allBreeds').getData(),
+           future: Firestore.instance.collection("allBreeds").document('allBreeds').get(),
+           builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) { 
 
-             if (snapshot.data != null) {
-              List<Breed> allBreeds = snapshot.data;
+          
+             if (snapshot.hasData) {
+              List<dynamic> allBreeds = snapshot.data["allBreeds"];
           
               return Padding(
                 padding: const EdgeInsets.only(bottom: 70.0),
@@ -84,10 +87,10 @@ class _BreedListDropDownState extends State<BreedListDropDown> {
                         dropdownValue = newValue;
                       });
                     },
-                    items: allBreeds.map<DropdownMenuItem<String>>((Breed value) {
+                    items: allBreeds.map<DropdownMenuItem<String>>((dynamic value) {
                       return DropdownMenuItem<String>(
-                        value: value.id,
-                        child: Text(value.id),
+                        value: value,
+                        child: Text(value),
                       );
                     }).toList(),
                   ),
@@ -177,7 +180,6 @@ class _BreedDetailsState extends State<BreedDetails> {
             _additionalImagesController.text = value.data.additionalImages.join(', ');
           } else {
             _additionalImagesController.text = "";
-
           }
         } 
 
@@ -373,7 +375,7 @@ class EditAndSaveRow extends StatelessWidget {
                 new FlatButton(
                   child: new Text("Accept"),
                   onPressed: () {
-                    saveBreed(breedId: breedId, fullName: fullName.text, description: description.text, lifeSpan: lifeSpan.text, bredFor: bredFor.text, breedGroup: breedGroup.text, height: height.text, weight: weight.text, origin: origin.text, img: img.text, additionalImages: additionalImages.text);
+                    saveBreed(breedId: breedId, fullName: fullName.text, description: description.text, lifeSpan: lifeSpan.text, bredFor: bredFor.text, breedGroup: breedGroup.text, height: height.text, weight: weight.text, origin: origin.text, img: img.text, additionalImages: additionalImages.text.split(', '));
                     Navigator.of(context).pop();
                   },
                 ),
@@ -402,7 +404,7 @@ class EditAndSaveRow extends StatelessWidget {
               onPressed: (source == "Dog CEO") ? 
                 () => _showDialog()
               : () => {
-                saveBreed(breedId: breedId, fullName: fullName.text, description: description.text, lifeSpan: lifeSpan.text, bredFor: bredFor.text, breedGroup: breedGroup.text, height: height.text, weight: weight.text, origin: origin.text, img: img.text, additionalImages: additionalImages.text)
+                saveBreed(breedId: breedId, fullName: fullName.text, description: description.text, lifeSpan: lifeSpan.text, bredFor: bredFor.text, breedGroup: breedGroup.text, height: height.text, weight: weight.text, origin: origin.text, img: img.text, additionalImages: additionalImages.text.split(', '))
                 // .then((value) => print(value))
               }, 
               padding: EdgeInsets.all(16),
@@ -418,25 +420,58 @@ class EditAndSaveRow extends StatelessWidget {
 }
 
 
-Future<void> saveBreed({String breedId, String description, String fullName, String lifeSpan, String bredFor, String breedGroup, String height, String weight, String origin, String img, dynamic additionalImages}) async {
+Future<void> saveBreed({String breedId, String description, String fullName, String lifeSpan, String bredFor, String breedGroup, String height, String weight, String origin, String img, List additionalImages}) async {
 
   final Document<Breed> breedsRef = Document<Breed>(path: 'Breed/$breedId');
 
-  additionalImages = additionalImages.split(", ");
+  // additionalImages = additionalImages.split(", ");
   
-  final toSave = {
-    "id": breedId,
-    "fullName": fullName, 
-    "description": description,
-    "lifeSpan": lifeSpan,
-    "bredFor": bredFor,
-    "breedGroup": breedGroup,
-    "height": height,
-    "weight": weight,
-    "origin": origin,
-    "img": img,
-    "additionalImages": additionalImages
-  };
+  // final toSave = {
+  //   "id": breedId,
+  //   "fullName": fullName, 
+  //   "description": description,
+  //   "lifeSpan": lifeSpan,
+  //   "bredFor": bredFor,
+  //   "breedGroup": breedGroup,
+  //   "height": height,
+  //   "weight": weight,
+  //   "origin": origin,
+  //   "img": img,
+  //   "additionalImages": additionalImagesr
+  // };
+  print('here is additionalImages length');
+  print(additionalImages.length);
+  var toSave = {};
+  if (additionalImages != null && additionalImages.length > 0) {
+    // toSave['additionalImages'] = additionalImages;
+    toSave = {
+      "id": breedId,
+      "fullName": fullName, 
+      "description": description,
+      "lifeSpan": lifeSpan,
+      "bredFor": bredFor,
+      "breedGroup": breedGroup,
+      "height": height,
+      "weight": weight,
+      "origin": origin,
+      "img": img,
+      "additionalImages": additionalImages
+    };
+  } else {
+    toSave = {
+      "id": breedId,
+      "fullName": fullName, 
+      "description": description,
+      "lifeSpan": lifeSpan,
+      "bredFor": bredFor,
+      "breedGroup": breedGroup,
+      "height": height,
+      "weight": weight,
+      "origin": origin,
+      "img": img,
+    };
+  }
+
 
   final response = await breedsRef.upsert(toSave);
             // Scaffold.of(context).showSnackBar(SnackBar(
@@ -458,8 +493,7 @@ class ImageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('her is our imagepath: ');
-    print(imagePath);
+
     return Card(
       clipBehavior: Clip.antiAlias,
       child: Column(
@@ -489,11 +523,13 @@ class ImageCard extends StatelessWidget {
 
 Future<Breed> fetchBreedFromDogWorld(String breedId) async {
 
+  print('ok running FETCH with id: ');
+  print(breedId);
   // THIS NEEDS TO PERIORITIZE GRABBING FROM OUR OWN DB FIRST
   final Document<Breed> breedsRef = Document<Breed>(path: 'Breed/$breedId');
   final fromOurDb = await breedsRef.getData();
 
-  print('here is what we GOT: ');
+  print('ok got back: ');
   print(fromOurDb);
 
   return fromOurDb;

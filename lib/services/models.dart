@@ -113,7 +113,7 @@ class Breed {
   final String fullName;
   final String description;
   String img;
-  List additionalImages;
+  List additionalImages; 
   final String lifeSpan;
   final String bredFor;
   final String breedGroup;
@@ -121,7 +121,7 @@ class Breed {
   final String weight;
   final String origin;
   final int dogApiId;
-  
+   
   Breed({this.fullName, this.description, this.img, this.additionalImages, this.id, this.lifeSpan, this.bredFor, this.breedGroup, this.height, this.weight, this.origin, this.dogApiId});
 
   factory Breed.convertFromFireBaseMap(Map data) {

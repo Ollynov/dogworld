@@ -39,7 +39,8 @@ class Document<T> {
   }
 
   Future<void> upsert(Map data) {
-    return ref.setData(Map<String, dynamic>.from(data), merge: true);
+    return ref.setData(Map<dynamic, dynamic>.from(data), merge: true);
+    // return ref.setData(Map<String, dynamic>.from(data), merge: true);
     
   }
 }
@@ -91,7 +92,7 @@ class UserData<T> {
     return _auth.onAuthStateChanged.switchMap((user) {
       if (user != null) {
         Document<T> doc = Document<T>(path: '$collection/${user.uid}');
-        return doc.streamData();
+        return doc.streamData();    
       } else {
         return Stream<T>.value(null);
       }
