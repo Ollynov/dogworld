@@ -427,7 +427,8 @@ Future<void> saveBreed({String breedId, String description, String fullName, Str
   additionalImages = additionalImages.split(", ");
   
   var toSave = {};
-  if (additionalImages != null && additionalImages.length > 0) {
+  // this is to avoid saving a blank string in our database as an "additional image"
+  if (additionalImages != null && additionalImages[0] != "") {
     toSave = {
       "id": breedId,
       "fullName": fullName, 

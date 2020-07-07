@@ -51,13 +51,19 @@ class Collection<T> {
   CollectionReference ref;
 
   Collection({this.path}) {
+
     ref = _db.collection(path);
+    
   }
 
-  Future<List<T>> getData() async {
-    var snapshots;
+  Future<List<T>> getData(limit) async {
     try {
-      snapshots = await ref.getDocuments();
+      QuerySnapshot snapshots;
+      if (limit != null) {
+        snapshots = await ref.limit(limit).getDocuments();
+      } else {
+        snapshots = await ref.getDocuments();
+      }
 
       return snapshots.documents
           .map<T>((doc) => Global.models[T](doc.data) as T)

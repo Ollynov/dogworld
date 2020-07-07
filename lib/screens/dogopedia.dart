@@ -9,7 +9,7 @@ class DogopediaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Global.breedsRef.getData(),
+      future: Global.breedsRef.getData(10),
       builder: (BuildContext context, AsyncSnapshot snap) {
 
         if (snap.hasData) {
