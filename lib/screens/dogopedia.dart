@@ -13,7 +13,7 @@ class DogopediaScreen extends StatefulWidget {
 }
 
 class _DogopediaScreenState extends State<DogopediaScreen> {
-  // List pagesOfData;
+  // List pagesOfData; We may want to save this in the future to serve as a cache to not perform a new search each time.
   List<String> previousBreeds = [];
   bool loading; 
   int perPageLimit = 10;
@@ -21,22 +21,17 @@ class _DogopediaScreenState extends State<DogopediaScreen> {
 
   _getMoreBreeds(allBreeds) {
     String last = allBreeds[allBreeds.length - 1].id;
-    // String first = allBreeds[0].id;
     setState(() {
       lastBreedId = last;
     });
     previousBreeds.add(last);
-    // pagesOfData.add(allBreeds);
   }
   _getPreviousBreeds() {
     var previousBreedId; 
     previousBreeds.length > 1 ? previousBreedId = previousBreeds[previousBreeds.length - 2] : previousBreedId = null;
-
-    print('previous: ');
-    print(previousBreedId);
-    // var previousBreeds = pagesOfData[pagesOfData.length - 1];
     setState(() {
       lastBreedId = previousBreedId;
+      previousBreeds.removeLast();
     });
   }
   // @override
@@ -84,19 +79,31 @@ class _DogopediaScreenState extends State<DogopediaScreen> {
                     ).toList()),
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      FlatButton(
-                        onPressed: () => _getPreviousBreeds(),
-                        child: Icon(FontAwesomeIcons.arrowLeft),
-                        color: Colors.transparent,
-                        padding: EdgeInsets.only(top: 80, bottom: 80),
-                      ),
-                      FlatButton(
-                        onPressed: () => _getMoreBreeds(breeds),
-                        child: Icon(FontAwesomeIcons.arrowRight),
-                        color: Colors.transparent,
-                        padding: EdgeInsets.only(top: 80, bottom: 80),
-                      )
+                      if (previousBreeds.length > 0)
+                        Tooltip(
+                          message: "Previous dogs",
+                          verticalOffset: 200,
+                          child: FlatButton(
+                            onPressed: () => _getPreviousBreeds(),
+                            child: Icon(FontAwesomeIcons.arrowLeft),
+                            color: Colors.transparent,
+                            padding: EdgeInsets.only(top: 40, bottom: 40),
+                          ),
+                        ),
+                      // if we have less than the perPageLimit displayed it means that we are on the last page and don't want to display the next button
+                      if (breeds.length == perPageLimit)
+                        Tooltip(
+                          message: "View more dogs",
+                          verticalOffset: 200,
+                          child: FlatButton(
+                            onPressed: () => _getMoreBreeds(breeds),
+                            child: Icon(FontAwesomeIcons.arrowRight),
+                            color: Colors.transparent,
+                            padding: EdgeInsets.only(top: 40, bottom: 40),
+                          ),
+                        )
                     ],
                   )
                 ],
@@ -111,6 +118,7 @@ class _DogopediaScreenState extends State<DogopediaScreen> {
     );
   }
 }
+
 
 class BreedPreview extends StatelessWidget {
   final Breed breed;
