@@ -39,7 +39,7 @@ class Document<T> {
   }
 
   Future<void> upsert(Map data) {
-    return ref.setData(Map<dynamic, dynamic>.from(data), merge: true);
+    return ref.setData(Map<String, dynamic>.from(data), merge: true);
     // return ref.setData(Map<String, dynamic>.from(data), merge: true);
     
   }

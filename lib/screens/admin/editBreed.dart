@@ -375,7 +375,7 @@ class EditAndSaveRow extends StatelessWidget {
                 new FlatButton(
                   child: new Text("Accept"),
                   onPressed: () {
-                    saveBreed(breedId: breedId, fullName: fullName.text, description: description.text, lifeSpan: lifeSpan.text, bredFor: bredFor.text, breedGroup: breedGroup.text, height: height.text, weight: weight.text, origin: origin.text, img: img.text, additionalImages: additionalImages);
+                    saveBreed(breedId: breedId, fullName: fullName.text, description: description.text, lifeSpan: lifeSpan.text, bredFor: bredFor.text, breedGroup: breedGroup.text, height: height.text, weight: weight.text, origin: origin.text, img: img.text, additionalImages: additionalImages.text);
                     Navigator.of(context).pop();
                   },
                 ),
@@ -404,7 +404,7 @@ class EditAndSaveRow extends StatelessWidget {
               onPressed: (source == "Dog CEO") ? 
                 () => _showDialog()
               : () => {
-                saveBreed(breedId: breedId, fullName: fullName.text, description: description.text, lifeSpan: lifeSpan.text, bredFor: bredFor.text, breedGroup: breedGroup.text, height: height.text, weight: weight.text, origin: origin.text, img: img.text, additionalImages: additionalImages)
+                saveBreed(breedId: breedId, fullName: fullName.text, description: description.text, lifeSpan: lifeSpan.text, bredFor: bredFor.text, breedGroup: breedGroup.text, height: height.text, weight: weight.text, origin: origin.text, img: img.text, additionalImages: additionalImages.text)
                 // .then((value) => print(value))
               }, 
               padding: EdgeInsets.all(16),
