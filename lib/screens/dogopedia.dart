@@ -15,41 +15,30 @@ class DogopediaScreen extends StatefulWidget {
 class _DogopediaScreenState extends State<DogopediaScreen> {
   List pagesOfData;
   bool loading; 
-  int perPageLimit;
-  // String lastBreedId;
-  String toRunWith;
+  int perPageLimit = 10;
+  String lastBreedId;
 
-  _getMoreBreeds(lastBreedId) async {
+  _getMoreBreeds(last) async {
 
-    //Query q = Firestore.instance.collection('Breed').orderBy("id").startAfter([lastBreedId]).limit(perPageLimit);
-    //QuerySnapshot querySnapshot = await q.getDocuments();
-    print('ok setting state to : ');
-    print(lastBreedId);
     setState(() {
-      toRunWith = lastBreedId;
+      lastBreedId = last;
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
-    loading = true;
-    perPageLimit = 10;
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   perPageLimit = 10;
+  // }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Global.breedsRef.getData(perPageLimit, toRunWith),
+      future: Global.breedsRef.getData(perPageLimit, lastBreedId),
       builder: (BuildContext context, AsyncSnapshot snap) {
 
         if (snap.hasData) {
-          // setState(() {
-          //   loading = false;
-          //   lastDocument = snap.data[snap.data.length - 1];
-          // });
           List<Breed> breeds = snap.data;
-          // lastBreedId = breeds[breeds.length - 1].id;
 
           return Scaffold(
             appBar: AppBar(
@@ -58,14 +47,6 @@ class _DogopediaScreenState extends State<DogopediaScreen> {
                 onPressed: () { Navigator.pushNamed(context, '/');},
                 tooltip: "Go Home",
               ),
-              // actions: [
-              //   IconButton(
-              //     icon: Icon(
-              //       FontAwesomeIcons.userCircle,
-              //     ),
-              //     onPressed: () => Navigator.pushNamed(context, '/login'),
-              //   )
-              // ],
             ),
             body: SingleChildScrollView(
               child: Column(
