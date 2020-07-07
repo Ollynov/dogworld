@@ -375,7 +375,7 @@ class EditAndSaveRow extends StatelessWidget {
                 new FlatButton(
                   child: new Text("Accept"),
                   onPressed: () {
-                    saveBreed(breedId: breedId, fullName: fullName.text, description: description.text, lifeSpan: lifeSpan.text, bredFor: bredFor.text, breedGroup: breedGroup.text, height: height.text, weight: weight.text, origin: origin.text, img: img.text, additionalImages: additionalImages.text.split(', '));
+                    saveBreed(breedId: breedId, fullName: fullName.text, description: description.text, lifeSpan: lifeSpan.text, bredFor: bredFor.text, breedGroup: breedGroup.text, height: height.text, weight: weight.text, origin: origin.text, img: img.text, additionalImages: additionalImages);
                     Navigator.of(context).pop();
                   },
                 ),
@@ -404,7 +404,7 @@ class EditAndSaveRow extends StatelessWidget {
               onPressed: (source == "Dog CEO") ? 
                 () => _showDialog()
               : () => {
-                saveBreed(breedId: breedId, fullName: fullName.text, description: description.text, lifeSpan: lifeSpan.text, bredFor: bredFor.text, breedGroup: breedGroup.text, height: height.text, weight: weight.text, origin: origin.text, img: img.text, additionalImages: additionalImages.text.split(', '))
+                saveBreed(breedId: breedId, fullName: fullName.text, description: description.text, lifeSpan: lifeSpan.text, bredFor: bredFor.text, breedGroup: breedGroup.text, height: height.text, weight: weight.text, origin: origin.text, img: img.text, additionalImages: additionalImages)
                 // .then((value) => print(value))
               }, 
               padding: EdgeInsets.all(16),
@@ -420,30 +420,14 @@ class EditAndSaveRow extends StatelessWidget {
 }
 
 
-Future<void> saveBreed({String breedId, String description, String fullName, String lifeSpan, String bredFor, String breedGroup, String height, String weight, String origin, String img, List additionalImages}) async {
+Future<void> saveBreed({String breedId, String description, String fullName, String lifeSpan, String bredFor, String breedGroup, String height, String weight, String origin, String img, dynamic additionalImages}) async {
 
   final Document<Breed> breedsRef = Document<Breed>(path: 'Breed/$breedId');
 
-  // additionalImages = additionalImages.split(", ");
+  additionalImages = additionalImages.split(", ");
   
-  // final toSave = {
-  //   "id": breedId,
-  //   "fullName": fullName, 
-  //   "description": description,
-  //   "lifeSpan": lifeSpan,
-  //   "bredFor": bredFor,
-  //   "breedGroup": breedGroup,
-  //   "height": height,
-  //   "weight": weight,
-  //   "origin": origin,
-  //   "img": img,
-  //   "additionalImages": additionalImagesr
-  // };
-  print('here is additionalImages length');
-  print(additionalImages.length);
   var toSave = {};
   if (additionalImages != null && additionalImages.length > 0) {
-    // toSave['additionalImages'] = additionalImages;
     toSave = {
       "id": breedId,
       "fullName": fullName, 
