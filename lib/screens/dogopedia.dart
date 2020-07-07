@@ -64,6 +64,11 @@ class _DogopediaScreenState extends State<DogopediaScreen> {
                     padding: const EdgeInsets.all(12.0),
                     child: Text("The Dogopedia", style: Theme.of(context).textTheme.headline1),
                   ),
+                  IconButton(
+                    icon: Icon(Icons.search), 
+                    onPressed: () {
+                      print('pressy pressy');
+                    }),
                   Container(
                     padding: EdgeInsets.all(8),
                     child: ResponsiveGridRow(children: breeds.map((breed) => 
@@ -185,4 +190,29 @@ class BreedPreview extends StatelessWidget {
   }
 }
 
-
+class BreedSearch extends SearchDelegate<String> {
+  @override
+  List<Widget> buildActions(BuildContext context) {
+      // TODO: implement buildActions
+      throw UnimplementedError();
+    }
+  
+    @override
+    Widget buildLeading(BuildContext context) {
+      // TODO: implement buildLeading
+      throw UnimplementedError();
+    }
+  
+    @override
+    Widget buildResults(BuildContext context) {
+      // TODO: implement buildResults
+      throw UnimplementedError();
+    }
+  
+    @override
+    Widget buildSuggestions(BuildContext context) {
+    // TODO: implement buildSuggestions
+    throw UnimplementedError();
+  }
+  
+}
