@@ -16,7 +16,7 @@ class _DogopediaScreenState extends State<DogopediaScreen> {
   // List pagesOfData; We may want to save this in the future to serve as a cache to not perform a new search each time.
   List<String> previousBreeds = [];
   bool loading; 
-  int perPageLimit = 10;
+  int perPageLimit = 4;
   String lastBreedId;
 
   _getMoreBreeds(allBreeds) {
@@ -84,19 +84,20 @@ class _DogopediaScreenState extends State<DogopediaScreen> {
                       if (previousBreeds.length > 0)
                         Tooltip(
                           message: "Previous dogs",
-                          verticalOffset: 200,
                           child: FlatButton(
                             onPressed: () => _getPreviousBreeds(),
                             child: Icon(FontAwesomeIcons.arrowLeft),
                             color: Colors.transparent,
                             padding: EdgeInsets.only(top: 40, bottom: 40),
                           ),
-                        ),
+                        )
+                      else 
+                        Container(height: 50,),
+                      
                       // if we have less than the perPageLimit displayed it means that we are on the last page and don't want to display the next button
                       if (breeds.length == perPageLimit)
                         Tooltip(
                           message: "View more dogs",
-                          verticalOffset: 200,
                           child: FlatButton(
                             onPressed: () => _getMoreBreeds(breeds),
                             child: Icon(FontAwesomeIcons.arrowRight),
@@ -104,6 +105,8 @@ class _DogopediaScreenState extends State<DogopediaScreen> {
                             padding: EdgeInsets.only(top: 40, bottom: 40),
                           ),
                         )
+                      else 
+                        Container(height: 50,)
                     ],
                   )
                 ],
