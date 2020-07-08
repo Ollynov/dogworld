@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doggies/services/models.dart';
 import 'package:doggies/services/services.dart';
@@ -67,7 +69,8 @@ class _DogopediaScreenState extends State<DogopediaScreen> {
                   IconButton(
                     icon: Icon(Icons.search), 
                     onPressed: () {
-                      print('pressy pressy');
+                      showSearch(context: context, 
+                      delegate: BreedSearch(breeds));
                     }),
                   Container(
                     padding: EdgeInsets.all(8),
@@ -125,6 +128,78 @@ class _DogopediaScreenState extends State<DogopediaScreen> {
       },
     );
   }
+}
+
+
+
+class BreedSearch extends SearchDelegate<String> {
+  List<Breed> allBreeds;
+  // final Stream<List<Breed>> allBreeds;
+  // first lets just pass in our current breeds
+
+  BreedSearch(this.allBreeds);
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    // this navigates to an entirely new screen, which displays on top of your search results...this is typically if your search results should be displayed in a completely new page. Probably not relevant for us.
+    return [
+      IconButton(
+        icon: Icon(Icons.clear), 
+        onPressed: () {
+          query = "";
+        },
+      )
+    ];
+  }
+  
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () => {
+        close(context, null)
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return Container();
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+
+    final suggestions = allBreeds.where((a) => a.id.toLowerCase().contains(query));
+    print('ok our suggestions: ');
+    print(suggestions);
+
+    return ListView(
+        children: suggestions.map<Widget>((e) => Text(e.id)).toList()
+    );
+
+    //throw UnimplementedError();
+  }
+  // @override
+  // Widget buildSuggestions(BuildContext context) {
+  //   return FutureBuilder(
+  //     future: Global.breedsRef.getData(perPageLimit, lastBreedId),
+  //     builder: (context, AsyncSnapshot<UnmodifiableListView<Breed>> snapshot) {
+  //       if (snapshot.hasData) {
+  //         return Center(
+  //           child: Text("No data!"),
+  //         );
+  //       }
+
+  //       return ListView(
+  //         children: snapshot.data.map<Widget>((e) => Text(e.id)).toList()
+  //       );
+  //     },
+  //   );
+
+  //   //throw UnimplementedError();
+  // }
+  
 }
 
 
@@ -188,31 +263,4 @@ class BreedPreview extends StatelessWidget {
       ),
     );
   }
-}
-
-class BreedSearch extends SearchDelegate<String> {
-  @override
-  List<Widget> buildActions(BuildContext context) {
-      // TODO: implement buildActions
-      throw UnimplementedError();
-    }
-  
-    @override
-    Widget buildLeading(BuildContext context) {
-      // TODO: implement buildLeading
-      throw UnimplementedError();
-    }
-  
-    @override
-    Widget buildResults(BuildContext context) {
-      // TODO: implement buildResults
-      throw UnimplementedError();
-    }
-  
-    @override
-    Widget buildSuggestions(BuildContext context) {
-    // TODO: implement buildSuggestions
-    throw UnimplementedError();
-  }
-  
 }
