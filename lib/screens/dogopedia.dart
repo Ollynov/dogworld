@@ -175,7 +175,11 @@ class BreedSearch extends SearchDelegate<String> {
     print(suggestions);
 
     return ListView(
-        children: suggestions.map<Widget>((e) => Text(e.id)).toList()
+        children: suggestions.map<ListTile>((a) => ListTile(
+          title: Text(a.id),
+          leading: Icon(Icons.book),
+          subtitle: Text('Poi?'),
+        )).toList()
     );
 
     //throw UnimplementedError();
