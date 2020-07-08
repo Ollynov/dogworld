@@ -170,9 +170,7 @@ class BreedSearch extends SearchDelegate<String> {
   @override
   Widget buildSuggestions(BuildContext context) {
 
-    final suggestions = allBreeds.where((a) => a.id.toLowerCase().contains(query));
-    print('ok our suggestions: ');
-    print(suggestions);
+    final suggestions = allBreeds.where((a) => a.id.contains(query) || a.id.toLowerCase().contains(query));
 
     return ListView(
         children: suggestions.map<ListTile>((a) => ListTile(
@@ -181,7 +179,6 @@ class BreedSearch extends SearchDelegate<String> {
           onTap: () => {
             query = a.id,
             Navigator.pushNamed(context, '/breed/${a.id}', arguments: {'breedId': a.id})
-
           },
         )).toList(),
     );
