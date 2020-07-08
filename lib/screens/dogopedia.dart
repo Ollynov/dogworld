@@ -178,8 +178,12 @@ class BreedSearch extends SearchDelegate<String> {
         children: suggestions.map<ListTile>((a) => ListTile(
           title: Text(a.id),
           leading: Icon(Icons.book),
-          subtitle: Text('Poi?'),
-        )).toList()
+          onTap: () => {
+            query = a.id,
+            Navigator.pushNamed(context, '/breed/${a.id}', arguments: {'breedId': a.id})
+
+          },
+        )).toList(),
     );
 
     //throw UnimplementedError();
