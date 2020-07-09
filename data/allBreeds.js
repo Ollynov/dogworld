@@ -25,14 +25,19 @@ const update = async() => {
     const json = require("./breeds/allBreeds.json");
 
 
-    json.dogs.forEach(async (breed) => {
+    // json.dogs.forEach(async (breed) => {
       
-      const ref = db.collection('allBreeds').doc(breed);
+    //   const ref = db.collection('allBreeds').doc(breed);
+    //   await ref.set({
+    //     id: breed,
+    //     fullName: breed,
+    //   }, { merge: false });
+    // })
+      
+      const ref = db.collection('allBreeds').doc("allBreeds");
       await ref.set({
-        id: breed,
-        fullName: breed,
+        allBreeds: json.dogs,
       }, { merge: false });
-    })
 
 
 

@@ -1,5 +1,4 @@
 // These functions in this file essentially allow us to deserialize data that we get back from firebase. Firebase sends us back data in the form of a map. It is possible to use that map directly to achieve what you need to but this gives us consistency, and also gives us a central area to define data.
-import 'package:doggies/services/services.dart';
 
 class Report {
   String uid;
@@ -114,6 +113,7 @@ class Breed {
   final String fullName;
   final String description;
   String img;
+  List additionalImages; 
   final String lifeSpan;
   final String bredFor;
   final String breedGroup;
@@ -121,12 +121,10 @@ class Breed {
   final String weight;
   final String origin;
   final int dogApiId;
-  
-  Breed({this.fullName, this.description, this.img, this.id, this.lifeSpan, this.bredFor, this.breedGroup, this.height, this.weight, this.origin, this.dogApiId});
+   
+  Breed({this.fullName, this.description, this.img, this.additionalImages, this.id, this.lifeSpan, this.bredFor, this.breedGroup, this.height, this.weight, this.origin, this.dogApiId});
 
   factory Breed.convertFromFireBaseMap(Map data) {
-    print('here is what we got back from firebase: ');
-    print(data);
     if (data == null) { 
       return null;
     }
@@ -135,6 +133,7 @@ class Breed {
       fullName: data['fullName'] ?? '',
       description: data['description'] ?? '',
       img: data['img'] ?? 'default.png',
+      additionalImages: data['additionalImages'] ?? [],
       lifeSpan: data['lifeSpan'] ?? '',
       bredFor: data['bredFor'] ?? '',
       breedGroup: data['breedGroup'] ?? '',

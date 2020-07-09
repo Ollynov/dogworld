@@ -53,8 +53,8 @@ class DashboardScreen extends StatelessWidget {
                   FlatButton(
                     child: Text('Logout'),
                     color: Colors.red[400],
+                    padding: EdgeInsets.all(16),
                     onPressed: () async {
-                      print('ok you just signed out bruh');
                       await auth.signOut();
                       Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
                   }),
@@ -83,24 +83,27 @@ class DashNotLoggedIn extends StatelessWidget {
         title: Text('Dashboard'),
       ),
       body: Center( 
+        child: SingleChildScrollView(
           child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'Sorry you are not logged in!!',
-            style: TextStyle(height: 1.5, fontWeight: FontWeight.bold),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: FlatButton(
-                child: Text('Login'),
-                color: Theme.of(context).accentColor,
-                onPressed: () async {
-                  Navigator.pushNamed(context, '/login');
-                }),
-          ),
-        ],
-      )),
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+              Text(
+                'Sorry you are not logged in!!',
+                style: TextStyle(height: 1.5, fontWeight: FontWeight.bold),
+              ), 
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: FlatButton(
+                    padding: EdgeInsets.all(16),
+                    child: Text('Login'),
+                    color: Theme.of(context).accentColor,
+                    onPressed: () async {
+                      Navigator.pushNamed(context, '/login');
+                    }),
+              ),
+          ],
+        ),
+          )),
       bottomNavigationBar: AppBottomNav(route: 2, inactive: false),
     );
   }
@@ -112,6 +115,8 @@ class UserFavoriteBreeds extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('here is our userDetails: ');
+    print(userDetails);
 
     if (userDetails != null && userDetails.favoriteBreeds != []) {
       print(userDetails.favoriteBreeds);
@@ -153,7 +158,7 @@ class UserFavoriteBreeds extends StatelessWidget {
         ),
       );
     } else {
-      return Loader();
+      return Container();
     }
  
     

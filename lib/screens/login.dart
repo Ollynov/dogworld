@@ -1,8 +1,7 @@
-import 'package:apple_sign_in/apple_sign_in.dart';
+// import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../services/services.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
   createState() => LoginScreenState();
@@ -53,7 +52,7 @@ class LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // FlutterLogo(size: 150,),
-                Image.asset('assets/smallDogWorldLogo.png'),
+                Image.asset('assets/icons/smallDogWorldLogo.png'),
                 // Image(image: AssetImage('assets/smallDogWorldLogo.png')),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 100, top: 20),
@@ -94,12 +93,12 @@ class LoginScreenState extends State<LoginScreen> {
                         return Container();
                       }
                     }),
-                LoginButton(
-                  text: 'CONTINUE AS GUEST',
-                  icon: FontAwesomeIcons.user, 
-                  loginMethod: auth.anonLogin,
-                  color: Theme.of(context).primaryColorDark,
-                  destination: '/dashboard',),
+                // LoginButton(
+                //   text: 'CONTINUE AS GUEST',
+                //   icon: FontAwesomeIcons.user, 
+                //   loginMethod: auth.anonLogin,
+                //   color: Theme.of(context).primaryColorDark,
+                //   destination: '/dashboard',),
               ],
             ),
           ],

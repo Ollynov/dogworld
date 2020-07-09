@@ -100,7 +100,7 @@ class StartPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(quiz.title, style: Theme.of(context).textTheme.headline),
+          Text(quiz.title, style: Theme.of(context).textTheme.headline1),
           Divider(),
           Expanded(child: Text(quiz.description)),
           ButtonBar(
@@ -136,7 +136,6 @@ class CongratsPage extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           Divider(),
-          Image.asset('assets/congrats.gif'),
           Divider(),
           FlatButton.icon(
             color: Colors.green,
@@ -214,7 +213,7 @@ class QuestionPage extends StatelessWidget {
                             margin: EdgeInsets.only(left: 16),
                             child: Text(
                               opt.value,
-                              style: Theme.of(context).textTheme.body2,
+                              style: Theme.of(context).textTheme.bodyText1,
                             ),
                           ),
                         )

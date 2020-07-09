@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doggies/services/users.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -29,15 +30,17 @@ class EditBreedScreen extends StatelessWidget {
               tooltip: "Go Home",
             )
           ),
-          body: Center(
-            child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Select Breed to Edit'),
-              BreedListDropDown(),
+          body: SingleChildScrollView(
+            child: Center(
+              child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Select Breed to Edit'),
+                BreedListDropDown(),
 
-            ],
-          )),
+              ],
+            )),
+          ),
           bottomNavigationBar: AppBottomNav(route: 2, inactive: false,),
         );
     } else {
@@ -62,11 +65,13 @@ class _BreedListDropDownState extends State<BreedListDropDown> {
     return Column(
       children: [
         FutureBuilder(
-           future: Collection<Breed>(path: 'allBreeds').getData(),
-           builder: (BuildContext context, AsyncSnapshot<List<Breed>> snapshot) { 
+          //  future: Collection<String>(path: 'allBreeds').getData(),
+           future: Firestore.instance.collection("allBreeds").document('allBreeds').get(),
+           builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) { 
 
-             if (snapshot.data != null) {
-              List<Breed> allBreeds = snapshot.data;
+          
+             if (snapshot.hasData) {
+              List<dynamic> allBreeds = snapshot.data["allBreeds"];
           
               return Padding(
                 padding: const EdgeInsets.only(bottom: 70.0),
@@ -82,10 +87,10 @@ class _BreedListDropDownState extends State<BreedListDropDown> {
                         dropdownValue = newValue;
                       });
                     },
-                    items: allBreeds.map<DropdownMenuItem<String>>((Breed value) {
+                    items: allBreeds.map<DropdownMenuItem<String>>((dynamic value) {
                       return DropdownMenuItem<String>(
-                        value: value.id,
-                        child: Text(value.id),
+                        value: value,
+                        child: Text(value),
                       );
                     }).toList(),
                   ),
@@ -95,7 +100,8 @@ class _BreedListDropDownState extends State<BreedListDropDown> {
              }
            }
         ),
-        BreedDetails(breedId: dropdownValue)
+        BreedDetails(breedId: dropdownValue, dataSource: "Dog World"),
+        BreedDetails(breedId: dropdownValue, dataSource: "Dog CEO",)
       ],
     );
   }
@@ -103,7 +109,9 @@ class _BreedListDropDownState extends State<BreedListDropDown> {
 
 class BreedDetails extends StatefulWidget {
   final String breedId;
-  const BreedDetails({Key key, this.breedId}) : super(key: key);
+  final String dataSource;
+
+  const BreedDetails({Key key, this.breedId, this.dataSource}) : super(key: key);
 
   @override
   _BreedDetailsState createState() => _BreedDetailsState();
@@ -119,6 +127,7 @@ class _BreedDetailsState extends State<BreedDetails> {
   TextEditingController _weightController;
   TextEditingController _originController;
   TextEditingController _imageController;
+  TextEditingController _additionalImagesController;
 
   void initState() {
     super.initState();
@@ -131,18 +140,29 @@ class _BreedDetailsState extends State<BreedDetails> {
     _weightController = TextEditingController();
     _originController = TextEditingController();
     _imageController = TextEditingController();
+    _additionalImagesController = TextEditingController();
   }
 
   void dispose() {
-    _nameController.dispose(); _descriptionController.dispose(); _lifeSpanController.dispose(); _bredForController.dispose(); _groupController.dispose(); _heightController.dispose(); _weightController.dispose(); _originController.dispose(); _imageController.dispose();
+    _nameController.dispose(); _descriptionController.dispose(); _lifeSpanController.dispose(); _bredForController.dispose(); _groupController.dispose(); _heightController.dispose(); _weightController.dispose(); _originController.dispose(); _imageController.dispose(); _additionalImagesController.dispose();
     super.dispose();
   }
+
+  void clear() {
+    setState(() => {
+      _nameController.text = ""
+    });
+    _descriptionController.clear(); _lifeSpanController.clear(); _bredForController.clear(); _groupController.clear(); _heightController.clear(); _weightController.clear(); _originController.clear(); _imageController.clear(); 
+      _additionalImagesController.clear();
+  }
+
+  // set copyValues(String value) => setState(() => _nameController.text = value);
 
   @override
   Widget build(BuildContext context) {
 
     return FutureBuilder(
-      future: fetchBreed(widget.breedId),
+      future: _fetchBreed(widget.dataSource),
       builder: (BuildContext context, AsyncSnapshot<Breed> value) {
       // builder: (BuildContext context, AsyncSnapshot<TempModel> value) {
 
@@ -156,11 +176,20 @@ class _BreedDetailsState extends State<BreedDetails> {
           _weightController.text = value.data.weight;
           _originController.text = value.data.origin;
           _imageController.text = value.data.img;
+          if (value.data.additionalImages != null) {
+            _additionalImagesController.text = value.data.additionalImages.join(', ');
+          } else {
+            _additionalImagesController.text = "";
+          }
+        } 
 
           return Padding(
             padding: const EdgeInsets.all(12.0),
             child: Column(
                   children: [
+                    Row(children: [
+                      Text(widget.dataSource, style: Theme.of(context).textTheme.headline2)
+                    ],),
                     Row(children: [
                       TitleColumn(text: 'Name'),
                       Flexible(child: 
@@ -230,7 +259,7 @@ class _BreedDetailsState extends State<BreedDetails> {
                       ),
                     ],),
                     Row(children: [
-                      TitleColumn(text: 'Image'),
+                      TitleColumn(text: 'Primary Image'),
                       Flexible(child: 
                         TextField(
                           controller: _imageController,
@@ -238,23 +267,51 @@ class _BreedDetailsState extends State<BreedDetails> {
                         ),
                       ),
                     ],),
-                  EditAndSaveRow(breedId: widget.breedId, fullName: _nameController, description: _descriptionController, lifeSpan: _lifeSpanController, bredFor: _bredForController, breedGroup: _groupController, height: _heightController, weight: _weightController, origin: _originController, img: _imageController),
 
+                  if (widget.dataSource == "Dog World")
+                    Row(children: [
+                      TitleColumn(text: 'Additional Images'),
+                      Flexible(child: 
+                        TextField(
+                          controller: _additionalImagesController,
+                          style: TextStyle(fontSize: 20, fontFamily: 'Roboto'),
+                        ),
+                      ),
+                    ],),
+                  EditAndSaveRow(source: widget.dataSource, breedId: widget.breedId, fullName: _nameController, description: _descriptionController, lifeSpan: _lifeSpanController, bredFor: _bredForController, breedGroup: _groupController, height: _heightController, weight: _weightController, origin: _originController, img: _imageController, additionalImages: _additionalImagesController),
+                  
+                  Row(
+                    children: [
+                      Column(children: [ImageCard(imagePath: _imageController.text)],),
+                      if (widget.dataSource == "Dog World") 
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(children: _additionalImagesController.text.split(", ").map((imagePath) => 
+                            ImageCard(imagePath: imagePath,)
+                          ).toList(),),
+                        )
+                    ],
+                  )
                 ],),
           );
-        } else {
-          return Loader();
-        }
+        // } else {
+        //   return Loader();
+        // }
       }
     );
   }
-}
 
-  // TextEditingController _bredForController;
-  // TextEditingController _groupController;
-  // TextEditingController _heightController;
-  // TextEditingController _weightController;
-  // TextEditingController _originController;
+  _fetchBreed(dataSource) {
+    //widget.breedId
+    clear();
+    if (dataSource == "Dog CEO") {
+      return fetchBreedFromDogCEO(widget.breedId);
+    } else if (dataSource == "Dog World") {
+      return fetchBreedFromDogWorld(widget.breedId);
+    }
+    
+  }
+}
 
 
 class TitleColumn extends StatelessWidget {
@@ -279,6 +336,7 @@ class TitleColumn extends StatelessWidget {
 }
 
 class EditAndSaveRow extends StatelessWidget {
+  final String source;
   final String breedId;
   final TextEditingController fullName;
   final TextEditingController description;
@@ -289,35 +347,71 @@ class EditAndSaveRow extends StatelessWidget {
   final TextEditingController weight;
   final TextEditingController origin;
   final TextEditingController img;
+  final TextEditingController additionalImages;
 
-  const EditAndSaveRow({Key key, this.breedId, this.fullName, this.description, this.lifeSpan, this.bredFor, this.breedGroup, this.height, this.weight, this.origin, this.img}) : super(key: key);
+  const EditAndSaveRow({Key key, this.breedId, this.fullName, this.description, this.lifeSpan, this.bredFor, this.breedGroup, this.height, this.weight, this.origin, this.img, this.additionalImages, this.source}) : super(key: key);
+
 
   @override
-  Widget build(BuildContext context) {
+    Widget build(BuildContext context) {
+
+      _showDialog() {
+        // flutter defined function
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            // return object of type Dialog
+            return AlertDialog(
+              title: new Text("Warning!"),
+              content: new Text("This will overwrite everything we have in our DB, are you sure?"),
+              actions: <Widget>[
+                // usually buttons at the bottom of the dialog
+                new FlatButton(
+                  child: new Text("Close"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                new FlatButton(
+                  child: new Text("Accept"),
+                  onPressed: () {
+                    saveBreed(breedId: breedId, fullName: fullName.text, description: description.text, lifeSpan: lifeSpan.text, bredFor: bredFor.text, breedGroup: breedGroup.text, height: height.text, weight: weight.text, origin: origin.text, img: img.text, additionalImages: additionalImages.text);
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
 
       return Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-          RaisedButton.icon(
-            onPressed: ()=> {
-              print('pressy pressy')
-            }, 
-            padding: EdgeInsets.all(16),
-            icon: Icon(FontAwesomeIcons.edit), 
-            label: Text('Edit', style: TextStyle(fontSize: 22),),
-          ),
+          // RaisedButton.icon(
+          //   onPressed: ()=> {
+          //     print('pressy pressy')
+          //   }, 
+          //   padding: EdgeInsets.all(16),
+          //   icon: Icon(FontAwesomeIcons.edit), 
+          //   label: Text('Edit', style: TextStyle(fontSize: 22),),
+          // ),
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: RaisedButton.icon(
-              onPressed: ()=> {
-                print('pressy pressy'),
-                saveBreed(breedId: breedId, fullName: fullName.text, description: description.text, lifeSpan: lifeSpan.text, bredFor: bredFor.text, breedGroup: breedGroup.text, height: height.text, weight: weight.text, origin: origin.text, img: img.text)
+              onPressed: (source == "Dog CEO") ? 
+                () => _showDialog()
+              : () => {
+                saveBreed(breedId: breedId, fullName: fullName.text, description: description.text, lifeSpan: lifeSpan.text, bredFor: bredFor.text, breedGroup: breedGroup.text, height: height.text, weight: weight.text, origin: origin.text, img: img.text, additionalImages: additionalImages.text)
+                // .then((value) => print(value))
               }, 
               padding: EdgeInsets.all(16),
               icon: Icon(FontAwesomeIcons.save), 
-              label: Text('Save', style: TextStyle(fontSize: 22),),
+              label: (source == "Dog CEO") ?
+                  Text('Overwrite Database', style: TextStyle(fontSize: 22)) :
+                  Text('Save', style: TextStyle(fontSize: 22))
             ),
           )
       ]),
@@ -325,54 +419,114 @@ class EditAndSaveRow extends StatelessWidget {
   }
 }
 
-Future<void> saveBreed({String breedId, String description, String fullName, String lifeSpan, String bredFor, String breedGroup, String height, String weight, String origin, String img}) async {
-  print('here is breedId: ');
-  print(breedId);
+
+Future<void> saveBreed({String breedId, String description, String fullName, String lifeSpan, String bredFor, String breedGroup, String height, String weight, String origin, String img, dynamic additionalImages}) async {
+
   final Document<Breed> breedsRef = Document<Breed>(path: 'Breed/$breedId');
+
+  additionalImages = additionalImages.split(", ");
   
-  final toSave = {
-    "id": breedId,
-    "fullName": fullName, 
-    "description": description,
-    "lifeSpan": lifeSpan,
-    "bredFor": bredFor,
-    "breedGroup": breedGroup,
-    "height": height,
-    "weight": weight,
-    "origin": origin,
-    "img": img
-  };
+  var toSave = {};
+  // this is to avoid saving a blank string in our database as an "additional image"
+  if (additionalImages != null && additionalImages[0] != "") {
+    toSave = {
+      "id": breedId,
+      "fullName": fullName, 
+      "description": description,
+      "lifeSpan": lifeSpan,
+      "bredFor": bredFor,
+      "breedGroup": breedGroup,
+      "height": height,
+      "weight": weight,
+      "origin": origin,
+      "img": img,
+      "additionalImages": additionalImages
+    };
+  } else {
+    toSave = {
+      "id": breedId,
+      "fullName": fullName, 
+      "description": description,
+      "lifeSpan": lifeSpan,
+      "bredFor": bredFor,
+      "breedGroup": breedGroup,
+      "height": height,
+      "weight": weight,
+      "origin": origin,
+      "img": img,
+    };
+  }
+
 
   final response = await breedsRef.upsert(toSave);
-
+            // Scaffold.of(context).showSnackBar(SnackBar(
+            //   content: GestureDetector(
+            //     child: Text("You must be logged in to save a favorite dog breed."),
+            //     onTap: () {Navigator.pushNamed(context, '/login');},
+            //   ),
+            //   backgroundColor: Theme.of(context).primaryColorLight,
+            // ));
+            // print('this is what we got');
+            // print(response);
+  final ourBreedsListRef = Firestore.instance.collection("allBreeds").document('ourBreeds');
+  ourBreedsListRef.updateData({
+    "ourBreeds": FieldValue.arrayUnion([breedId])
+  });
   return response;
-
-  // if (true) {
-    
-  //   return 'chii';
-  // } else {
-    
-  //   print('Failed to load album');
-  //   return null;
-  // }
 }
 
 
-Future<Breed> fetchBreed(String breedId) async {
+class ImageCard extends StatelessWidget {
+  final String imagePath;
+  const ImageCard({Key key, this.imagePath}) : super(key: key);
 
+  @override
+  Widget build(BuildContext context) {
+
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            height: 240,
+            child: Padding(
+              padding: EdgeInsets.all(5),
+              child: 
+                Image.network(
+                  imagePath, 
+                  fit: BoxFit.contain,
+                ) 
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+
+
+
+Future<Breed> fetchBreedFromDogWorld(String breedId) async {
+
+  print('ok running FETCH with id: ');
+  print(breedId);
   // THIS NEEDS TO PERIORITIZE GRABBING FROM OUR OWN DB FIRST
   final Document<Breed> breedsRef = Document<Breed>(path: 'Breed/$breedId');
   final fromOurDb = await breedsRef.getData();
 
-  print('here is what we got: ');
+  print('ok got back: ');
   print(fromOurDb);
 
-  if (fromOurDb != null) {
-    print('ok got some goodi back: ');
-    print(fromOurDb.fullName);
-    return fromOurDb;
+  return fromOurDb;
+}
 
-  } else {
+Future<Breed> fetchBreedFromDogCEO(String breedId) async {
+
+
     final response = await http.get('https://api.thedogapi.com/v1/breeds/search?q=$breedId');
 
     if (response.statusCode == 200) {
@@ -398,9 +552,6 @@ Future<Breed> fetchBreed(String breedId) async {
       print('Failed to load album');
       return null;
     }
-  }
-
-
-
+  
 }
 

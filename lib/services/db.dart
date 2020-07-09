@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 import './globals.dart';
-import './models.dart';
 
 class Document<T> {
   final Firestore _db = Firestore.instance;
@@ -27,8 +26,6 @@ class Document<T> {
   Future<T> getData() {
     try {
       var result = ref.get().then((v) => Global.models[T](v.data) as T);
-      print('here is result: ');
-      print(result);
       return result;
     } catch(err) {
       print('got error: ');
@@ -43,6 +40,8 @@ class Document<T> {
 
   Future<void> upsert(Map data) {
     return ref.setData(Map<String, dynamic>.from(data), merge: true);
+    // return ref.setData(Map<String, dynamic>.from(data), merge: true);
+    
   }
 }
 
@@ -52,13 +51,21 @@ class Collection<T> {
   CollectionReference ref;
 
   Collection({this.path}) {
+
     ref = _db.collection(path);
+    
   }
 
-  Future<List<T>> getData() async {
-    var snapshots;
+  Future<List<T>> getData(limit, startAfter) async {
     try {
-      snapshots = await ref.getDocuments();
+      QuerySnapshot snapshots;
+      if (limit != null && startAfter != null) {
+        snapshots = await ref.orderBy("id").startAfter([startAfter]).limit(limit).getDocuments();
+      } else if (limit != null) {
+        snapshots = await ref.limit(limit).getDocuments();
+      } else {
+        snapshots = await ref.getDocuments();
+      }
 
       return snapshots.documents
           .map<T>((doc) => Global.models[T](doc.data) as T)
@@ -80,7 +87,7 @@ class Collection<T> {
 
 // The cool thing about UserData class is that it gets the user information based on whoever is logged in. And does not require you to pass in a user id as a parameter.
 class UserData<T> {
-  final Firestore _db = Firestore.instance;
+  // final Firestore _db = Firestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final String collection;
 
@@ -93,7 +100,7 @@ class UserData<T> {
     return _auth.onAuthStateChanged.switchMap((user) {
       if (user != null) {
         Document<T> doc = Document<T>(path: '$collection/${user.uid}');
-        return doc.streamData();
+        return doc.streamData();    
       } else {
         return Stream<T>.value(null);
       }

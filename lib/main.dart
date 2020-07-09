@@ -1,7 +1,5 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -72,6 +70,7 @@ class _MyAppState extends State<MyApp> {
               bodyText1: TextStyle(fontSize: 18),
               bodyText2: TextStyle(fontSize: 16),
               headline1: TextStyle(fontSize: 44),
+              headline2: TextStyle(fontSize: 36),
               button: TextStyle(letterSpacing: 1.5, fontWeight: FontWeight.bold),
               subtitle1: TextStyle(color: Colors.grey, fontSize: 24)),
           cardTheme: CardTheme(
@@ -96,7 +95,7 @@ class _MyAppState extends State<MyApp> {
           '/dogopedia': (context) => DogopediaScreen(),
           '/search': (context) => SearchScreen(),
           '/login': (context) => LoginScreen(),
-          '/quiz': (context) => QuizScreen(),
+          // '/quiz': (context) => QuizScreen(),
           // '/breed/*': (context) => BreedScreen(),
           '/admin': (context) => AdminScreen(),
           '/admin/editBreed': (context) => EditBreedScreen()
@@ -121,14 +120,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   AuthService auth = AuthService();
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
