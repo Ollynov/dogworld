@@ -18,7 +18,7 @@ class _DogopediaScreenState extends State<DogopediaScreen> {
   // List pagesOfData; We may want to save this in the future to serve as a cache to not perform a new search each time.
   List<String> previousBreeds = [];
   bool loading; 
-  int perPageLimit = 4;
+  int perPageLimit = 10;
   String lastBreedId;
 
   _getMoreBreeds(allBreeds) {
