@@ -70,7 +70,7 @@ class _DogopediaScreenState extends State<DogopediaScreen> {
                     icon: Icon(Icons.search), 
                     onPressed: () {
                       showSearch(context: context, 
-                      delegate: BreedSearch(breeds));
+                      delegate: BreedSearch());
                     }),
                   Container(
                     padding: EdgeInsets.all(8),
@@ -133,11 +133,11 @@ class _DogopediaScreenState extends State<DogopediaScreen> {
 
 
 class BreedSearch extends SearchDelegate<String> {
-  List<Breed> allBreeds;
+  // List<Breed> allBreeds;
   // final Stream<List<Breed>> allBreeds;
   // first lets just pass in our current breeds
 
-  BreedSearch(this.allBreeds);
+  // BreedSearch(this.allBreeds);
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -170,41 +170,34 @@ class BreedSearch extends SearchDelegate<String> {
   @override
   Widget buildSuggestions(BuildContext context) {
 
-    final suggestions = allBreeds.where((a) => a.id.contains(query) || a.id.toLowerCase().contains(query));
 
-    return ListView(
-        children: suggestions.map<ListTile>((a) => ListTile(
-          title: Text(a.id),
-          leading: Icon(Icons.book),
-          onTap: () => {
-            query = a.id,
-            Navigator.pushNamed(context, '/breed/${a.id}', arguments: {'breedId': a.id})
-          },
-        )).toList(),
+    return FutureBuilder(
+      future: Firestore.instance.collection("allBreeds").document('ourBreeds').get(),
+      builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+
+
+        if (snapshot.hasData) {
+          List<dynamic> ourBreeds = snapshot.data["ourBreeds"];
+          final suggestions = ourBreeds.where((a) => a.contains(query) || a.toLowerCase().contains(query));
+
+          return ListView(
+            children: suggestions.map<ListTile>((a) => ListTile(
+              title: Text(a),
+              leading: Icon(Icons.book),
+              onTap: () => {
+                query = a,
+                Navigator.pushNamed(context, '/breed/$a', arguments: {'breedId': a})
+              },
+            )).toList(),
+          );
+        } else {
+          return Loader();
+        }
+      }
     );
 
     //throw UnimplementedError();
   }
-  // @override
-  // Widget buildSuggestions(BuildContext context) {
-  //   return FutureBuilder(
-  //     future: Global.breedsRef.getData(perPageLimit, lastBreedId),
-  //     builder: (context, AsyncSnapshot<UnmodifiableListView<Breed>> snapshot) {
-  //       if (snapshot.hasData) {
-  //         return Center(
-  //           child: Text("No data!"),
-  //         );
-  //       }
-
-  //       return ListView(
-  //         children: snapshot.data.map<Widget>((e) => Text(e.id)).toList()
-  //       );
-  //     },
-  //   );
-
-  //   //throw UnimplementedError();
-  // }
-  
 }
 
 
