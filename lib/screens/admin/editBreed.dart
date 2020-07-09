@@ -468,6 +468,10 @@ Future<void> saveBreed({String breedId, String description, String fullName, Str
             // ));
             // print('this is what we got');
             // print(response);
+  final ourBreedsListRef = Firestore.instance.collection("allBreeds").document('ourBreeds');
+  ourBreedsListRef.updateData({
+    "ourBreeds": FieldValue.arrayUnion([breedId])
+  });
   return response;
 }
 
