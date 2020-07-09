@@ -134,6 +134,7 @@ class _DogopediaScreenState extends State<DogopediaScreen> {
 
 class BreedSearch extends SearchDelegate<String> {
   // List<Breed> allBreeds;
+  List<dynamic> ourBreeds;
   // final Stream<List<Breed>> allBreeds;
   // first lets just pass in our current breeds
 
@@ -164,7 +165,19 @@ class BreedSearch extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Container();
+    final suggestionResults = ourBreeds.where((a) => a.contains(query) || a.toLowerCase().contains(query));
+
+    return ListView(
+
+            children: suggestionResults.map<ListTile>((a) => ListTile(
+              title: Text(a),
+              leading: Icon(Icons.book),
+              onTap: () => {
+                query = a,
+                Navigator.pushNamed(context, '/breed/$a', arguments: {'breedId': a})
+              },
+            )).toList(),
+          );
   }
 
   @override
@@ -177,13 +190,13 @@ class BreedSearch extends SearchDelegate<String> {
 
 
         if (snapshot.hasData) {
-          List<dynamic> ourBreeds = snapshot.data["ourBreeds"];
+          ourBreeds = snapshot.data["ourBreeds"];
+          // List<dynamic> ourBreeds = snapshot.data["ourBreeds"];
           final suggestions = ourBreeds.where((a) => a.contains(query) || a.toLowerCase().contains(query));
 
           return ListView(
             children: suggestions.map<ListTile>((a) => ListTile(
               title: Text(a),
-              leading: Icon(Icons.book),
               onTap: () => {
                 query = a,
                 Navigator.pushNamed(context, '/breed/$a', arguments: {'breedId': a})
