@@ -1,6 +1,6 @@
 {
-    "name": "doggies",
-    "short_name": "doggies",
+    "name": "Dog World",
+    "short_name": "Dog World",
     "start_url": ".",
     "display": "minimal-ui",
     "background_color": "#0175C2",
@@ -10,12 +10,12 @@
     "prefer_related_applications": false,
     "icons": [
         {
-            "src": "icons/Icon-192.png",
+            "src": "../assets/icons/smallDogWorldLogo.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "icons/Icon-512.png",
+            "src": "../assets/WhiteDogWorld.png",
             "sizes": "512x512",
             "type": "image/png"
         }

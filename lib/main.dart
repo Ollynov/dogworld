@@ -8,7 +8,7 @@ import 'screens/admin/admin.dart';
 import 'screens/admin/editBreed.dart';
 import 'services/services.dart';
 import 'screens/screens.dart';
-import 'package:doggies/shared/bottom_nav.dart';
+import 'shared/bottom_nav.dart';
 
 
 void main() {
