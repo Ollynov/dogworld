@@ -47,10 +47,11 @@ const scrapeDogTime = functions.https.onRequest((req, res) => {
       res.send("No urls provided")
 
     } else {
-      console.log('here is our req.body: ', req.body)
-      const body = JSON.parse(req.body);
+      // const body = JSON.parse(req.body);
+      // console.log('here is our body: ', body)
+
       // this is taking the text from our frontend, where we will indicate which urls we want to scrape
-      const data = await scrapeMetaTags(body.text);
+      const data = await scrapeMetaTags(req.body.text);
   
       res.send(data)
     }
