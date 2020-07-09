@@ -101,7 +101,8 @@ class _BreedListDropDownState extends State<BreedListDropDown> {
            }
         ),
         BreedDetails(breedId: dropdownValue, dataSource: "Dog World"),
-        BreedDetails(breedId: dropdownValue, dataSource: "Dog CEO",)
+        BreedDetails(breedId: dropdownValue, dataSource: "Dog CEO",),
+        DogTimeDetails(breedId: dropdownValue)
       ],
     );
   }
@@ -310,6 +311,63 @@ class _BreedDetailsState extends State<BreedDetails> {
       return fetchBreedFromDogWorld(widget.breedId);
     }
     
+  }
+}
+
+
+class DogTimeDetails extends StatefulWidget {
+  final String breedId;
+
+  DogTimeDetails({Key key, this.breedId}) : super(key: key);
+
+  @override
+  _DogTimeDetailsState createState() => _DogTimeDetailsState();
+}
+
+class _DogTimeDetailsState extends State<DogTimeDetails> {
+  TextEditingController _descriptionController;
+
+  void initState() {
+    super.initState();
+    _descriptionController = TextEditingController();
+  }
+
+  void dispose() {
+    _descriptionController.dispose();
+    super.dispose();
+  }
+
+  void clear() {
+    _descriptionController.clear(); 
+  }
+  @override
+  Widget build(BuildContext context) {
+    // _controller.text = widget.data;
+
+    return Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Text("Dogtime", style: Theme.of(context).textTheme.headline2)
+                  ],
+                ),
+                Row(children: [
+                  TitleColumn(text: 'Description'),
+                  Flexible(child: 
+                    TextField(
+                      controller: _descriptionController,
+                      style: TextStyle(fontSize: 20, fontFamily: 'Roboto'),
+                    ),
+                  ),
+                ])
+              ]
+            ));
+              
+
+
+
   }
 }
 
