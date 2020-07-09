@@ -43,15 +43,16 @@ const scrapeMetaTags = (text: any) => {
 const scrapeDogTime = functions.https.onRequest((req, res) => {
   cors(req, res, async () => {
     // wrapping our function in cors ensures that we can properly call it from any frontend application;
-    if (req.body) {
+    if (Object.keys(req.body).length === 0 && req.body.constructor === Object) {
+      res.send("No urls provided")
+
+    } else {
       console.log('here is our req.body: ', req.body)
       const body = JSON.parse(req.body);
       // this is taking the text from our frontend, where we will indicate which urls we want to scrape
       const data = await scrapeMetaTags(body.text);
   
       res.send(data)
-    } else {
-      res.send("No urls provided")
     }
 
   })
