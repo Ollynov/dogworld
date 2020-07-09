@@ -7,7 +7,7 @@ Welcome.
 ### Running the app locally: 
 
 - Specifically running flutter web server on google auth authorized port: flutter run -d chrome --web-hostname localhost --web-port 7357
-- To run our cloud functions `firebase serve --only functions`
+- To run our cloud functions `firebase serve --only functions` or to get them on the emulator: `npm run serve` from within the functions directory.
 
 ### Deployment: 
 

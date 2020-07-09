@@ -1,5 +1,5 @@
 import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
+// import * as admin from 'firebase-admin';
 const cors = require("cors")({origin: true})
 const cheerio = require('cheerio');
 const getUrls = require('get-urls');
@@ -11,12 +11,9 @@ const helloWorld = functions.https.onRequest((request, response) => {
  response.send("Hello from Firebase!!!!!");
 });
 
-const scrapeDogTime = functions.https.onRequest((req, res) => {
 
-  
-});
 
-const scrapeMetaTags = (text) => {
+const scrapeMetaTags = (text: any) => {
   // This cheerio method here is fast and easy, but it does not get data that is rendered after the fact by javascript. So for many websites, such as any that use react, this really won't work at all.
   const urls = Array.from( getUrls(text) );
   const requests = urls.map(async url => {
@@ -24,7 +21,7 @@ const scrapeMetaTags = (text) => {
     const html = await res.text();
     const $ = cheerio.load(html);
 
-    const getMetatag = (name) =>  
+    const getMetatag = (name: any) =>  
             $(`meta[name=${name}]`).attr('content') ||  
             $(`meta[name="og:${name}"]`).attr('content') ||  
             $(`meta[name="twitter:${name}"]`).attr('content');
@@ -42,5 +39,23 @@ const scrapeMetaTags = (text) => {
   return Promise.all(requests);
 
 }
+
+const scrapeDogTime = functions.https.onRequest((req, res) => {
+  cors(req, res, async () => {
+    // wrapping our function in cors ensures that we can properly call it from any frontend application;
+    if (req.body) {
+      console.log('here is our req.body: ', req.body)
+      const body = JSON.parse(req.body);
+      // this is taking the text from our frontend, where we will indicate which urls we want to scrape
+      const data = await scrapeMetaTags(body.text);
+  
+      res.send(data)
+    } else {
+      res.send("No urls provided")
+    }
+
+  })
+  
+});
 
 export { helloWorld, scrapeDogTime }
