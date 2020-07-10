@@ -279,9 +279,13 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
 
     return FutureBuilder(
       future: fetchBreedFromDogtime(widget.breedId),
-      builder: (BuildContext context, AsyncSnapshot<Breed> value) {
-        print('ok got this value back: ');
-        print(value);
+      builder: (BuildContext context, dynamic value) {
+        // print(value.data.description);
+        print('value.data');
+        print(value.data);
+        // var description = value.data.description;
+        // _descriptionController.text = value.data;
+
         return Padding(
           padding: const EdgeInsets.all(12.0),
           child: Column(
