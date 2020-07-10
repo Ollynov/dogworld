@@ -2,13 +2,21 @@
 
 Welcome.
 
-## Useful Commands
+# Useful Commands
+
+### Running the app locally: 
 
 - Specifically running flutter web server on google auth authorized port: flutter run -d chrome --web-hostname localhost --web-port 7357
+- Then for devtools you need to go to `http://127.0.0.1:9101/#/`, and then manually connect by inputting something like: 127.0.0.1:62426/ko7vgxcxxRs= The actual thing you input will be in your terminal.
+- To run our cloud functions `firebase serve --only functions` or to get them on the emulator: `npm run serve` from within the functions directory.
 
-- Deployment: 
+### Testing:
+- Run `npm run shell` to get an interactive command line interface where you can test your cloud functions. Just run the function name. Just remember that you need to pass in the data that it expects. 
+
+### Deployment: 
 
 - For web first run `flutter build web` then `firebase deploy`
+- For Cloud Functions: `firebase deploy --only functions` for all functions for your functions/src/index.ts file to be compiled into our lib folder and deployed. 
 
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
