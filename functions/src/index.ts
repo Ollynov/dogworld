@@ -52,7 +52,6 @@ const scrapeDogTime = functions.https.onRequest((req, res) => {
 
       // this is taking the text from our frontend, where we will indicate which urls we want to scrape
       const data = await scrapeMetaTags(req.body.text);
-  
       res.send(data)
     }
 

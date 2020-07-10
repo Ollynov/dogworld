@@ -222,7 +222,7 @@ class _BreedDetailsState extends State<BreedDetails> {
       return fetchBreedFromDogCEO(widget.breedId);
     } else if (dataSource == "Dog World") {
       return fetchBreedFromDogWorld(widget.breedId);
-    }
+    } 
   }
 }
 
@@ -277,26 +277,26 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
   Widget build(BuildContext context) {
     // _controller.text = widget.data;
 
-    return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: Column(
-        children: [
-          Row(
+    return FutureBuilder(
+      future: fetchBreedFromDogtime(widget.breedId),
+      builder: (BuildContext context, AsyncSnapshot<Breed> value) {
+        print('ok got this value back: ');
+        print(value);
+        return Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
             children: [
-              Text("Dogtime", style: Theme.of(context).textTheme.headline2)
-            ],
-          ),
-          Row(children: [
-            TitleColumn(text: 'Description'),
-            Flexible(child: 
-              TextField(
-                controller: _descriptionController,
-                style: TextStyle(fontSize: 20, fontFamily: 'Roboto'),
+              Row(
+                children: [
+                  Text("Dogtime", style: Theme.of(context).textTheme.headline2)
+                ],
               ),
-            ),
-          ])
-        ]
-      ));
+              InfoRow(text: "Description", controller: _descriptionController)
+            ]
+          )
+        );
+      }
+    );
   }
 }
 

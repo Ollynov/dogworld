@@ -100,3 +100,32 @@ Future<Breed> fetchBreedFromDogCEO(String breedId) async {
     }
 }
 
+Future<Breed> fetchBreedFromDogtime(String breedId) async {
+
+    final String breedId = "labrador-retriever";
+    var body = json.encode({"text": "https://dogtime.com/dog-breeds/$breedId"});
+
+    final response = await http.post('http://localhost:5000/dogworldio/us-central1/scrapeDogTime?breed=$breedId', headers: {"Content-Type": "application/json"}, body: body);
+
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      var decoded = json.decode(response.body);
+      print('ok got this body back: ');
+      print(response.body);
+      if (decoded.length > 0) {
+        // before we return, let's get the image:
+        
+        return decoded;
+
+      } else {
+        return null;
+      }
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      print('Failed to load album');
+      return null;
+    }
+}
+
