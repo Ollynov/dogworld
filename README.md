@@ -8,7 +8,7 @@ Welcome.
 
 - Specifically running flutter web server on google auth authorized port: flutter run -d chrome --web-hostname localhost --web-port 7357
 - Then for devtools you need to go to `http://127.0.0.1:9101/#/`, and then manually connect by inputting something like: 127.0.0.1:62426/ko7vgxcxxRs= The actual thing you input will be in your terminal.
-- To run our cloud functions `firebase serve --only functions` or to get them on the emulator: `npm run serve` from within the functions directory.
+- To run our cloud functions `npm run serve` or to get them on the emulator: `npm run serve` from within the functions directory.
 
 ### Testing:
 - Run `npm run shell` to get an interactive command line interface where you can test your cloud functions. Just run the function name. Just remember that you need to pass in the data that it expects. 

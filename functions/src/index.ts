@@ -26,13 +26,41 @@ const scrapeMetaTags = (text: any) => {
             $(`meta[name="og:${name}"]`).attr('content') ||  
             $(`meta[name="twitter:${name}"]`).attr('content');
 
+    // interface Attributes {
+    //   name: string;
+    // }
+
+    const getAttributes = async () => {
+      // $(".characteristic-stars")[4].children[0].innerText
+      const base = $(".characteristic-stars");
+      let all: any = {
+        name: "yosh3"
+      };
+
+      console.log('ok here is base: ', base[5].children[0].text())
+
+      for (var i in base) {
+        if (base[i] && base[i].children && base[i].children[0] && base[i].children[1]) {
+          var attribute = base[i].children[0].innerText;
+          // console.log('att: ', attribute);
+          var score =  base[i].children[1].innerText;
+          // console.log('score: ', score);
+
+          all[attribute] = score;
+        }
+      }
+      // console.log('ok here is all: ', all)
+      return all;
+    }
+
     return {
       url, 
       title: $('title').first().text,
       favicon: $('link[rel="shortcut icon"]').attr('href'),
       description: getMetatag('description'),
-      image: getMetatag('image'),
-      author: getMetatag('author'),
+      // image: getMetatag('image'),
+      // author: getMetatag('author'),
+      something: await getAttributes()
     }
   });
 
