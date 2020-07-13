@@ -280,28 +280,27 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
     return FutureBuilder(
       future: fetchBreedFromDogtime(widget.breedId),
       builder: (BuildContext context, AsyncSnapshot<dynamic> value) {
-        // print(value.data.description);
-        // print('value.data');
-        // print(value.data);
-        // print(value);
-        // var description = value.data.description;
-        print('got this value: ');
-        print(value.data);
-        _descriptionController.text = value.data.description;
+        
+        if (value != null && value.data != null) {
+          _descriptionController.text = value.data.description;
 
-        return Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Text("Dogtime", style: Theme.of(context).textTheme.headline2)
-                ],
-              ),
-              InfoRow(text: "Description", controller: _descriptionController)
-            ]
-          )
-        );
+          return Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Text("Dogtime", style: Theme.of(context).textTheme.headline2)
+                  ],
+                ),
+                InfoRow(text: "Description", controller: _descriptionController)
+              ]
+            )
+          );
+        } else {
+          return Loader();
+        }
+
       }
     );
   }
