@@ -45,6 +45,7 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
           _sensitivityController.text = dog.sensitivity;
           _beingAloneController.text = dog.beingAlone;
           _coldWeatherController.text = dog.coldWeather;
+          _coldWeatherController.text = dog.coldWeather;
           _hotWeatherController.text = dog.hotWeather;
           _familyFriendlyController.text = dog.familyFriendly;
           _kidFriendlyController.text = dog.kidFriendly;
