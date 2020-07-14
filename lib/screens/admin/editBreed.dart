@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doggies/screens/admin/db.dart';
 import 'package:doggies/services/users.dart';
+import 'package:doggies/shared/admin/dogTimeTable.dart';
+import 'package:doggies/shared/admin/infoRow.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -36,6 +38,7 @@ class EditBreedScreen extends StatelessWidget {
               children: [
                 Text('Select Breed to Edit'),
                 BreedListDropDown(),
+                // This should probably be refactored, but essentialy our breed list dropdown is what populates the rest of this screen since it is a future builder that waits for a dog value to be selected.
               ],
             )),
           ),
@@ -223,108 +226,6 @@ class _BreedDetailsState extends State<BreedDetails> {
     } else if (dataSource == "Dog World") {
       return fetchBreedFromDogWorld(widget.breedId);
     } 
-  }
-}
-
-class InfoRow extends StatelessWidget {
-
-  final String text;
-  final TextEditingController controller;
-
-  InfoRow({Key key, this.text, this.controller}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-
-    return Row(children: [
-      TitleColumn(text: text),
-      Flexible(child: 
-        TextField(
-          controller: controller,
-          style: TextStyle(fontSize: 20, fontFamily: 'Roboto'),)
-      ),
-    ],);
-  }
-}
-
-
-class DogTimeDetails extends StatefulWidget {
-  final String breedId;
-
-  DogTimeDetails({Key key, this.breedId}) : super(key: key);
-
-  @override
-  _DogTimeDetailsState createState() => _DogTimeDetailsState();
-}
-
-class _DogTimeDetailsState extends State<DogTimeDetails> {
-  TextEditingController _descriptionController;
-
-  void initState() {
-    super.initState();
-    _descriptionController = TextEditingController();
-  }
-
-  void dispose() {
-    _descriptionController.dispose();
-    super.dispose();
-  }
-
-  void clear() {
-    _descriptionController.clear(); 
-  }
-  @override
-  Widget build(BuildContext context) {
-    // _controller.text = widget.data;
-
-    return FutureBuilder(
-      future: fetchBreedFromDogtime(widget.breedId),
-      builder: (BuildContext context, AsyncSnapshot<dynamic> value) {
-        
-        if (value != null && value.data != null) {
-          _descriptionController.text = value.data.description;
-
-          return Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Text("Dogtime", style: Theme.of(context).textTheme.headline2)
-                  ],
-                ),
-                InfoRow(text: "Description", controller: _descriptionController)
-              ]
-            )
-          );
-        } else {
-          return Loader();
-        }
-
-      }
-    );
-  }
-}
-
-
-class TitleColumn extends StatelessWidget {
-  final String text;
-
-  TitleColumn({Key key, this.text}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    // _controller.text = widget.data;
-
-    return 
-      Padding(
-        padding: const EdgeInsets.only(right: 12),
-        child: Container(
-          width: 130,
-          child: 
-            Text("$text", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'Roboto')),
-        ),
-      );
   }
 }
 
