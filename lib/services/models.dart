@@ -186,9 +186,21 @@ class DogtimeDog{
   String strangerFriendly;
   String shedding;
   String drooling; 
+  String easyToGroom;
+  String health;
+  String weightGain;
+  String size; 
+  String trainingEase;
+  String iq;
+  String mouthiness;
+  String preyDrive; 
+  String barking;
+  String wanderlust;
+  String energy;
+  String intensity; 
 
   DogtimeDog({
-    this.adaptsToApartment,this.forNovice,this.sensitivity,this.beingAlone, this.hotWeather, this.coldWeather, this.familyFriendly, this.kidFriendly, this.dogFriendly, this.strangerFriendly, this.shedding, this.drooling
+    this.adaptsToApartment,this.forNovice,this.sensitivity,this.beingAlone, this.hotWeather, this.coldWeather, this.familyFriendly, this.kidFriendly, this.dogFriendly, this.strangerFriendly, this.shedding, this.drooling, this.easyToGroom, this.health, this.weightGain, this.size, this.trainingEase, this.iq, this.mouthiness, this.preyDrive, this.barking, this.wanderlust, this.energy, this.intensity
   });
 
   factory DogtimeDog.fromJson(Map<String, dynamic> parsedJson){
@@ -206,6 +218,18 @@ class DogtimeDog{
       strangerFriendly: parsedJson["Friendly Toward Strangers"] ?? "",
       shedding: parsedJson["Amount Of Shedding"] ?? "",
       drooling: parsedJson["Drooling Potential"] ?? "",
+      easyToGroom: parsedJson["Easy To Groom"] ?? "",
+      health: parsedJson["General Health"] ?? "",
+      weightGain: parsedJson["Potential For Weight Gain"] ?? "",
+      size: parsedJson["Size"] ?? "",
+      trainingEase: parsedJson["Easy To Train"] ?? "",
+      iq: parsedJson["Intelligence"] ?? "",
+      mouthiness: parsedJson["Potential For Mouthiness"] ?? "",
+      preyDrive: parsedJson["Prey Drive"] ?? "",
+      barking: parsedJson["Tendency To Bark Or Howl"] ?? "",
+      wanderlust: parsedJson["Wanderlust Potential"] ?? "",
+      energy: parsedJson["Energy Level"] ?? "",
+      intensity: parsedJson["Intensity"] ?? "",
     );
   }
 }
