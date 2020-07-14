@@ -182,9 +182,13 @@ class DogtimeDog{
   String hotWeather;
   String familyFriendly;
   String kidFriendly; 
+  String dogFriendly;
+  String strangerFriendly;
+  String shedding;
+  String drooling; 
 
   DogtimeDog({
-    this.adaptsToApartment,this.forNovice,this.sensitivity,this.beingAlone, this.hotWeather, this.coldWeather, this.familyFriendly, this.kidFriendly
+    this.adaptsToApartment,this.forNovice,this.sensitivity,this.beingAlone, this.hotWeather, this.coldWeather, this.familyFriendly, this.kidFriendly, this.dogFriendly, this.strangerFriendly, this.shedding, this.drooling
   });
 
   factory DogtimeDog.fromJson(Map<String, dynamic> parsedJson){
@@ -198,6 +202,10 @@ class DogtimeDog{
       hotWeather: parsedJson["Tolerates Hot Weather"] ?? "",
       familyFriendly: parsedJson["Affectionate With Family"] ?? "",
       kidFriendly: parsedJson["Kid-Friendly"] ?? "",
+      dogFriendly: parsedJson["Dog Friendly"] ?? "",
+      strangerFriendly: parsedJson["Friendly Toward Strangers"] ?? "",
+      shedding: parsedJson["Amount Of Shedding"] ?? "",
+      drooling: parsedJson["Drooling Potential"] ?? "",
     );
   }
 }

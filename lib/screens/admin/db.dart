@@ -91,6 +91,7 @@ Future<Breed> fetchBreedFromDogCEO(String breedId) async {
 
       } else {
         return null;
+        
       }
     } else {
       // If the server did not return a 200 OK response,
@@ -101,7 +102,7 @@ Future<Breed> fetchBreedFromDogCEO(String breedId) async {
 }
 
 Future<dynamic> fetchBreedFromDogtime(String breedId) async {
-    
+    breedId = breedId.replaceAll(RegExp(' +'), '-');
     var body = json.encode({"text": "https://dogtime.com/dog-breeds/$breedId"});
 
     final response = await http.post('http://localhost:5001/dogworldio/us-central1/scrapeDogTime?breed=$breedId', headers: {"Content-Type": "application/json"}, body: body);
@@ -110,8 +111,6 @@ Future<dynamic> fetchBreedFromDogtime(String breedId) async {
       
       var decoded = json.decode(response.body);
 
-      print('what we will pass');
-      print(decoded[0]);
       if (decoded.length > 0) {
         DogtimeDog dog = new DogtimeDog.fromJson(decoded[0]);
         return dog;

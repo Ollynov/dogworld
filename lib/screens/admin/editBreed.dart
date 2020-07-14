@@ -57,7 +57,7 @@ class BreedListDropDown extends StatefulWidget {
 }
 
 class _BreedListDropDownState extends State<BreedListDropDown> {
-  String dropdownValue = 'Affenpinscher';
+  String dropdownValue = 'Bernese Mountain Dog';
 
   @override
   Widget build(BuildContext context) {

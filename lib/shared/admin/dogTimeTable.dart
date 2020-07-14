@@ -23,6 +23,10 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
   TextEditingController _hotWeatherController = TextEditingController();
   TextEditingController _familyFriendlyController = TextEditingController();
   TextEditingController _kidFriendlyController = TextEditingController();
+  TextEditingController _dogFriendlyController = TextEditingController();
+  TextEditingController _strangerFriendlyController = TextEditingController();
+  TextEditingController _sheddingController = TextEditingController();
+  TextEditingController _droolingController = TextEditingController();
 
 
   @override
@@ -44,6 +48,10 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
           _hotWeatherController.text = dog.hotWeather;
           _familyFriendlyController.text = dog.familyFriendly;
           _kidFriendlyController.text = dog.kidFriendly;
+          _dogFriendlyController.text = dog.dogFriendly;
+          _strangerFriendlyController.text = dog.strangerFriendly;
+          _sheddingController.text = dog.shedding;
+          _droolingController.text = dog.drooling;
 
           return Padding(
             padding: const EdgeInsets.all(12.0),
@@ -54,16 +62,21 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
                     Text("Dogtime", style: Theme.of(context).textTheme.headline2)
                   ],
                 ),
-                InfoRow(text: "Adapts Well To Apartment Living", controller: _adaptsToApartmentController),
-                InfoRow(text: "Good For Novice Owners", controller: _forNoviceController),
-                InfoRow(text: "Sensitivity Level", controller: _sensitivityController),
-                InfoRow(text: "Tolerates Being Alone", controller: _beingAloneController),
-                InfoRow(text: "Tolerates Cold Weather", controller: _coldWeatherController),
-                InfoRow(text: "Tolerates Hot Weather", controller: _hotWeatherController),
-                InfoRow(text: "Affectionate With Family", controller: _familyFriendlyController),
-                InfoRow(text: "Kid-Friendly", controller: _kidFriendlyController),
+
+                InfoRow2(text: "Adapts Well To Apartment Living", controller: _adaptsToApartmentController),
+                InfoRow2(text: "Good For Novice Owners", controller: _forNoviceController),
+                InfoRow2(text: "Sensitivity Level", controller: _sensitivityController),
+                InfoRow2(text: "Tolerates Being Alone", controller: _beingAloneController),
+                InfoRow2(text: "Tolerates Cold Weather", controller: _coldWeatherController),
+                InfoRow2(text: "Tolerates Hot Weather", controller: _hotWeatherController),
+                InfoRow2(text: "Affectionate With Family", controller: _familyFriendlyController),
+                InfoRow2(text: "Kid-Friendly", controller: _kidFriendlyController),
+                InfoRow2(text: "Dog Friendly", controller: _dogFriendlyController),
+                InfoRow2(text: "Friendly Toward Strangers", controller: _strangerFriendlyController),
+                InfoRow2(text: "Amount Of Shedding", controller: _sheddingController),
+                InfoRow2(text: "Drooling Potential", controller: _droolingController),
               ]
-            )
+            ),
           );
         } else {
           return Loader();
