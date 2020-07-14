@@ -100,29 +100,6 @@ Future<Breed> fetchBreedFromDogCEO(String breedId) async {
     }
 }
 
-class DogtimeDog{
-  String adaptsToApartment;
-  String forNovice;
-  String sensitivity;
-  String beingAlone;
-
-  DogtimeDog({
-    this.adaptsToApartment,
-    this.forNovice,
-    this.sensitivity,
-    this.beingAlone
-  });
-
-  factory DogtimeDog.fromJson(Map<String, dynamic> parsedJson){
-    return DogtimeDog(
-      adaptsToApartment: parsedJson["Adapts Well To Apartment Living"] ?? "daf",
-      forNovice: parsedJson["Good For Novice Owners"] ?? "asdf",
-      sensitivity: parsedJson["Sensitivity Level"] ?? "asdf",
-      beingAlone: parsedJson["Tolerates Being Alone"] ?? "adsf",
-    );
-  }
-}
-
 Future<dynamic> fetchBreedFromDogtime(String breedId) async {
     
     var body = json.encode({"text": "https://dogtime.com/dog-breeds/$breedId"});
@@ -133,6 +110,8 @@ Future<dynamic> fetchBreedFromDogtime(String breedId) async {
       
       var decoded = json.decode(response.body);
 
+      print('what we will pass');
+      print(decoded[0]);
       if (decoded.length > 0) {
         DogtimeDog dog = new DogtimeDog.fromJson(decoded[0]);
         return dog;

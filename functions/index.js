@@ -45,13 +45,15 @@ const scrapeMetaTags = (text) => {
       return attributes;
     }
 
-    return {
-      url, 
-      title: $('title').first().text,
-      favicon: $('link[rel="shortcut icon"]').attr('href'),
-      description: getMetatag('description'),
-      attributes: getAttributes()
-    }
+    return getAttributes();
+
+    // return {
+    //   url, 
+    //   title: $('title').first().text,
+    //   favicon: $('link[rel="shortcut icon"]').attr('href'),
+    //   description: getMetatag('description'),
+    //   attributes: getAttributes()
+    // }
   });
 
   return Promise.all(requests);
