@@ -101,15 +101,24 @@ Future<Breed> fetchBreedFromDogCEO(String breedId) async {
 }
 
 class DogtimeDog{
-  String description;
+  String adaptsToApartment;
+  String forNovice;
+  String sensitivity;
+  String beingAlone;
 
   DogtimeDog({
-    this.description
+    this.adaptsToApartment,
+    this.forNovice,
+    this.sensitivity,
+    this.beingAlone
   });
 
   factory DogtimeDog.fromJson(Map<String, dynamic> parsedJson){
     return DogtimeDog(
-      description: parsedJson['description'],
+      adaptsToApartment: parsedJson["Adapts Well To Apartment Living"] ?? "daf",
+      forNovice: parsedJson["Good For Novice Owners"] ?? "asdf",
+      sensitivity: parsedJson["Sensitivity Level"] ?? "asdf",
+      beingAlone: parsedJson["Tolerates Being Alone"] ?? "adsf",
     );
   }
 }
@@ -118,9 +127,9 @@ Future<dynamic> fetchBreedFromDogtime(String breedId) async {
     
     var body = json.encode({"text": "https://dogtime.com/dog-breeds/$breedId"});
 
-    final response = await http.post('http://localhost:5000/dogworldio/us-central1/scrapeDogTime?breed=$breedId', headers: {"Content-Type": "application/json"}, body: body);
+    final response = await http.post('http://localhost:5001/dogworldio/us-central1/scrapeDogTime?breed=$breedId', headers: {"Content-Type": "application/json"}, body: body);
 
-    if (response.statusCode == 200) {
+    if (response != null && response.statusCode == 200) {
       
       var decoded = json.decode(response.body);
 
@@ -134,7 +143,7 @@ Future<dynamic> fetchBreedFromDogtime(String breedId) async {
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
-      print('Failed to load album');
+      print('Failed to load data from dogtime');
       return null;
     }
 }

@@ -14,21 +14,12 @@ class DogTimeDetails extends StatefulWidget {
 }
 
 class _DogTimeDetailsState extends State<DogTimeDetails> {
-  TextEditingController _descriptionController = TextEditingController();
+  TextEditingController _adaptsToApartmentController = TextEditingController();
+  TextEditingController _forNoviceController = TextEditingController();
+  TextEditingController _sensitivityController = TextEditingController();
+  TextEditingController _beingAloneController = TextEditingController();
 
-  // void initState() {
-  //   super.initState();
-  //   _descriptionController = TextEditingController();
-  // }
 
-  void dispose() {
-    _descriptionController.dispose();
-    super.dispose();
-  }
-
-  void clear() {
-    _descriptionController.clear(); 
-  }
   @override
   Widget build(BuildContext context) {
     // _controller.text = widget.data;
@@ -38,7 +29,13 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
       builder: (BuildContext context, AsyncSnapshot<dynamic> value) {
         
         if (value != null && value.data != null) {
-          _descriptionController.text = value.data.description;
+          DogtimeDog dog = value.data;
+          print('ok here is our value.data.adaptsToApartment: ');
+          print(dog.adaptsToApartment);
+          _adaptsToApartmentController.text = dog.adaptsToApartment;
+          _forNoviceController.text = dog.forNovice;
+          _sensitivityController.text = dog.sensitivity;
+          _beingAloneController.text = dog.beingAlone;
 
           return Padding(
             padding: const EdgeInsets.all(12.0),
@@ -49,7 +46,10 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
                     Text("Dogtime", style: Theme.of(context).textTheme.headline2)
                   ],
                 ),
-                InfoRow(text: "Description", controller: _descriptionController)
+                InfoRow(text: "Adapts Well To Apartment Living", controller: _adaptsToApartmentController),
+                InfoRow(text: "Good For Novice Owners", controller: _forNoviceController),
+                InfoRow(text: "Sensitivity Level", controller: _sensitivityController),
+                InfoRow(text: "Tolerates Being Alone", controller: _beingAloneController),
               ]
             )
           );
