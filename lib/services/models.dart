@@ -171,3 +171,41 @@ class Breed {
 
   // get id => null;
 }
+
+
+class DogtimeDog{
+  String adaptsToApartment;
+  String forNovice;
+  String sensitivity;
+  String beingAlone;
+  String coldWeather;
+  String hotWeather;
+  String familyFriendly;
+  String kidFriendly; 
+  String dogFriendly;
+  String strangerFriendly;
+  String shedding;
+  String drooling; 
+
+  DogtimeDog({
+    this.adaptsToApartment,this.forNovice,this.sensitivity,this.beingAlone, this.hotWeather, this.coldWeather, this.familyFriendly, this.kidFriendly, this.dogFriendly, this.strangerFriendly, this.shedding, this.drooling
+  });
+
+  factory DogtimeDog.fromJson(Map<String, dynamic> parsedJson){
+
+    return DogtimeDog(
+      adaptsToApartment: parsedJson["Adapts Well To Apartment Living"] ?? "",
+      forNovice: parsedJson["Good For Novice Owners"] ?? "",
+      sensitivity: parsedJson["Sensitivity Level"] ?? "",
+      beingAlone: parsedJson["Tolerates Being Alone"] ?? "",
+      coldWeather: parsedJson["Tolerates Cold Weather"] ?? "",
+      hotWeather: parsedJson["Tolerates Hot Weather"] ?? "",
+      familyFriendly: parsedJson["Affectionate With Family"] ?? "",
+      kidFriendly: parsedJson["Kid-Friendly"] ?? "",
+      dogFriendly: parsedJson["Dog Friendly"] ?? "",
+      strangerFriendly: parsedJson["Friendly Toward Strangers"] ?? "",
+      shedding: parsedJson["Amount Of Shedding"] ?? "",
+      drooling: parsedJson["Drooling Potential"] ?? "",
+    );
+  }
+}

@@ -91,6 +91,7 @@ Future<Breed> fetchBreedFromDogCEO(String breedId) async {
 
       } else {
         return null;
+        
       }
     } else {
       // If the server did not return a 200 OK response,
@@ -101,18 +102,18 @@ Future<Breed> fetchBreedFromDogCEO(String breedId) async {
 }
 
 Future<dynamic> fetchBreedFromDogtime(String breedId) async {
-
-    final String breedId = "labrador-retriever";
+    breedId = breedId.replaceAll(RegExp(' +'), '-');
     var body = json.encode({"text": "https://dogtime.com/dog-breeds/$breedId"});
 
-    final response = await http.post('http://localhost:5000/dogworldio/us-central1/scrapeDogTime?breed=$breedId', headers: {"Content-Type": "application/json"}, body: body);
+    final response = await http.post('http://localhost:5001/dogworldio/us-central1/scrapeDogTime?breed=$breedId', headers: {"Content-Type": "application/json"}, body: body);
 
-    if (response.statusCode == 200) {
+    if (response != null && response.statusCode == 200) {
       
       var decoded = json.decode(response.body);
 
       if (decoded.length > 0) {
-        return decoded[0];
+        DogtimeDog dog = new DogtimeDog.fromJson(decoded[0]);
+        return dog;
 
       } else {
         return null;
@@ -120,7 +121,7 @@ Future<dynamic> fetchBreedFromDogtime(String breedId) async {
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
-      print('Failed to load album');
+      print('Failed to load data from dogtime');
       return null;
     }
 }

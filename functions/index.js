@@ -1,4 +1,5 @@
-import * as functions from 'firebase-functions';
+
+const functions = require('firebase-functions');
 // import * as admin from 'firebase-admin';
 const cors = require("cors")({origin: true})
 const cheerio = require('cheerio');
@@ -12,8 +13,7 @@ const helloWorld = functions.https.onRequest((request, response) => {
 });
 
 
-
-const scrapeMetaTags = (text: any) => {
+const scrapeMetaTags = (text) => {
   // This cheerio method here is fast and easy, but it does not get data that is rendered after the fact by javascript. So for many websites, such as any that use react, this really won't work at all.
   const urls = Array.from( getUrls(text) );
   const requests = urls.map(async url => {
@@ -21,19 +21,39 @@ const scrapeMetaTags = (text: any) => {
     const html = await res.text();
     const $ = cheerio.load(html);
 
-    const getMetatag = (name: any) =>  
+    const getMetatag = (name) =>  
             $(`meta[name=${name}]`).attr('content') ||  
             $(`meta[name="og:${name}"]`).attr('content') ||  
             $(`meta[name="twitter:${name}"]`).attr('content');
 
-    return {
-      url, 
-      title: $('title').first().text,
-      favicon: $('link[rel="shortcut icon"]').attr('href'),
-      description: getMetatag('description'),
-      image: getMetatag('image'),
-      author: getMetatag('author'),
+    const getAttributes = () => {
+      const base = $(".characteristic-stars");
+      let attributes = {};
+
+      for (var i in base) {
+        if (base[i] && base[i].children && base[i].children[0] && base[i].children[1]) {
+          let first = base[i].children[0];
+          let second = base[i].children[1];
+          if (first.children && first.children[1] && second.children && second.children[0].children) {
+            var attribute = first.children[1].data;
+            var score =  second.children[0].children[0].data;
+
+            attributes[attribute] = score;
+          }
+        }
+      }
+      return attributes;
     }
+
+    return getAttributes();
+
+    // return {
+    //   url, 
+    //   title: $('title').first().text,
+    //   favicon: $('link[rel="shortcut icon"]').attr('href'),
+    //   description: getMetatag('description'),
+    //   attributes: getAttributes()
+    // }
   });
 
   return Promise.all(requests);
@@ -59,4 +79,7 @@ const scrapeDogTime = functions.https.onRequest((req, res) => {
   
 });
 
-export { helloWorld, scrapeDogTime }
+module.exports = {
+  helloWorld, 
+  scrapeDogTime
+}
