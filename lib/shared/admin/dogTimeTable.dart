@@ -19,6 +19,10 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
   TextEditingController _forNoviceController = TextEditingController();
   TextEditingController _sensitivityController = TextEditingController();
   TextEditingController _beingAloneController = TextEditingController();
+  TextEditingController _coldWeatherController = TextEditingController();
+  TextEditingController _hotWeatherController = TextEditingController();
+  TextEditingController _familyFriendlyController = TextEditingController();
+  TextEditingController _kidFriendlyController = TextEditingController();
 
 
   @override
@@ -31,12 +35,15 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
         
         if (value != null && value.data != null) {
           DogtimeDog dog = value.data;
-          print('ok here is our value.data.adaptsToApartment: ');
-          print(dog.adaptsToApartment);
+
           _adaptsToApartmentController.text = dog.adaptsToApartment;
           _forNoviceController.text = dog.forNovice;
           _sensitivityController.text = dog.sensitivity;
           _beingAloneController.text = dog.beingAlone;
+          _coldWeatherController.text = dog.coldWeather;
+          _hotWeatherController.text = dog.hotWeather;
+          _familyFriendlyController.text = dog.familyFriendly;
+          _kidFriendlyController.text = dog.kidFriendly;
 
           return Padding(
             padding: const EdgeInsets.all(12.0),
@@ -51,6 +58,10 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
                 InfoRow(text: "Good For Novice Owners", controller: _forNoviceController),
                 InfoRow(text: "Sensitivity Level", controller: _sensitivityController),
                 InfoRow(text: "Tolerates Being Alone", controller: _beingAloneController),
+                InfoRow(text: "Tolerates Cold Weather", controller: _coldWeatherController),
+                InfoRow(text: "Tolerates Hot Weather", controller: _hotWeatherController),
+                InfoRow(text: "Affectionate With Family", controller: _familyFriendlyController),
+                InfoRow(text: "Kid-Friendly", controller: _kidFriendlyController),
               ]
             )
           );
