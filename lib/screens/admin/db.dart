@@ -105,61 +105,46 @@ Future<Breed> fetchBreedFromDogCEO(String breedId) async {
 Future<dynamic> fetchBreedFromDogtime(String breedId, String source) async {
 
 
+    if (source == "Dogtime") {
       breedId = breedId.replaceAll(RegExp(' +'), '-');
       var body = json.encode({"text": "https://dogtime.com/dog-breeds/$breedId"});
 
-      final response = await http.post('http://localhost:5001/dogworldio/us-central1/scrapeDogTime?breed=$breedId', headers: {"Content-Type": "application/json"}, body: body);
+      final response = await 
+        http.post('http://localhost:5001/dogworldio/us-central1/scrapeDogTime?breed=$breedId', 
+        headers: {"Content-Type": "application/json"}, 
+        body: body);
 
-    
 
+      if (response != null) {
+        
+        var decoded = json.decode(response.body);
 
-    if (response != null && response.statusCode == 200) {
-      
-      var decoded = json.decode(response.body);
+        if (decoded.length > 0) {
+          DogtimeDog dog = new DogtimeDog.fromJson(decoded[0]);
+          return dog;
 
-      print('ok decoded[0]');
-      print(decoded[0]);
-      if (decoded.length > 0) {
-        DogtimeDog dog = new DogtimeDog.fromJson(decoded[0]);
-        return dog;
-
+        } else {
+          return null;
+        }
       } else {
+        // If the server did not return a 200 OK response,
+        // then throw an exception.
+        print('Failed to load data from dogtime');
         return null;
       }
-    } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      print('Failed to load data from dogtime');
-      return null;
-    }
-}
-Future<dynamic> fetchCharacteristics1(String breedId) async {
 
-
-    final response = await Document<DogtimeDog>(path: 'BreedCharacteristics1/$breedId').getData();
-    print(response.kidFriendly);
-
-    
-
-
-    if (response != null && response.statusCode == 200) {
+    } else if (source == "Dog World") {
+      final response = await Document<DogtimeDog>(path: 'BreedCharacteristics1/$breedId').getData();
       
-      var decoded = json.decode(response.body);
-
-      print('ok decoded[0]');
-      print(decoded[0]);
-      if (decoded.length > 0) {
-        DogtimeDog dog = new DogtimeDog.fromJson(decoded[0]);
-        return dog;
-
+      if (response != null) {
+        return response;
       } else {
+        print('ok some error getting from our own db');
         return null;
       }
-    } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      print('Failed to load data from dogtime');
-      return null;
     }
+
+
+
 }
 
