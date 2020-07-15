@@ -198,9 +198,11 @@ class DogtimeDog{
   String wanderlust;
   String energy;
   String intensity; 
+  String exerciseNeed;
+  String playfulness; 
 
   DogtimeDog({
-    this.adaptsToApartment,this.forNovice,this.sensitivity,this.beingAlone, this.hotWeather, this.coldWeather, this.familyFriendly, this.kidFriendly, this.dogFriendly, this.strangerFriendly, this.shedding, this.drooling, this.easyToGroom, this.health, this.weightGain, this.size, this.trainingEase, this.iq, this.mouthiness, this.preyDrive, this.barking, this.wanderlust, this.energy, this.intensity
+    this.adaptsToApartment,this.forNovice,this.sensitivity,this.beingAlone, this.hotWeather, this.coldWeather, this.familyFriendly, this.kidFriendly, this.dogFriendly, this.strangerFriendly, this.shedding, this.drooling, this.easyToGroom, this.health, this.weightGain, this.size, this.trainingEase, this.iq, this.mouthiness, this.preyDrive, this.barking, this.wanderlust, this.energy, this.intensity, this.exerciseNeed, this.playfulness
   });
 
   factory DogtimeDog.fromJson(Map<String, dynamic> parsedJson){
@@ -230,6 +232,8 @@ class DogtimeDog{
       wanderlust: parsedJson["Wanderlust Potential"] ?? "",
       energy: parsedJson["Energy Level"] ?? "",
       intensity: parsedJson["Intensity"] ?? "",
+      exerciseNeed: parsedJson["Exercise Needs"] ?? "",
+      playfulness: parsedJson["Potential For Playfulness"] ?? "",
     );
   }
 }

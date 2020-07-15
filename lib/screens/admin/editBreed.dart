@@ -95,7 +95,8 @@ class _BreedListDropDownState extends State<BreedListDropDown> {
         ),
         BreedDetails(breedId: dropdownValue, dataSource: "Dog World"),
         BreedDetails(breedId: dropdownValue, dataSource: "Dog CEO",),
-        DogTimeDetails(breedId: dropdownValue)
+        DogTimeDetails(breedId: dropdownValue, source: "Dogtime"),
+        DogTimeDetails(breedId: dropdownValue, source: "Dog World")
       ],
     );
   }

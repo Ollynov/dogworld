@@ -7,8 +7,9 @@ import 'package:flutter/material.dart';
 
 class DogTimeDetails extends StatefulWidget {
   final String breedId;
+  final String source;
 
-  DogTimeDetails({Key key, this.breedId}) : super(key: key);
+  DogTimeDetails({Key key, this.breedId, this.source}) : super(key: key);
 
   @override
   _DogTimeDetailsState createState() => _DogTimeDetailsState();
@@ -39,6 +40,8 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
   TextEditingController _wanderlustController = TextEditingController();
   TextEditingController _energyController = TextEditingController();
   TextEditingController _intensityController = TextEditingController();
+  TextEditingController _exerciseNeedController = TextEditingController();
+  TextEditingController _playfulnessController = TextEditingController();
 
 
   @override
@@ -46,7 +49,7 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
     // _controller.text = widget.data;
 
     return FutureBuilder(
-      future: fetchBreedFromDogtime(widget.breedId),
+      future: fetchBreedFromDogtime(widget.breedId, widget.source),
       builder: (BuildContext context, AsyncSnapshot<dynamic> value) {
         
         if (value != null && value.data != null) {
@@ -77,6 +80,8 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
           _wanderlustController.text = dog.wanderlust;
           _energyController.text = dog.energy;
           _intensityController.text = dog.intensity;
+          _exerciseNeedController.text = dog.exerciseNeed;
+          _playfulnessController.text = dog.playfulness;
 
           return Padding(
             padding: const EdgeInsets.all(12.0),
@@ -112,6 +117,9 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
                 InfoRow2(text: "Wanderlust Potential", controller: _wanderlustController),
                 InfoRow2(text: "Energy Level", controller: _energyController),
                 InfoRow2(text: "Intensity", controller: _intensityController),
+                InfoRow2(text: "Potential For Playfulness", controller: _playfulnessController),
+                InfoRow2(text: "Exercise Needs", controller: _exerciseNeedController),
+                
               ]
             ),
           );
