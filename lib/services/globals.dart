@@ -10,6 +10,7 @@ class Global {
     Quiz: (data) => Quiz.convertFromFireBaseMap(data),
     Report: (data) => Report.convertFromFireBaseMap(data),
     UserDetails: (data) => UserDetails.convertFromFireBaseMap(data),
+    DogtimeDog: (data) => DogtimeDog.fromJson(data),
   };
 
   // Firestore References for Writes

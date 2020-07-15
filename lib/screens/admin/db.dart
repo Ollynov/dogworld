@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doggies/services/models.dart';
 import 'package:doggies/services/services.dart';
+import 'package:doggies/shared/admin/dogTimeTable.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -101,28 +102,49 @@ Future<Breed> fetchBreedFromDogCEO(String breedId) async {
     }
 }
 
-Future<dynamic> fetchBreedFromDogtime(String breedId) async {
-    breedId = breedId.replaceAll(RegExp(' +'), '-');
-    var body = json.encode({"text": "https://dogtime.com/dog-breeds/$breedId"});
+Future<dynamic> fetchBreedFromDogtime(String breedId, String source) async {
 
-    final response = await http.post('http://localhost:5001/dogworldio/us-central1/scrapeDogTime?breed=$breedId', headers: {"Content-Type": "application/json"}, body: body);
 
-    if (response != null && response.statusCode == 200) {
-      
-      var decoded = json.decode(response.body);
+    if (source == "Dogtime") {
+      breedId = breedId.replaceAll(RegExp(' +'), '-');
+      var body = json.encode({"text": "https://dogtime.com/dog-breeds/$breedId"});
 
-      if (decoded.length > 0) {
-        DogtimeDog dog = new DogtimeDog.fromJson(decoded[0]);
-        return dog;
+      final response = await 
+        http.post('http://localhost:5001/dogworldio/us-central1/scrapeDogTime?breed=$breedId', 
+        headers: {"Content-Type": "application/json"}, 
+        body: body);
 
+
+      if (response != null) {
+        
+        var decoded = json.decode(response.body);
+
+        if (decoded.length > 0) {
+          DogtimeDog dog = new DogtimeDog.fromJson(decoded[0]);
+          return dog;
+
+        } else {
+          return null;
+        }
       } else {
+        // If the server did not return a 200 OK response,
+        // then throw an exception.
+        print('Failed to load data from dogtime');
         return null;
       }
-    } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      print('Failed to load data from dogtime');
-      return null;
+
+    } else if (source == "Dog World") {
+      final response = await Document<DogtimeDog>(path: 'BreedCharacteristics1/$breedId').getData();
+      
+      if (response != null) {
+        return response;
+      } else {
+        print('ok some error getting from our own db');
+        return null;
+      }
     }
+
+
+
 }
 
