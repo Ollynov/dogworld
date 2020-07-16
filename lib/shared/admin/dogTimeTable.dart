@@ -53,11 +53,6 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
         
         if (value != null && value.data != null) {
           DogtimeDog dog = value.data;
-                    print('ok here is our dog: ');
-                    print(dog);
-                    print('ok here is our value: ');
-                    print(value);
-
 
           _adaptsToApartmentController.text = dog.adaptsToApartment;
           _forNoviceController.text = dog.forNovice;
