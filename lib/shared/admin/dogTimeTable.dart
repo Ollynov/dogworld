@@ -1,7 +1,6 @@
 import 'package:doggies/screens/admin/db.dart';
 import 'package:doggies/services/models.dart';
 import 'package:doggies/shared/admin/infoRow.dart';
-import 'package:doggies/shared/loader.dart';
 import 'package:flutter/material.dart';
 
 
@@ -54,6 +53,11 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
         
         if (value != null && value.data != null) {
           DogtimeDog dog = value.data;
+                    print('ok here is our dog: ');
+                    print(dog);
+                    print('ok here is our value: ');
+                    print(value);
+
 
           _adaptsToApartmentController.text = dog.adaptsToApartment;
           _forNoviceController.text = dog.forNovice;
@@ -124,7 +128,8 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
             ),
           );
         } else {
-          return Loader();
+          
+          return Text("No data");
         }
 
       }

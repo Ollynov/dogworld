@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doggies/services/models.dart';
 import 'package:doggies/services/services.dart';
-import 'package:doggies/shared/admin/dogTimeTable.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -135,13 +134,13 @@ Future<dynamic> fetchBreedFromDogtime(String breedId, String source) async {
 
     } else if (source == "Dog World") {
       final response = await Document<DogtimeDog>(path: 'BreedCharacteristics1/$breedId').getData();
-      
-      if (response != null) {
-        return response;
-      } else {
-        print('ok some error getting from our own db');
-        return null;
-      }
+      return response;
+      // if (response != null) {
+      //   return response;
+      // } else {
+      //   print('ok some error getting from our own db');
+      //   return null;
+      // }
     }
 
 

@@ -206,8 +206,10 @@ class DogtimeDog{
   });
 
   factory DogtimeDog.fromJson(Map<String, dynamic> parsedJson){
-
-    return DogtimeDog(
+    if (parsedJson == null) {
+      parsedJson = {};
+    }
+    return  DogtimeDog(
       adaptsToApartment: parsedJson["Adapts Well To Apartment Living"] ?? "",
       forNovice: parsedJson["Good For Novice Owners"] ?? "",
       sensitivity: parsedJson["Sensitivity Level"] ?? "",

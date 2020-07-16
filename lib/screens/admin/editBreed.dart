@@ -4,21 +4,20 @@ import 'package:doggies/shared/admin/dogTimeTable.dart';
 import 'package:doggies/shared/admin/dogWorldTable.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import './../../services/services.dart';
 import './../../shared/shared.dart';
 import 'package:provider/provider.dart';
 
 
 class EditBreedScreen extends StatelessWidget {
-  final AuthService auth = AuthService();
+  // final AuthService auth = AuthService();
   final UsersService userService = UsersService();
 
   @override
   Widget build(BuildContext context) {
     
-    FirebaseUser user = Provider.of<FirebaseUser>(context);
+    // FirebaseUser user = Provider.of<FirebaseUser>(context);
 
-    if (user != null) {
+    // if (user != null) {
 
       return Scaffold (
           appBar: AppBar(
@@ -42,9 +41,9 @@ class EditBreedScreen extends StatelessWidget {
           ),
           bottomNavigationBar: AppBottomNav(route: 2, inactive: false,),
         );
-    } else {
-      return LoadingScreen();
-    }
+    // } else {
+    //   return LoadingScreen();
+    // }
   }
 }
 

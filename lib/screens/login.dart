@@ -135,8 +135,6 @@ class LoginButton extends StatelessWidget {
         color: color,
         onPressed: () async {
           var user = await loginMethod();
-          print('ok in our button we got user as: ');
-          print(user);
           if (user != null) {Navigator.pushReplacementNamed(context, destination);}
         },
         label: Expanded(
