@@ -3,9 +3,7 @@ import 'package:doggies/services/users.dart';
 import 'package:doggies/shared/admin/dogTimeTable.dart';
 import 'package:doggies/shared/admin/dogWorldTable.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import './../../shared/shared.dart';
-import 'package:provider/provider.dart';
 
 
 class EditBreedScreen extends StatelessWidget {

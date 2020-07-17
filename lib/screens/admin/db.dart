@@ -63,7 +63,7 @@ Future<void> saveBreed({String breedId, String description, String fullName, Str
 
 Future<void> saveCharacteristics(dog, breedId) async {
   // DogtimeDog dog = await fetchBreedFromDogtime(breedId, source);
-  final Document<Breed> breedsRef = Document<Breed>(path: 'BreedCharacteristics1/$breedId');
+  final Document<DogtimeDog> breedsRef = Document<DogtimeDog>(path: 'BreedCharacteristics1/$breedId');
 
   String json = jsonEncode(dog);
 

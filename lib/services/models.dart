@@ -230,7 +230,9 @@ class DogtimeDog{
     "Tendency To Bark Or Howl" : barking,
     "Wanderlust Potential" : wanderlust,
     "Energy Level": energy,
-    "Intensity": intensity
+    "Intensity": intensity,
+    "Exercise Needs": exerciseNeed,
+    "Potential For Playfulness": playfulness
 
   };
 

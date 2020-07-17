@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:doggies/screens/admin/db.dart';
 import 'package:doggies/services/models.dart';
 import 'package:doggies/services/services.dart';
@@ -7,6 +5,7 @@ import 'package:doggies/shared/admin/infoRow.dart';
 import 'package:flutter/material.dart';
 
 
+// ignore: must_be_immutable
 class DogTimeDetails extends StatefulWidget {
   final String breedId;
   final String source;
@@ -94,39 +93,23 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
           InfoRow2(text: "Intensity", controller: _intensityController),
           InfoRow2(text: "Potential For Playfulness", controller: _playfulnessController),
           InfoRow2(text: "Exercise Needs", controller: _exerciseNeedController),
-          if (widget.source == "Dogtime")
-            Row(
-              children: [
-                new FlatButton(
-                  child: new Text("Scrape"),
-                    onPressed: () async {
-                      _fillTable();
-                    },
-                  ),
-                new FlatButton(
-                  child: new Text("Copy to our DB"),
-                    onPressed: () {
-                      saveCharacteristics(widget.dog, widget.breedId);
-                    },
-                  ),
-              ],
-            )
-          else 
-            Row(
-              children: [
-                new FlatButton(
-                  child: new Text("Get Data"),
-                    onPressed: () {
-                      _fillTable();
-                    },
-                  ),
-                new FlatButton(
-                  child: new Text("Update DB"),
-                    onPressed: () {
-                      saveCharacteristics(widget.dog, widget.breedId);
-                    },
-                  ),
-            ],)
+          Row(
+            children: [
+              new FlatButton(
+                child: new Text("Fill Table"),
+                  onPressed: () async {
+                    _fillTable();
+                  },
+                ),
+              new FlatButton(
+                child: new Text("Copy to our DB"),
+                  onPressed: () {
+                    // here we need to pass in the actual controller values and not the widget.dog so that it can get the latest changed values, but only for our own db, not dogtimeTable
+                    _save();
+                  },
+                ),
+            ],
+          )
         ]
       ),
     );
@@ -143,12 +126,10 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
 
     if (widget.source == "Dogtime") {
       widget.dog = await fetchBreedFromDogtime(widget.breedId, widget.source);
-      dog = widget.dog;
     } else {
-      dog = await Document<DogtimeDog>(path: 'BreedCharacteristics1/${widget.breedId}').getData();
-      print('got this back bre: ');
-      print(dog);
+      widget.dog = await Document<DogtimeDog>(path: 'BreedCharacteristics1/${widget.breedId}').getData();
     }
+    if (widget.dog != null) {dog = widget.dog;}
     
     if (dog != null) {
 
@@ -184,32 +165,43 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
     }
   }
 
+
+  Future<void> _save() async {
+
+    DogtimeDog dog;
+    if (widget.dog != null) {
+      dog = widget.dog;
+
+      dog.adaptsToApartment = _adaptsToApartmentController.text;
+      dog.forNovice = _forNoviceController.text; 
+      dog.sensitivity = _sensitivityController.text;
+      dog.beingAlone = _beingAloneController.text;
+      dog.coldWeather = _coldWeatherController.text;
+      dog.coldWeather = _coldWeatherController.text;
+      dog.hotWeather = _hotWeatherController.text;
+      dog.familyFriendly = _familyFriendlyController.text;
+      dog.kidFriendly = _kidFriendlyController.text;
+      dog.dogFriendly = _dogFriendlyController.text;
+      dog.strangerFriendly = _strangerFriendlyController.text;
+      dog.shedding = _sheddingController.text;
+      dog.drooling = _droolingController.text;
+      dog.easyToGroom = _easyToGroomController.text;
+      dog.health = _healthController.text;
+      dog.weightGain = _weightGainController.text;
+      dog.size = _sizeController.text;
+      dog.trainingEase = _trainingEaseController.text;
+      dog.iq = _iqController.text;
+      dog.mouthiness = _mouthinessController.text;
+      dog.preyDrive = _preyDriveController.text;
+      dog.barking = _barkingController.text;
+      dog.wanderlust = _wanderlustController.text;
+      dog.energy = _energyController.text;
+      dog.intensity = _intensityController.text;
+      dog.exerciseNeed = _exerciseNeedController.text;
+      dog.playfulness = _playfulnessController.text;
+    } 
+
+    saveCharacteristics(widget.dog, widget.breedId);
+  }
+
 }
-
-// class MyRow extends StatelessWidget {
-//   final DogtimeDog dog;
-//   final String breedId;
-
-//   const MyRow({Key key, this.dog, this.breedId}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-
-//   return Row(
-//     children: [
-//       new FlatButton(
-//         child: new Text("Scrape"),
-//           onPressed: () async {
-//             _fillTable();
-//           },
-//         ),
-//       new FlatButton(
-//         child: new Text("Copy to our DB"),
-//           onPressed: () {
-//             saveCharacteristics(dog, breedId);
-//           },
-//         ),
-//     ],);
-//   }
-
-// }
