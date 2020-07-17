@@ -270,3 +270,18 @@ class DogtimeDog{
     );
   }
 }
+
+class OurBreedsList {
+  dynamic ourBreeds;
+
+  OurBreedsList({this.ourBreeds});
+
+  factory OurBreedsList.fromJson(Map<String, dynamic> parsedJson){
+    if (parsedJson == null) {
+      parsedJson = {};
+    }
+    return OurBreedsList(
+      ourBreeds: parsedJson["ourBreeds"] ?? "",
+    );
+  }
+}

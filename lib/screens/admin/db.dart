@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doggies/services/models.dart';
 import 'package:doggies/services/services.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -43,8 +44,9 @@ Future<void> saveBreed({String breedId, String description, String fullName, Str
     };
   }
 
-
-  final response = await breedsRef.upsert(toSave);
+  var encoded = jsonEncode(toSave);
+  final response = await breedsRef.upsert(encoded);
+  print(breedId);
             // Scaffold.of(context).showSnackBar(SnackBar(
             //   content: GestureDetector(
             //     child: Text("You must be logged in to save a favorite dog breed."),
@@ -54,7 +56,12 @@ Future<void> saveBreed({String breedId, String description, String fullName, Str
             // ));
             // print('this is what we got');
             // print(response);
+ 
+
   final ourBreedsListRef = Firestore.instance.collection("allBreeds").document('ourBreeds');
+  var all = await ourBreedsListRef.get()
+    .then((v) => OurBreedsList.fromJson(v.data));
+
   ourBreedsListRef.updateData({
     "ourBreeds": FieldValue.arrayUnion([breedId])
   });
