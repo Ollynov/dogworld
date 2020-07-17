@@ -47,40 +47,12 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
   Widget build(BuildContext context) {
     // _controller.text = widget.data;
 
-    return FutureBuilder(
-      future: fetchBreedFromDogtime(widget.breedId, widget.source),
-      builder: (BuildContext context, AsyncSnapshot<dynamic> value) {
+    // return FutureBuilder(
+    //   future: fetchBreedFromDogtime(widget.breedId, widget.source),
+    //   builder: (BuildContext context, AsyncSnapshot<dynamic> value) {
         
-        if (value != null && value.data != null) {
-          DogtimeDog dog = value.data;
-
-          _adaptsToApartmentController.text = dog.adaptsToApartment;
-          _forNoviceController.text = dog.forNovice;
-          _sensitivityController.text = dog.sensitivity;
-          _beingAloneController.text = dog.beingAlone;
-          _coldWeatherController.text = dog.coldWeather;
-          _coldWeatherController.text = dog.coldWeather;
-          _hotWeatherController.text = dog.hotWeather;
-          _familyFriendlyController.text = dog.familyFriendly;
-          _kidFriendlyController.text = dog.kidFriendly;
-          _dogFriendlyController.text = dog.dogFriendly;
-          _strangerFriendlyController.text = dog.strangerFriendly;
-          _sheddingController.text = dog.shedding;
-          _droolingController.text = dog.drooling;
-          _easyToGroomController.text = dog.easyToGroom;
-          _healthController.text = dog.health;
-          _weightGainController.text = dog.weightGain;
-          _sizeController.text = dog.size;
-          _trainingEaseController.text = dog.trainingEase;
-          _iqController.text = dog.iq;
-          _mouthinessController.text = dog.mouthiness;
-          _preyDriveController.text = dog.preyDrive;
-          _barkingController.text = dog.barking;
-          _wanderlustController.text = dog.wanderlust;
-          _energyController.text = dog.energy;
-          _intensityController.text = dog.intensity;
-          _exerciseNeedController.text = dog.exerciseNeed;
-          _playfulnessController.text = dog.playfulness;
+        // if (value != null && value.data != null) {
+          
 
           return Padding(
             padding: const EdgeInsets.all(12.0),
@@ -125,16 +97,59 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
                 InfoRow2(text: "Intensity", controller: _intensityController),
                 InfoRow2(text: "Potential For Playfulness", controller: _playfulnessController),
                 InfoRow2(text: "Exercise Needs", controller: _exerciseNeedController),
-                
+                Row(children: [
+                  new FlatButton(
+                  child: new Text("Scrape"),
+                    onPressed: () async {
+                      DogtimeDog dog = await fetchBreedFromDogtime(widget.breedId, widget.source);
+                      if (dog != null) {
+
+                        _adaptsToApartmentController.text = dog.adaptsToApartment;
+                        _forNoviceController.text = dog.forNovice;
+                        _sensitivityController.text = dog.sensitivity;
+                        _beingAloneController.text = dog.beingAlone;
+                        _coldWeatherController.text = dog.coldWeather;
+                        _coldWeatherController.text = dog.coldWeather;
+                        _hotWeatherController.text = dog.hotWeather;
+                        _familyFriendlyController.text = dog.familyFriendly;
+                        _kidFriendlyController.text = dog.kidFriendly;
+                        _dogFriendlyController.text = dog.dogFriendly;
+                        _strangerFriendlyController.text = dog.strangerFriendly;
+                        _sheddingController.text = dog.shedding;
+                        _droolingController.text = dog.drooling;
+                        _easyToGroomController.text = dog.easyToGroom;
+                        _healthController.text = dog.health;
+                        _weightGainController.text = dog.weightGain;
+                        _sizeController.text = dog.size;
+                        _trainingEaseController.text = dog.trainingEase;
+                        _iqController.text = dog.iq;
+                        _mouthinessController.text = dog.mouthiness;
+                        _preyDriveController.text = dog.preyDrive;
+                        _barkingController.text = dog.barking;
+                        _wanderlustController.text = dog.wanderlust;
+                        _energyController.text = dog.energy;
+                        _intensityController.text = dog.intensity;
+                        _exerciseNeedController.text = dog.exerciseNeed;
+                        _playfulnessController.text = dog.playfulness;
+                      }
+                    },
+                  ),
+                  new FlatButton(
+                  child: new Text("Copy to our DB"),
+                    onPressed: () {
+                      // saveCharacteristics(breedId: breedId, );
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],)
               ]
             ),
           );
-        } else {
-          
-          return Text("No data");
-        }
+        // } else {
+        //   return Text("No data");
+        // }
 
-      }
-    );
+    //   }
+    // );
   }
 }
