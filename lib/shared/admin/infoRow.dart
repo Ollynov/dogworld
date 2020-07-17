@@ -21,27 +21,6 @@ class InfoRow extends StatelessWidget {
   }
 }
 
-class InfoRow2 extends StatelessWidget {
-
-  final String text;
-  final TextEditingController controller;
-
-  InfoRow2({Key key, this.text, this.controller}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-
-    return Row(children: [
-      TitleColumn2(text: text),
-      Flexible(child: 
-        TextField(
-          controller: controller,
-          style: TextStyle(fontSize: 14, fontFamily: 'Roboto'),)
-      ),
-    ],);
-  }
-}
-
 class TitleColumn extends StatelessWidget {
   final String text;
 
@@ -60,6 +39,28 @@ class TitleColumn extends StatelessWidget {
             Text("$text", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, fontFamily: 'Roboto')),
         ),
       );
+  }
+}
+
+class InfoRow2 extends StatelessWidget {
+
+  final String text;
+  final TextEditingController controller;
+
+  InfoRow2({Key key, this.text, this.controller}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Row(children: [
+      TitleColumn2(text: text),
+      Container(
+        width: 100, 
+        child: TextField(
+          controller: controller,
+          style: TextStyle(fontSize: 14, fontFamily: 'Roboto'),)
+      ),
+    ],);
   }
 }
 

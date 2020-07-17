@@ -86,11 +86,18 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
             padding: const EdgeInsets.all(12.0),
             child: Column(
               children: [
-                Row(
-                  children: [
-                    Text("Dogtime", style: Theme.of(context).textTheme.headline2)
-                  ],
-                ),
+                if (widget.source == "Dogtime")
+                  Row(
+                    children: [
+                      Text("Dogtime", style: Theme.of(context).textTheme.headline2)
+                    ],
+                  )
+                else 
+                  Row(
+                    children: [
+                      Text("Dog World", style: Theme.of(context).textTheme.headline2)
+                    ],
+                  ),
 
                 InfoRow2(text: "Adapts Well To Apartment Living", controller: _adaptsToApartmentController),
                 InfoRow2(text: "Good For Novice Owners", controller: _forNoviceController),
