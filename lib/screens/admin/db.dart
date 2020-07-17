@@ -61,6 +61,16 @@ Future<void> saveBreed({String breedId, String description, String fullName, Str
   return response;
 }
 
+Future<void> saveCharacteristics(dog, breedId) async {
+  // DogtimeDog dog = await fetchBreedFromDogtime(breedId, source);
+  final Document<Breed> breedsRef = Document<Breed>(path: 'BreedCharacteristics1/$breedId');
+
+  String json = jsonEncode(dog);
+
+  final response = await breedsRef.upsert(json);
+  return response;
+}
+
 
 
 Future<Breed> fetchBreedFromDogWorld(String breedId) async {

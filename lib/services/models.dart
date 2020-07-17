@@ -205,6 +205,23 @@ class DogtimeDog{
     this.adaptsToApartment,this.forNovice,this.sensitivity,this.beingAlone, this.hotWeather, this.coldWeather, this.familyFriendly, this.kidFriendly, this.dogFriendly, this.strangerFriendly, this.shedding, this.drooling, this.easyToGroom, this.health, this.weightGain, this.size, this.trainingEase, this.iq, this.mouthiness, this.preyDrive, this.barking, this.wanderlust, this.energy, this.intensity, this.exerciseNeed, this.playfulness
   });
 
+  Map<String, dynamic> toJson() =>
+  {
+    "Adapts Well To Apartment Living" : adaptsToApartment,
+    "Good For Novice Owners" : forNovice,
+    "Sensitivity Level": sensitivity,
+    "Tolerates Being Alone": beingAlone,
+    "Tolerates Cold Weather" : coldWeather,
+    "Tolerates Hot Weather" : hotWeather,
+    "Affectionate With Family": familyFriendly,
+    "Kid-Friendly": kidFriendly,
+    "Dog Friendly" : dogFriendly,
+    "Friendly Toward Strangers" : strangerFriendly,
+    "Amount Of Shedding": shedding,
+    "Drooling Potential": drooling
+
+  };
+
   factory DogtimeDog.fromJson(Map<String, dynamic> parsedJson){
     if (parsedJson == null) {
       parsedJson = {};

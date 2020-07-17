@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
@@ -42,8 +44,10 @@ class Document<T> {
     return ref.snapshots().map((v) => Global.models[T](v.data) as T);
   }
 
-  Future<void> upsert(Map data) {
-    return ref.setData(Map<String, dynamic>.from(data), merge: true);
+  Future<void> upsert(data) {
+    Map<String, dynamic> decoded = jsonDecode(data);
+
+    return ref.setData(Map<String, dynamic>.from(decoded), merge: true);
     // return ref.setData(Map<String, dynamic>.from(data), merge: true);
     
   }
