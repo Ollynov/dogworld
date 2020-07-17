@@ -218,7 +218,19 @@ class DogtimeDog{
     "Dog Friendly" : dogFriendly,
     "Friendly Toward Strangers" : strangerFriendly,
     "Amount Of Shedding": shedding,
-    "Drooling Potential": drooling
+    "Drooling Potential": drooling,
+    "Easy To Groom" : easyToGroom,
+    "General Health" : health,
+    "Potential For Weight Gain": weightGain,
+    "Size": size,
+    "Easy To Train" : trainingEase,
+    "Intelligence" : iq,
+    "Potential For Mouthiness": mouthiness,
+    "Prey Drive": preyDrive,
+    "Tendency To Bark Or Howl" : barking,
+    "Wanderlust Potential" : wanderlust,
+    "Energy Level": energy,
+    "Intensity": intensity
 
   };
 
