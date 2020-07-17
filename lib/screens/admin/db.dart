@@ -63,6 +63,7 @@ Future<void> saveBreed({String breedId, String description, String fullName, Str
     .then((v) => OurBreedsList.fromJson(v.data));
 
   all.ourBreeds.add(breedId);
+  all.ourBreeds = all.ourBreeds.toSet().toList();
   all.ourBreeds.sort();
 
   ourBreedsListRef.updateData({
