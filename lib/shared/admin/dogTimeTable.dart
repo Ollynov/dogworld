@@ -143,7 +143,6 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
       _sensitivityController.text = dog.sensitivity;
       _beingAloneController.text = dog.beingAlone;
       _coldWeatherController.text = dog.coldWeather;
-      _coldWeatherController.text = dog.coldWeather;
       _hotWeatherController.text = dog.hotWeather;
       _familyFriendlyController.text = dog.familyFriendly;
       _kidFriendlyController.text = dog.kidFriendly;
@@ -182,7 +181,6 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
       dog.sensitivity = _sensitivityController.text;
       dog.beingAlone = _beingAloneController.text;
       dog.coldWeather = _coldWeatherController.text;
-      dog.coldWeather = _coldWeatherController.text;
       dog.hotWeather = _hotWeatherController.text;
       dog.familyFriendly = _familyFriendlyController.text;
       dog.kidFriendly = _kidFriendlyController.text;
@@ -210,8 +208,33 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
   }
 
   void clear() {
-    print('bruh running clear');
     _adaptsToApartmentController.clear();
+    _forNoviceController.clear();
+    _sensitivityController.clear();
+    _beingAloneController.clear();
+    _coldWeatherController.clear();
+    _hotWeatherController.clear();
+    _familyFriendlyController.clear();
+    _kidFriendlyController.clear();
+    _dogFriendlyController.clear();
+    _strangerFriendlyController.clear();
+    _sheddingController.clear();
+    _droolingController.clear();
+    _easyToGroomController.clear();
+    _healthController.clear();
+    _weightGainController.clear();
+    _sizeController.clear();
+    _trainingEaseController.clear();
+    _iqController.clear();
+    _mouthinessController.clear();
+    _preyDriveController.clear();
+    _barkingController.clear();
+    _wanderlustController.clear();
+    _energyController.clear();
+    _intensityController.clear();
+    _exerciseNeedController.clear();
+    _playfulnessController.clear();
+    
   }
 
 }
