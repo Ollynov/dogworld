@@ -27,30 +27,30 @@ class _BreedDetailsState extends State<BreedDetails> {
   TextEditingController _imageController = TextEditingController();
   TextEditingController _additionalImagesController = TextEditingController();
 
-  void initState() {
-    super.initState();
-    // _nameController = TextEditingController();
-  }
+  // void initState() {
+  //   super.initState();
+  //   _nameController = TextEditingController(text: "");
+  // }
 
-  void dispose() {
-    _nameController.dispose(); _descriptionController.dispose(); _lifeSpanController.dispose(); _bredForController.dispose(); _groupController.dispose(); _heightController.dispose(); _weightController.dispose(); _originController.dispose(); _imageController.dispose(); _additionalImagesController.dispose();
-    super.dispose();
-  }
+  // void dispose() {
+  //   _nameController.dispose(); _descriptionController.dispose(); _lifeSpanController.dispose(); _bredForController.dispose(); _groupController.dispose(); _heightController.dispose(); _weightController.dispose(); _originController.dispose(); _imageController.dispose(); _additionalImagesController.dispose();
+  //   super.dispose();
+  // }
 
-  void clear() {
-      _nameController.clear(); _descriptionController.clear(); _lifeSpanController.clear(); _bredForController.clear(); _groupController.clear(); _heightController.clear(); _weightController.clear(); _originController.clear(); _imageController.clear(); _additionalImagesController.clear();
-  }
+
 
   // set copyValues(String value) => setState(() => _nameController.text = value);
 
   @override
   Widget build(BuildContext context) {
+    _clear();
 
     return FutureBuilder(
       future: _fetchBreed(widget.dataSource),
       builder: (BuildContext context, AsyncSnapshot<Breed> value) {
       // builder: (BuildContext context, AsyncSnapshot<TempModel> value) {
-
+        print('here is our values: ');
+        print(value);
         if (value.data != null) {
           _nameController.text = value.data.fullName;
           _descriptionController.text = value.data.description;
@@ -111,11 +111,15 @@ class _BreedDetailsState extends State<BreedDetails> {
 
 
   _fetchBreed(dataSource) {
-    clear();
+    
     if (dataSource == "Dog CEO") {
       return fetchBreedFromDogCEO(widget.breedId);
     } else if (dataSource == "Dog World") {
       return fetchBreedFromDogWorld(widget.breedId);
     } 
+  }
+
+  void _clear() {
+      _nameController.clear(); _descriptionController.clear(); _lifeSpanController.clear(); _bredForController.clear(); _groupController.clear(); _heightController.clear(); _weightController.clear(); _originController.clear(); _imageController.clear(); _additionalImagesController.clear();
   }
 }

@@ -122,9 +122,6 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
 
 
 
-
-
-
   Future<void> _fillTable() async {
 
     DogtimeDog dog;
