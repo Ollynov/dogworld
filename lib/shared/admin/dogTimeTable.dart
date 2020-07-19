@@ -15,6 +15,11 @@ class DogTimeDetails extends StatefulWidget {
 
   @override
   _DogTimeDetailsState createState() => _DogTimeDetailsState();
+
+  // void didUpdateWidget(BreedListDropDown oldWidget) {
+  //   // this method IS called when parent widget is rebuilt
+  //   super.didUpdateWidget(oldWidget);
+  // }
 }
 
 class _DogTimeDetailsState extends State<DogTimeDetails> {
@@ -48,7 +53,7 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
 
   @override
   Widget build(BuildContext context) {
-
+    clear();
 
     return Padding(
       padding: const EdgeInsets.all(12.0),
@@ -202,6 +207,11 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
     } 
 
     saveCharacteristics(widget.dog, widget.breedId);
+  }
+
+  void clear() {
+    print('bruh running clear');
+    _adaptsToApartmentController.clear();
   }
 
 }
