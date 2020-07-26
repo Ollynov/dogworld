@@ -167,7 +167,7 @@ class _TabRowState extends State<TabRow> with TickerProviderStateMixin{
 }
 
 class Vitals extends StatelessWidget {
-  Breed breed;
+  final Breed breed;
 
   Vitals({this.breed});
 
@@ -187,21 +187,33 @@ class Vitals extends StatelessWidget {
 }
 
 class Characteristics extends StatelessWidget {
-  Breed breed;
+  final Breed breed;
 
   Characteristics({this.breed});
 
   @override 
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Firestore.instance.collection("BreedCharacteristics1").document(breed.id).get(), 
-      builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-        if (snapshot.hasData) {
-          final ourCharacteristics = snapshot.data;
-          print('here we go: ');
-          print(ourCharacteristics["Dog Friendly"]);
-          print(ourCharacteristics);
-          return Loader();
+      // future: Firestore.instance.collection("BreedCharacteristics1").document(breed.id).get(), 
+      future: Document<DogtimeDog>(path: 'BreedCharacteristics1/${breed.id}').getData(), 
+      builder: (BuildContext context, AsyncSnapshot<DogtimeDog> snapshot) {
+        print('am I even runnning: ');
+        print(snapshot);
+        print(snapshot.data);
+        if (snapshot.data != null) {
+          final dog = snapshot.data;
+          
+          return ListView(
+            children: [
+              Row(children: [
+                Text(dog.forNovice[0]),
+                Padding(padding: EdgeInsets.only(left: 30), child: 
+                  Text(dog.forNovice[1])
+                ,)
+              ],
+              )
+            ],
+          );
         } else {
           return Loader();
         }

@@ -175,7 +175,7 @@ class Breed {
 
 class DogtimeDog{
   String adaptsToApartment;
-  String forNovice;
+  List<String> forNovice;
   String sensitivity;
   String beingAlone;
   String coldWeather;
@@ -242,7 +242,7 @@ class DogtimeDog{
     }
     return  DogtimeDog(
       adaptsToApartment: parsedJson["Adapts Well To Apartment Living"] ?? "",
-      forNovice: parsedJson["Good For Novice Owners"] ?? "",
+      forNovice: ["Good For Novice Owners", parsedJson["Good For Novice Owners"]] ?? "",
       sensitivity: parsedJson["Sensitivity Level"] ?? "",
       beingAlone: parsedJson["Tolerates Being Alone"] ?? "",
       coldWeather: parsedJson["Tolerates Cold Weather"] ?? "",
