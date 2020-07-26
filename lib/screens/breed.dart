@@ -104,20 +104,6 @@ class BreedDetails extends StatelessWidget {
           ),
         ),
         TabRow(breed: breed),
-        // Padding(
-        //   padding: const EdgeInsets.all(12.0),
-        //   child: 
-        //   Column(
-        //     children: <Widget>[
-        //       ListItem(title: "Life Span", data: breed.lifeSpan, icon: FontAwesomeIcons.heart,),
-        //       ListItem(title: "Bred For", data: breed.bredFor, icon: FontAwesomeIcons.baby,),
-        //       ListItem(title: "Group", data: breed.breedGroup, icon: FontAwesomeIcons.layerGroup,),
-        //       ListItem(title: "Height", data: "${breed.height} inches", icon: FontAwesomeIcons.textHeight),
-        //       ListItem(title: "Weight", data: "${breed.weight} pounds", icon: FontAwesomeIcons.weightHanging),
-        //       ListItem(title: "Origin", data: breed.origin, icon: FontAwesomeIcons.home,)
-        //     ],
-        //   ),
-        // )
       ],
     );
   }
@@ -153,17 +139,13 @@ class _TabRowState extends State<TabRow> with TickerProviderStateMixin{
             TabBar(
               tabs: [
                 Container(
-                  width: 70.0,
-                  child: new Text('Tab1',
-                    style: TextStyle(fontSize: 20),
+                  // width: 80,
+                  child: new Text('Vitals', style: TextStyle(fontSize: 20),
                   ),
                 ),
                 Container(
-                  width: 75.0,
-                  child: new Text(
-                    'Tab2',
-                    style: TextStyle(fontSize: 20),
-                  ),
+                  // width: 200,
+                  child: new Text('Characteristics', style: TextStyle(fontSize: 20),),
                 )
               ],
               unselectedLabelColor: const Color(0xffacb3bf),
@@ -177,7 +159,7 @@ class _TabRowState extends State<TabRow> with TickerProviderStateMixin{
             ),
           ),
           Container(
-            height: 100,
+            height: 600,
             child: TabBarView(
               controller: _tabController,
               children: <Widget>[
@@ -199,12 +181,12 @@ class Vitals extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-              ListItem(title: "Life Span", data: breed.lifeSpan, icon: FontAwesomeIcons.heart,),
-              ListItem(title: "Bred For", data: breed.bredFor, icon: FontAwesomeIcons.baby,),
-              ListItem(title: "Group", data: breed.breedGroup, icon: FontAwesomeIcons.layerGroup,),
-              ListItem(title: "Height", data: "${breed.height} inches", icon: FontAwesomeIcons.textHeight),
-              ListItem(title: "Weight", data: "${breed.weight} pounds", icon: FontAwesomeIcons.weightHanging),
-              ListItem(title: "Origin", data: breed.origin, icon: FontAwesomeIcons.home,)
+          ListItem(title: "Life Span", data: breed.lifeSpan, icon: FontAwesomeIcons.heart,),
+          ListItem(title: "Bred For", data: breed.bredFor, icon: FontAwesomeIcons.baby,),
+          ListItem(title: "Group", data: breed.breedGroup, icon: FontAwesomeIcons.layerGroup,),
+          ListItem(title: "Height", data: "${breed.height} inches", icon: FontAwesomeIcons.textHeight),
+          ListItem(title: "Weight", data: "${breed.weight} pounds", icon: FontAwesomeIcons.weightHanging),
+          ListItem(title: "Origin", data: breed.origin, icon: FontAwesomeIcons.home,)
       ],
     );
   }
