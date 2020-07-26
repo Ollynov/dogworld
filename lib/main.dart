@@ -94,9 +94,9 @@ class _MyAppState extends State<MyApp> {
           '/admin/editBreed': (context) => EditBreedScreen()
         },
         onGenerateRoute: Application.router.generator,
-        navigatorObservers: [
-          FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),
-        ],
+        // navigatorObservers: [
+        //   FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),
+        // ],
       ),
     );
   }

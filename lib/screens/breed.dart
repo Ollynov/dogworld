@@ -57,7 +57,6 @@ class BreedScreen extends StatelessWidget {
                           child: FavoriteButton(breedId: breed.id),
                         )
                       ],
-                      
                     ),
                   ],
                 ),
@@ -87,7 +86,6 @@ class BreedDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(breed.fullName);
     return Column(
       children: [
         Container(
@@ -105,20 +103,108 @@ class BreedDetails extends StatelessWidget {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            children: <Widget>[
+        TabRow(breed: breed),
+        // Padding(
+        //   padding: const EdgeInsets.all(12.0),
+        //   child: 
+        //   Column(
+        //     children: <Widget>[
+        //       ListItem(title: "Life Span", data: breed.lifeSpan, icon: FontAwesomeIcons.heart,),
+        //       ListItem(title: "Bred For", data: breed.bredFor, icon: FontAwesomeIcons.baby,),
+        //       ListItem(title: "Group", data: breed.breedGroup, icon: FontAwesomeIcons.layerGroup,),
+        //       ListItem(title: "Height", data: "${breed.height} inches", icon: FontAwesomeIcons.textHeight),
+        //       ListItem(title: "Weight", data: "${breed.weight} pounds", icon: FontAwesomeIcons.weightHanging),
+        //       ListItem(title: "Origin", data: breed.origin, icon: FontAwesomeIcons.home,)
+        //     ],
+        //   ),
+        // )
+      ],
+    );
+  }
+}
 
+class TabRow extends StatefulWidget {
+  Breed breed;
+
+  TabRow({this.breed});
+
+  @override
+  _TabRowState createState() => _TabRowState();
+}
+
+class _TabRowState extends State<TabRow> with TickerProviderStateMixin{
+  TabController _tabController;
+
+
+  void initState() {
+    super.initState();
+    _tabController = new TabController(length: 2, vsync: this);
+  }
+
+
+  @override 
+  Widget build(BuildContext context) {
+    return Column(
+        children: <Widget>[
+          Container(
+            height: 60,
+            margin: EdgeInsets.only(left: 60),
+            child: 
+            TabBar(
+              tabs: [
+                Container(
+                  width: 70.0,
+                  child: new Text('Tab1',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+                Container(
+                  width: 75.0,
+                  child: new Text(
+                    'Tab2',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                )
+              ],
+              unselectedLabelColor: const Color(0xffacb3bf),
+              indicatorColor: Color(0xFFffac81),
+              labelColor: Colors.black,
+              indicatorSize: TabBarIndicatorSize.tab,
+              indicatorWeight: 3.0,
+              indicatorPadding: EdgeInsets.all(10),
+              isScrollable: false,
+              controller: _tabController,
+            ),
+          ),
+          Container(
+            height: 100,
+            child: TabBarView(
+              controller: _tabController,
+              children: <Widget>[
+                Vitals(breed: widget.breed,),
+                Container(child: Text("sign up"),)
+              ]),
+          )
+        ],
+      );
+  }
+}
+
+class Vitals extends StatelessWidget {
+  Breed breed;
+
+  Vitals({this.breed});
+
+  @override 
+  Widget build(BuildContext context) {
+    return ListView(
+      children: [
               ListItem(title: "Life Span", data: breed.lifeSpan, icon: FontAwesomeIcons.heart,),
               ListItem(title: "Bred For", data: breed.bredFor, icon: FontAwesomeIcons.baby,),
               ListItem(title: "Group", data: breed.breedGroup, icon: FontAwesomeIcons.layerGroup,),
               ListItem(title: "Height", data: "${breed.height} inches", icon: FontAwesomeIcons.textHeight),
               ListItem(title: "Weight", data: "${breed.weight} pounds", icon: FontAwesomeIcons.weightHanging),
               ListItem(title: "Origin", data: breed.origin, icon: FontAwesomeIcons.home,)
-            ],
-          ),
-        )
       ],
     );
   }
