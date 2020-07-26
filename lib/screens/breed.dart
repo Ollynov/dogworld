@@ -158,7 +158,7 @@ class _TabRowState extends State<TabRow> with TickerProviderStateMixin{
               controller: _tabController,
               children: <Widget>[
                 Vitals(breed: widget.breed,),
-                Container(child: Text("sign up"),)
+                Characteristics(breed: widget.breed,)
               ]),
           )
         ],
@@ -183,6 +183,29 @@ class Vitals extends StatelessWidget {
           ListItem(title: "Origin", data: breed.origin, icon: FontAwesomeIcons.home,)
       ],
     );
+  }
+}
+
+class Characteristics extends StatelessWidget {
+  Breed breed;
+
+  Characteristics({this.breed});
+
+  @override 
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: Firestore.instance.collection("BreedCharacteristics1").document(breed.id).get(), 
+      builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.hasData) {
+          final ourCharacteristics = snapshot.data;
+          print('here we go: ');
+          print(ourCharacteristics["Dog Friendly"]);
+          print(ourCharacteristics);
+          return Loader();
+        } else {
+          return Loader();
+        }
+      });
   }
 }
 
