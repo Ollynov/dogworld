@@ -199,25 +199,18 @@ class Characteristics extends StatelessWidget {
       // future: Firestore.instance.collection("BreedCharacteristics1").document(breed.id).get(), 
       future: Document<DogtimeDog>(path: 'BreedCharacteristics1/${breed.id}').getData(), 
       builder: (BuildContext context, AsyncSnapshot<DogtimeDog> dog) {
-        // var stringy = json.encode(dog.data);
-        // var newy = DogtimeDog.fromJson(dog.data as Map<String, dynamic>);
-
-        print('here is original  all: ');
-        print(dog.data.toJson());
-        // print('here is normal data for Novice: ');
-        // print(dog.data.forNovice);
+        
         if (dog.data != null) {
-          // DogtimeDog doggy = dog as DogtimeDog;
-      //     DogtimeDog doggy = new DogtimeDog(adaptsToApartment: dog.data.adaptsToApartment,
-      // forNovice: parsedJson["Good For Novice Owners"] ?? "",);
-          // print('doggy: ');
-          // print(dog);
-          // print('returnAll: ');
-          // print(doggy.returnAll);
-          // final dog = new DogtimeDog(dog.data);
+          final Map allCharacteristics = dog.data.toJson();
+          List<Widget> myList = new List();
 
-          // final allData = dog.getAll();
-          return Loader();
+          allCharacteristics.forEach((key, value) {
+            myList.add(Text("$key score is: $value"));
+          });
+            
+          return ListView(
+            children: myList
+          );
         } else {
           return Loader();
         }
