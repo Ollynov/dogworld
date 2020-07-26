@@ -134,13 +134,13 @@ class _TabRowState extends State<TabRow> with TickerProviderStateMixin{
     return Column(
         children: <Widget>[
           Container(
-            height: 60,
+            height: 50,
             margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*.12, right: MediaQuery.of(context).size.width*.12),
             child: 
             TabBar(
               tabs: [
-                Container(child: new Text('Vitals', style: TextStyle(fontSize: 20),),),
-                Container(child: new Text('Characteristics', style: TextStyle(fontSize: 20),),)
+                Container(height: 50, child: new Text('Vitals', style: TextStyle(fontSize: 20),),),
+                Container(height: 50, child: new Text('Characteristics', style: TextStyle(fontSize: 20),),)
               ],
               unselectedLabelColor: const Color(0xffacb3bf),
               indicatorColor: Theme.of(context).accentColor,
