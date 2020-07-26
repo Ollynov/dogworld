@@ -175,8 +175,7 @@ class _DogTimeDetailsState extends State<DogTimeDetails> {
       dog = widget.dog;
 
       dog.adaptsToApartment = _adaptsToApartmentController.text;
-      // dog.forNovice = _forNoviceController.text; 
-      dog.forNovice[1] = _forNoviceController.text; 
+      dog.forNovice = _forNoviceController.text; 
       dog.sensitivity = _sensitivityController.text;
       dog.beingAlone = _beingAloneController.text;
       dog.coldWeather = _coldWeatherController.text;

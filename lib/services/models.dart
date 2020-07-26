@@ -175,7 +175,7 @@ class Breed {
 
 class DogtimeDog{
   String adaptsToApartment;
-  List<String> forNovice;
+  String forNovice;
   String sensitivity;
   String beingAlone;
   String coldWeather;
@@ -233,8 +233,19 @@ class DogtimeDog{
     "Intensity": intensity,
     "Exercise Needs": exerciseNeed,
     "Potential For Playfulness": playfulness
-
   };
+  Map<String, dynamic> toJson2() =>
+  {
+    "Adapts Well To Apartment Living" : adaptsToApartment,
+    "Good For Novice Owners" : forNovice,
+  };
+
+  Map<String,String> get returnAll {
+    return {
+      "Adapts Well To Apartment Living": adaptsToApartment,
+      "Good For Novice Owners": forNovice,
+    };
+  }
 
   factory DogtimeDog.fromJson(Map<String, dynamic> parsedJson){
     if (parsedJson == null) {
@@ -242,7 +253,7 @@ class DogtimeDog{
     }
     return  DogtimeDog(
       adaptsToApartment: parsedJson["Adapts Well To Apartment Living"] ?? "",
-      forNovice: ["Good For Novice Owners", parsedJson["Good For Novice Owners"]] ?? "",
+      forNovice: parsedJson["Good For Novice Owners"] ?? "",
       sensitivity: parsedJson["Sensitivity Level"] ?? "",
       beingAlone: parsedJson["Tolerates Being Alone"] ?? "",
       coldWeather: parsedJson["Tolerates Cold Weather"] ?? "",

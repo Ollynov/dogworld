@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doggies/services/models.dart';
 import 'package:doggies/services/services.dart';
@@ -196,28 +198,46 @@ class Characteristics extends StatelessWidget {
     return FutureBuilder(
       // future: Firestore.instance.collection("BreedCharacteristics1").document(breed.id).get(), 
       future: Document<DogtimeDog>(path: 'BreedCharacteristics1/${breed.id}').getData(), 
-      builder: (BuildContext context, AsyncSnapshot<DogtimeDog> snapshot) {
-        print('am I even runnning: ');
-        print(snapshot);
-        print(snapshot.data);
-        if (snapshot.data != null) {
-          final dog = snapshot.data;
-          
-          return ListView(
-            children: [
-              Row(children: [
-                Text(dog.forNovice[0]),
-                Padding(padding: EdgeInsets.only(left: 30), child: 
-                  Text(dog.forNovice[1])
-                ,)
-              ],
-              )
-            ],
-          );
+      builder: (BuildContext context, AsyncSnapshot<DogtimeDog> dog) {
+        // var stringy = json.encode(dog.data);
+        // var newy = DogtimeDog.fromJson(dog.data as Map<String, dynamic>);
+
+        print('here is original  all: ');
+        print(dog.data.toJson());
+        // print('here is normal data for Novice: ');
+        // print(dog.data.forNovice);
+        if (dog.data != null) {
+          // DogtimeDog doggy = dog as DogtimeDog;
+      //     DogtimeDog doggy = new DogtimeDog(adaptsToApartment: dog.data.adaptsToApartment,
+      // forNovice: parsedJson["Good For Novice Owners"] ?? "",);
+          // print('doggy: ');
+          // print(dog);
+          // print('returnAll: ');
+          // print(doggy.returnAll);
+          // final dog = new DogtimeDog(dog.data);
+
+          // final allData = dog.getAll();
+          return Loader();
         } else {
           return Loader();
         }
       });
+  }
+}
+
+class IndividualCharacteristic extends StatelessWidget {
+  final Map characteristic;
+
+  const IndividualCharacteristic({Key key, this.characteristic}) : super(key: key);
+
+  @override 
+  Widget build(BuildContext context) {
+    return Row(children: [
+        Text(characteristic['title']),
+        Padding(padding: EdgeInsets.only(left: 30), child: 
+          Text(characteristic['score'])
+        ,)
+      ],);
   }
 }
 
