@@ -68,11 +68,9 @@ class BreedScreen extends StatelessWidget {
               ]),
             ),
           );
-
         } else {
           return LoadingScreen();
         }
-  
       }
     );
   }
@@ -103,14 +101,17 @@ class BreedDetails extends StatelessWidget {
             ),
           ),
         ),
-        TabRow(breed: breed),
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: TabRow(breed: breed),
+        ),
       ],
     );
   }
 }
 
 class TabRow extends StatefulWidget {
-  Breed breed;
+  final Breed breed;
 
   TabRow({this.breed});
 
@@ -134,26 +135,19 @@ class _TabRowState extends State<TabRow> with TickerProviderStateMixin{
         children: <Widget>[
           Container(
             height: 60,
-            margin: EdgeInsets.only(left: 60),
+            margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*.12, right: MediaQuery.of(context).size.width*.12),
             child: 
             TabBar(
               tabs: [
-                Container(
-                  // width: 80,
-                  child: new Text('Vitals', style: TextStyle(fontSize: 20),
-                  ),
-                ),
-                Container(
-                  // width: 200,
-                  child: new Text('Characteristics', style: TextStyle(fontSize: 20),),
-                )
+                Container(child: new Text('Vitals', style: TextStyle(fontSize: 20),),),
+                Container(child: new Text('Characteristics', style: TextStyle(fontSize: 20),),)
               ],
               unselectedLabelColor: const Color(0xffacb3bf),
-              indicatorColor: Color(0xFFffac81),
+              indicatorColor: Theme.of(context).accentColor,
               labelColor: Colors.black,
               indicatorSize: TabBarIndicatorSize.tab,
               indicatorWeight: 3.0,
-              indicatorPadding: EdgeInsets.all(10),
+              indicatorPadding: EdgeInsets.all(20),
               isScrollable: false,
               controller: _tabController,
             ),
