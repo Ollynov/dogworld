@@ -1,5 +1,5 @@
 // import 'package:apple_sign_in/apple_sign_in.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Router;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../services/services.dart';
 

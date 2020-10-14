@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doggies/services/models.dart';
 import 'package:doggies/services/services.dart';
 import 'package:doggies/shared/shared.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Router;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 

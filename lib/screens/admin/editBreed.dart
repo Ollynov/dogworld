@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doggies/services/users.dart';
 import 'package:doggies/shared/admin/dogTimeTable.dart';
 import 'package:doggies/shared/admin/dogWorldTable.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Router;
 import 'package:firebase_auth/firebase_auth.dart';
 import './../../services/services.dart';
 import './../../shared/shared.dart';
