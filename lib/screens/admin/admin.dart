@@ -1,5 +1,5 @@
 import 'package:doggies/services/users.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Router;
 import 'package:firebase_auth/firebase_auth.dart';
 import './../../services/services.dart';
 import 'package:provider/provider.dart';

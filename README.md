@@ -6,9 +6,11 @@ Welcome.
 
 ### Running the app locally: 
 
-- Specifically running flutter web server on google auth authorized port: flutter run -d chrome --web-hostname localhost --web-port 7357
+1. Make sure you are in the project (Dev/doggies) location in the terminal. Then specifically running flutter web server on google auth authorized port. COMMAND: 
+flutter run -d chrome --web-hostname localhost --web-port 7357
+2. - To run our cloud functions `npm run serve` or to get them on the emulator: `npm run serve` from within the functions directory.
+
 - Then for devtools you need to go to `http://127.0.0.1:9101/#/`, and then manually connect by inputting something like: http://127.0.0.1:62426/ko7vgxcxxRs= The actual thing you input will be in your terminal.
-- To run our cloud functions `npm run serve` or to get them on the emulator: `npm run serve` from within the functions directory.
 
 ### Testing:
 - Run `npm run shell` to get an interactive command line interface where you can test your cloud functions. Just run the function name. Just remember that you need to pass in the data that it expects. 

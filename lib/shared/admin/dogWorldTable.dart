@@ -3,7 +3,7 @@ import 'package:doggies/services/models.dart';
 import 'package:doggies/shared/admin/editAndSaveRow.dart';
 import 'package:doggies/shared/admin/imageCard.dart';
 import 'package:doggies/shared/admin/infoRow.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Router;
 
 class BreedDetails extends StatefulWidget {
   final String breedId;

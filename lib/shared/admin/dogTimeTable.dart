@@ -2,7 +2,9 @@ import 'package:doggies/screens/admin/db.dart';
 import 'package:doggies/services/models.dart';
 import 'package:doggies/services/services.dart';
 import 'package:doggies/shared/admin/infoRow.dart';
-import 'package:flutter/material.dart';
+
+// import 'package:doggies/shared/loader.dart';
+import 'package:flutter/material.dart' hide Router;
 
 
 // ignore: must_be_immutable
