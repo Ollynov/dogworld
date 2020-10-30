@@ -205,9 +205,53 @@ class DogtimeDog{
     this.adaptsToApartment,this.forNovice,this.sensitivity,this.beingAlone, this.hotWeather, this.coldWeather, this.familyFriendly, this.kidFriendly, this.dogFriendly, this.strangerFriendly, this.shedding, this.drooling, this.easyToGroom, this.health, this.weightGain, this.size, this.trainingEase, this.iq, this.mouthiness, this.preyDrive, this.barking, this.wanderlust, this.energy, this.intensity, this.exerciseNeed, this.playfulness
   });
 
-  factory DogtimeDog.fromJson(Map<String, dynamic> parsedJson){
+  Map<String, dynamic> toJson() =>
+  {
+    "Adapts Well To Apartment Living" : adaptsToApartment,
+    "Good For Novice Owners" : forNovice,
+    "Sensitivity Level": sensitivity,
+    "Tolerates Being Alone": beingAlone,
+    "Tolerates Cold Weather" : coldWeather,
+    "Tolerates Hot Weather" : hotWeather,
+    "Affectionate With Family": familyFriendly,
+    "Kid-Friendly": kidFriendly,
+    "Dog Friendly" : dogFriendly,
+    "Friendly Toward Strangers" : strangerFriendly,
+    "Amount Of Shedding": shedding,
+    "Drooling Potential": drooling,
+    "Easy To Groom" : easyToGroom,
+    "General Health" : health,
+    "Potential For Weight Gain": weightGain,
+    "Size": size,
+    "Easy To Train" : trainingEase,
+    "Intelligence" : iq,
+    "Potential For Mouthiness": mouthiness,
+    "Prey Drive": preyDrive,
+    "Tendency To Bark Or Howl" : barking,
+    "Wanderlust Potential" : wanderlust,
+    "Energy Level": energy,
+    "Intensity": intensity,
+    "Exercise Needs": exerciseNeed,
+    "Potential For Playfulness": playfulness
+  };
+  Map<String, dynamic> toJson2() =>
+  {
+    "Adapts Well To Apartment Living" : adaptsToApartment,
+    "Good For Novice Owners" : forNovice,
+  };
 
-    return DogtimeDog(
+  Map<String,String> get returnAll {
+    return {
+      "Adapts Well To Apartment Living": adaptsToApartment,
+      "Good For Novice Owners": forNovice,
+    };
+  }
+
+  factory DogtimeDog.fromJson(Map<String, dynamic> parsedJson){
+    if (parsedJson == null) {
+      parsedJson = {};
+    }
+    return  DogtimeDog(
       adaptsToApartment: parsedJson["Adapts Well To Apartment Living"] ?? "",
       forNovice: parsedJson["Good For Novice Owners"] ?? "",
       sensitivity: parsedJson["Sensitivity Level"] ?? "",
@@ -234,6 +278,21 @@ class DogtimeDog{
       intensity: parsedJson["Intensity"] ?? "",
       exerciseNeed: parsedJson["Exercise Needs"] ?? "",
       playfulness: parsedJson["Potential For Playfulness"] ?? "",
+    );
+  }
+}
+
+class OurBreedsList {
+  dynamic ourBreeds;
+
+  OurBreedsList({this.ourBreeds});
+
+  factory OurBreedsList.fromJson(Map<String, dynamic> parsedJson){
+    if (parsedJson == null) {
+      parsedJson = {};
+    }
+    return OurBreedsList(
+      ourBreeds: parsedJson["ourBreeds"] ?? "",
     );
   }
 }

@@ -1,5 +1,5 @@
 // import 'package:apple_sign_in/apple_sign_in.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Router;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../services/services.dart';
 
@@ -135,8 +135,6 @@ class LoginButton extends StatelessWidget {
         color: color,
         onPressed: () async {
           var user = await loginMethod();
-          print('ok in our button we got user as: ');
-          print(user);
           if (user != null) {Navigator.pushReplacementNamed(context, destination);}
         },
         label: Expanded(

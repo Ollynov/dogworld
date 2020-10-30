@@ -1,10 +1,12 @@
 
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doggies/services/models.dart';
 import 'package:doggies/services/services.dart';
 import 'package:doggies/shared/carousel.dart';
 import 'package:doggies/shared/loader.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Router;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -57,7 +59,6 @@ class BreedScreen extends StatelessWidget {
                           child: FavoriteButton(breedId: breed.id),
                         )
                       ],
-                      
                     ),
                   ],
                 ),
@@ -69,11 +70,9 @@ class BreedScreen extends StatelessWidget {
               ]),
             ),
           );
-
         } else {
           return LoadingScreen();
         }
-  
       }
     );
   }
@@ -87,7 +86,6 @@ class BreedDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(breed.fullName);
     return Column(
       children: [
         Container(
@@ -107,20 +105,132 @@ class BreedDetails extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.all(12.0),
-          child: Column(
-            children: <Widget>[
-
-              ListItem(title: "Life Span", data: breed.lifeSpan, icon: FontAwesomeIcons.heart,),
-              ListItem(title: "Bred For", data: breed.bredFor, icon: FontAwesomeIcons.baby,),
-              ListItem(title: "Group", data: breed.breedGroup, icon: FontAwesomeIcons.layerGroup,),
-              ListItem(title: "Height", data: "${breed.height} inches", icon: FontAwesomeIcons.textHeight),
-              ListItem(title: "Weight", data: "${breed.weight} pounds", icon: FontAwesomeIcons.weightHanging),
-              ListItem(title: "Origin", data: breed.origin, icon: FontAwesomeIcons.home,)
-            ],
-          ),
-        )
+          child: TabRow(breed: breed),
+        ),
       ],
     );
+  }
+}
+
+class TabRow extends StatefulWidget {
+  final Breed breed;
+
+  TabRow({this.breed});
+
+  @override
+  _TabRowState createState() => _TabRowState();
+}
+
+class _TabRowState extends State<TabRow> with TickerProviderStateMixin{
+  TabController _tabController;
+
+
+  void initState() {
+    super.initState();
+    _tabController = new TabController(length: 2, vsync: this);
+  }
+
+
+  @override 
+  Widget build(BuildContext context) {
+    return Column(
+        children: <Widget>[
+          Container(
+            height: 50,
+            margin: EdgeInsets.only(left: MediaQuery.of(context).size.width*.12, right: MediaQuery.of(context).size.width*.12),
+            child: 
+            TabBar(
+              tabs: [
+                Container(height: 50, child: new Text('Vitals', style: TextStyle(fontSize: 20),),),
+                Container(height: 50, child: new Text('Characteristics', style: TextStyle(fontSize: 20),),)
+              ],
+              unselectedLabelColor: const Color(0xffacb3bf),
+              indicatorColor: Theme.of(context).accentColor,
+              labelColor: Colors.black,
+              indicatorSize: TabBarIndicatorSize.tab,
+              indicatorWeight: 3.0,
+              indicatorPadding: EdgeInsets.all(20),
+              isScrollable: false,
+              controller: _tabController,
+            ),
+          ),
+          Container(
+            height: 600,
+            child: TabBarView(
+              controller: _tabController,
+              children: <Widget>[
+                Vitals(breed: widget.breed,),
+                Characteristics(breed: widget.breed,)
+              ]),
+          )
+        ],
+      );
+  }
+}
+
+class Vitals extends StatelessWidget {
+  final Breed breed;
+
+  Vitals({this.breed});
+
+  @override 
+  Widget build(BuildContext context) {
+    return ListView(
+      children: [
+          ListItem(title: "Life Span", data: breed.lifeSpan, icon: FontAwesomeIcons.heart,),
+          ListItem(title: "Bred For", data: breed.bredFor, icon: FontAwesomeIcons.baby,),
+          ListItem(title: "Group", data: breed.breedGroup, icon: FontAwesomeIcons.layerGroup,),
+          ListItem(title: "Height", data: "${breed.height} inches", icon: FontAwesomeIcons.textHeight),
+          ListItem(title: "Weight", data: "${breed.weight} pounds", icon: FontAwesomeIcons.weightHanging),
+          ListItem(title: "Origin", data: breed.origin, icon: FontAwesomeIcons.home,)
+      ],
+    );
+  }
+}
+
+class Characteristics extends StatelessWidget {
+  final Breed breed;
+
+  Characteristics({this.breed});
+
+  @override 
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      // future: Firestore.instance.collection("BreedCharacteristics1").document(breed.id).get(), 
+      future: Document<DogtimeDog>(path: 'BreedCharacteristics1/${breed.id}').getData(), 
+      builder: (BuildContext context, AsyncSnapshot<DogtimeDog> dog) {
+        
+        if (dog.data != null) {
+          final Map allCharacteristics = dog.data.toJson();
+          List<Widget> myList = new List();
+
+          allCharacteristics.forEach((key, value) {
+            myList.add(Text("$key score is: $value"));
+          });
+            
+          return ListView(
+            children: myList
+          );
+        } else {
+          return Loader();
+        }
+      });
+  }
+}
+
+class IndividualCharacteristic extends StatelessWidget {
+  final Map characteristic;
+
+  const IndividualCharacteristic({Key key, this.characteristic}) : super(key: key);
+
+  @override 
+  Widget build(BuildContext context) {
+    return Row(children: [
+        Text(characteristic['title']),
+        Padding(padding: EdgeInsets.only(left: 30), child: 
+          Text(characteristic['score'])
+        ,)
+      ],);
   }
 }
 

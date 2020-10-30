@@ -1,5 +1,5 @@
 import 'package:doggies/shared/bottom_nav.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Router;
 
 class SearchScreen extends StatelessWidget {
   @override

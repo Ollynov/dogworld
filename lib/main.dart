@@ -1,5 +1,7 @@
+// import 'package:firebase_analytics/firebase_analytics.dart';
+// import 'package:firebase_analytics/observer.dart';
 import 'package:fluro/fluro.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Router;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -61,10 +63,6 @@ class _MyAppState extends State<MyApp> {
             padding: EdgeInsets.all(14),
             buttonColor: Colors.grey[300],
           ),
-          
-          // buttonTheme: ButtonThemeData().copyWith(
-          //   buttonColor: secondaryColor
-          // ),
           fontFamily: 'IndieFlower',
           textTheme: TextTheme(
               bodyText1: TextStyle(fontSize: 18),
@@ -88,21 +86,14 @@ class _MyAppState extends State<MyApp> {
         // initialRoute: '/dogopedia',
         home: MyHomePage(),
         routes: {
-          // '/breed-information': (context) => BreedInfo(),
-          // '/dog': (context) => Dog(),
-          // '/profile': (context) => Profile(),
           '/dashboard': (context) => DashboardScreen(),
           '/dogopedia': (context) => DogopediaScreen(),
           '/search': (context) => SearchScreen(),
           '/login': (context) => LoginScreen(),
-          // '/quiz': (context) => QuizScreen(),
-          // '/breed/*': (context) => BreedScreen(),
           '/admin': (context) => AdminScreen(),
           '/admin/editBreed': (context) => EditBreedScreen()
         },
-        onGenerateRoute: Application.router.generator
-       
-        // WEB does not support firebase storage nor analytics so commenting out to avoid errors for now
+        onGenerateRoute: Application.router.generator,
         // navigatorObservers: [
         //   FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),
         // ],
@@ -126,19 +117,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // builder widget does 2 things essentially: 
-        // waits until the parent widget is done building before returning it's child
-        // gives the child the context of the build
-        // this normally happens anyways if you had a completely separate widget, but if you just have something very small then you may not want to create a compmletely new widget.
-        // leading: Builder(
-        //   builder: (BuildContext context) {
-        //     return IconButton(
-        //       icon: const Icon(Icons.home),
-        //       // onPressed: () { Scaffold.of(context).openDrawer();},
-        //       tooltip: "Go Home",
-        //     );
-        //   },
-        // ),
         actions: [
           IconButton(
             icon: Icon(FontAwesomeIcons.userCircle),

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doggies/services/models.dart';
 import 'package:doggies/services/services.dart';
-import 'package:doggies/shared/admin/dogTimeTable.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -44,8 +43,9 @@ Future<void> saveBreed({String breedId, String description, String fullName, Str
     };
   }
 
-
-  final response = await breedsRef.upsert(toSave);
+  var encoded = jsonEncode(toSave);
+  final response = await breedsRef.upsert(encoded);
+  print(breedId);
             // Scaffold.of(context).showSnackBar(SnackBar(
             //   content: GestureDetector(
             //     child: Text("You must be logged in to save a favorite dog breed."),
@@ -55,10 +55,29 @@ Future<void> saveBreed({String breedId, String description, String fullName, Str
             // ));
             // print('this is what we got');
             // print(response);
+ 
+
   final ourBreedsListRef = Firestore.instance.collection("allBreeds").document('ourBreeds');
+  var all = await ourBreedsListRef.get()
+    .then((v) => OurBreedsList.fromJson(v.data));
+
+  all.ourBreeds.add(breedId);
+  all.ourBreeds = all.ourBreeds.toSet().toList();
+  all.ourBreeds.sort();
+
   ourBreedsListRef.updateData({
-    "ourBreeds": FieldValue.arrayUnion([breedId])
+    "ourBreeds": all.ourBreeds
   });
+  return response;
+}
+
+Future<void> saveCharacteristics(dog, breedId) async {
+  // DogtimeDog dog = await fetchBreedFromDogtime(breedId, source);
+  final Document<DogtimeDog> breedsRef = Document<DogtimeDog>(path: 'BreedCharacteristics1/$breedId');
+
+  String json = jsonEncode(dog);
+
+  final response = await breedsRef.upsert(json);
   return response;
 }
 
@@ -135,13 +154,13 @@ Future<dynamic> fetchBreedFromDogtime(String breedId, String source) async {
 
     } else if (source == "Dog World") {
       final response = await Document<DogtimeDog>(path: 'BreedCharacteristics1/$breedId').getData();
-      
-      if (response != null) {
-        return response;
-      } else {
-        print('ok some error getting from our own db');
-        return null;
-      }
+      return response;
+      // if (response != null) {
+      //   return response;
+      // } else {
+      //   print('ok some error getting from our own db');
+      //   return null;
+      // }
     }
 
 

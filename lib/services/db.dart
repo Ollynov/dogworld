@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
@@ -25,8 +27,11 @@ class Document<T> {
 // This is our money function. <T> can be any of the data models we have defined inside of our Global.models class. The reason we need to do this is because Dart is strongly types, so we can't just run the .fromMap function onto any generic type.
   Future<T> getData() {
     try {
-      print('at least trying');
-      var result = ref.get().then((v) => Global.models[T](v.data) as T);
+      var result;
+      result = ref.get()
+        .then((v) => Global.models[T](v.data) as T);
+        // .catchError((onError) => result = null);
+
       return result;
     } catch(err) {
       print('got error: ');
@@ -39,8 +44,10 @@ class Document<T> {
     return ref.snapshots().map((v) => Global.models[T](v.data) as T);
   }
 
-  Future<void> upsert(Map data) {
-    return ref.setData(Map<String, dynamic>.from(data), merge: true);
+  Future<void> upsert(data) {
+    Map<String, dynamic> decoded = jsonDecode(data);
+
+    return ref.setData(Map<String, dynamic>.from(decoded), merge: true);
     // return ref.setData(Map<String, dynamic>.from(data), merge: true);
     
   }

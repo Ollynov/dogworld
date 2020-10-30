@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Router;
 import '../shared/shared.dart';
 import '../services/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

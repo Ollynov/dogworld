@@ -1,5 +1,5 @@
 import 'package:doggies/services/users.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Router;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../services/services.dart';
@@ -115,8 +115,6 @@ class UserFavoriteBreeds extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('here is our userDetails: ');
-    print(userDetails);
 
     if (userDetails != null && userDetails.favoriteBreeds != []) {
       print(userDetails.favoriteBreeds);

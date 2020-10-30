@@ -2,23 +2,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doggies/services/users.dart';
 import 'package:doggies/shared/admin/dogTimeTable.dart';
 import 'package:doggies/shared/admin/dogWorldTable.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import './../../services/services.dart';
+import 'package:flutter/material.dart' hide Router;
+// import 'package:firebase_auth/firebase_auth.dart';
+// import './../../services/services.dart';
 import './../../shared/shared.dart';
-import 'package:provider/provider.dart';
 
 
 class EditBreedScreen extends StatelessWidget {
-  final AuthService auth = AuthService();
+  // final AuthService auth = AuthService();
   final UsersService userService = UsersService();
 
   @override
   Widget build(BuildContext context) {
     
-    FirebaseUser user = Provider.of<FirebaseUser>(context);
+    // FirebaseUser user = Provider.of<FirebaseUser>(context);
 
-    if (user != null) {
+    // if (user != null) {
 
       return Scaffold (
           appBar: AppBar(
@@ -42,9 +41,9 @@ class EditBreedScreen extends StatelessWidget {
           ),
           bottomNavigationBar: AppBottomNav(route: 2, inactive: false,),
         );
-    } else {
-      return LoadingScreen();
-    }
+    // } else {
+    //   return LoadingScreen();
+    // }
   }
 }
 
@@ -57,7 +56,7 @@ class BreedListDropDown extends StatefulWidget {
 }
 
 class _BreedListDropDownState extends State<BreedListDropDown> {
-  String dropdownValue = 'Bernese Mountain Dog';
+  String dropdownValue = 'Affenpinscher';
 
   @override
   Widget build(BuildContext context) {
@@ -95,8 +94,11 @@ class _BreedListDropDownState extends State<BreedListDropDown> {
         ),
         BreedDetails(breedId: dropdownValue, dataSource: "Dog World"),
         BreedDetails(breedId: dropdownValue, dataSource: "Dog CEO",),
-        DogTimeDetails(breedId: dropdownValue, source: "Dogtime"),
-        DogTimeDetails(breedId: dropdownValue, source: "Dog World")
+        Row(children: [
+          DogTimeDetails(breedId: dropdownValue, source: "Dogtime"),
+          DogTimeDetails(breedId: dropdownValue, source: "Dog World")
+        ],)
+
       ],
     );
   }
